@@ -9,12 +9,16 @@
     }
   ],
   "require": {
-    "php": "^7.0"
+    "php": "^7.0",
+    "laravel/framework": "5.4.*"
   },
   "autoload": {
     "psr-4": {
       "Ivacuum\\Generic\\": "src/"
     }
   },
-  "minimum-stability": "dev"
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
 }
