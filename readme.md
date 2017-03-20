@@ -2,6 +2,13 @@
 
 ### Настройки
 
+`config/app.php`
+
+    'aliases' => [
+        ...
+        'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
+    ]
+
 `config/view.php`
 
     'paths' => [
