@@ -14,6 +14,18 @@
       }
     ],
 
+### Маршруты для входа через социалки
+
+`routes/web.php`
+
+    Route::get('auth/facebook', 'Auth\Facebook@index');
+    Route::get('auth/facebook/callback', 'Auth\Facebook@callback');
+    Route::get('auth/google', 'Auth\Google@index');
+    Route::get('auth/google/callback', 'Auth\Google@callback');
+    Route::get('auth/odnoklassniki', 'Auth\Odnoklassniki@index');
+    Route::get('auth/odnoklassniki/callback', 'Auth\Odnoklassniki@callback');
+    Route::get('auth/vk', 'Auth\Vk@index');
+    Route::get('auth/vk/callback', 'Auth\Vk@callback');
 
 ### Настройки
 
@@ -36,4 +48,3 @@
         ...
         realpath(base_path('vendor/ivacuum/generic/views'))
     ],
-
