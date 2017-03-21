@@ -23,7 +23,7 @@
         ...
         'Form' => Ivacuum\Generic\Facades\Form::class,
         'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
-    ]
+    ],
 
 `config/cfg.php`
 
