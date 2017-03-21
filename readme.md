@@ -28,6 +28,7 @@
 `config/cfg.php`
 
     'gm_bin' => env('GM_BIN', '/usr/bin/env gm'),
+    'metrics_address' => 'udp://127.0.0.1:1111',
 
 `config/view.php`
 
