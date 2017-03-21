@@ -10,6 +10,10 @@
         'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
     ]
 
+`config/cfg.php`
+
+    'gm_bin' => env('GM_BIN', '/usr/bin/env gm'),
+
 `config/view.php`
 
     'paths' => [
