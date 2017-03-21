@@ -1,5 +1,20 @@
 Общие компоненты для сайтов на Laravel.
 
+### Локальная разработка
+
+`composer.json` родительского проекта
+
+    "repositories": [
+      {
+        "type": "path",
+        "url": "~/Sites/generic",
+        "options": {
+          "symlink": true
+        }
+      }
+    ],
+
+
 ### Настройки
 
 `config/app.php`
