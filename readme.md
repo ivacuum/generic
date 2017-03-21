@@ -6,6 +6,7 @@
 
     'aliases' => [
         ...
+        'Form' => Ivacuum\Generic\Facades\Form::class,
         'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
     ]
 
