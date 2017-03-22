@@ -40,7 +40,14 @@
 `config/cfg.php`
 
     'gm_bin' => env('GM_BIN', '/usr/bin/env gm'),
+    'locales' => [
+        'ru' => ['posix' => 'ru_RU.UTF-8'],
+        'en' => ['posix' => 'en_US.UTF-8'],
+    ],
     'metrics_address' => 'udp://127.0.0.1:1111',
+    'telegram' => [
+        'admin_id' => env('TELEGRAM_ADMIN_ID'),
+    ],
 
 `config/view.php`
 
