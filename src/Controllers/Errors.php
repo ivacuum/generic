@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers;
 
+use App\Http\Controllers\Controller;
+
 class Errors extends Controller
 {
     public function unauthorized()

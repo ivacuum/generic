@@ -1,8 +1,8 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\ExternalIdentity;
+use App\Http\Controllers\Controller;
 use App\User;
-use Ivacuum\Generic\Controllers\Controller;
 use Ivacuum\Generic\Events\ExternalIdentitySaved;
 
 abstract class Base extends Controller

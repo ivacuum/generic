@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Controllers;
 
+use App\Http\Controllers\Controller;
 use Ivacuum\Generic\Services\Telegram;
 
 class Internal extends Controller

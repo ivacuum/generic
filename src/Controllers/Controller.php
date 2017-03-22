@@ -36,31 +36,45 @@ class Controller extends BaseController
             call_user_func_array([$this, 'alwaysCallBefore'], $parameters);
         }
 
+        $this->appendLocaleAndUri();
         $this->appendViewSharedVars();
 
         return parent::callAction($method, $parameters);
     }
 
-    protected function appendViewSharedVars()
+    protected function appendLocaleAndUri()
     {
         $locale = $this->request->segment(1);
+        $locales = config('cfg.locales');
 
-        if (in_array($locale, array_keys(config('cfg.locales')))) {
+        if (is_array($locales) && in_array($locale, array_keys($locales))) {
             $request_uri = implode('/', array_slice($this->request->segments(), 1));
         } else {
             $request_uri = $this->request->path();
         }
 
+        $this->appendRequestUri($request_uri);
+
         $locale = \App::getLocale();
 
+        view()->share([
+            'locale' => $locale,
+            'locale_uri' => $locale === config('app.locale') ? '' : "/{$locale}",
+        ]);
+    }
+
+    protected function appendRequestUri($uri = null)
+    {
+        view()->share('request_uri', $uri ?? $this->request->path());
+    }
+
+    protected function appendViewSharedVars()
+    {
         view()->share([
             'tpl' => $this->prefix,
             'goto' => $this->request->input('goto'),
             'self' => $this->class,
             'view' => $this->view,
-            'locale' => $locale,
-            'locale_uri' => $locale === config('cfg.default_locale') ? '' : "/{$locale}",
-            'request_uri' => $request_uri,
         ]);
     }
 }

@@ -1,7 +1,5 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
-use App\Http\Controllers\Acp\Controller as BaseController;
-
 class Controller extends BaseController
 {
     protected $show_with_count;
