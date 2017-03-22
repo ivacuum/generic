@@ -41,7 +41,7 @@ class Vk extends Base
             \Auth::loginUsingId($identity->user_id);
 
             event(new ExternalIdentityLogin($identity));
-            event(new \Ivacuum\Generic\Events\Stats\UserSignedInWithExternalIdentity());
+            event(new \Ivacuum\Generic\Events\Stats\UserSignedInWithExternalIdentity);
 
             return redirect()->intended('/');
         }

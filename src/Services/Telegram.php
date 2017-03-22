@@ -20,7 +20,7 @@ class Telegram
         $chat_id = config('cfg.telegram.admin_id');
         $disable_web_page_preview = true;
 
-        event(new \Ivacuum\Generic\Events\Stats\TelegramSent());
+        event(new \Ivacuum\Generic\Events\Stats\TelegramSent);
 
         register_shutdown_function(
             [$this->telegram, 'sendMessage'],
