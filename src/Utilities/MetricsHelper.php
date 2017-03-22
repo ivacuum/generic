@@ -21,7 +21,7 @@ class MetricsHelper
             return false;
         }
 
-        if (\App::environment('local')) {
+        if (\App::isLocal()) {
             foreach ($this->metrics as $metric) {
                 \Log::debug(json_encode($metric));
             }

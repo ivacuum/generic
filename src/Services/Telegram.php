@@ -13,7 +13,7 @@ class Telegram
 
     public function notifyAdmin($text)
     {
-        if (\App::environment('local')) {
+        if (\App::isLocal()) {
             $text = "\xF0\x9F\x9A\xA7 local\n{$text}";
         }
 
