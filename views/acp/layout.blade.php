@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="col-sm-9">
-    <h2 class="mt-0">
+    <h2 class="mt-0 text-break-word">
       @include('acp.tpl.back')
       @section('model_title')
         {{ $model->breadcrumb() }}
