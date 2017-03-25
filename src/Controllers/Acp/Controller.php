@@ -16,7 +16,8 @@ class Controller extends BaseController
         $model = $this->newModel();
 
         $this->authorize('create', $model);
-        $this->breadcrumbsCreate();
+
+        \Breadcrumbs::push(trans($this->view));
 
         return $model;
     }
@@ -51,7 +52,7 @@ class Controller extends BaseController
         $model = $this->getModel($id);
 
         $this->authorize('edit', $model);
-        $this->breadcrumbsCurrentSubpage($model);
+        $this->breadcrumbsModelSubpage($model);
 
         return $model;
     }
@@ -77,7 +78,8 @@ class Controller extends BaseController
         $model = $this->getModel($id);
 
         $this->authorize('show', $model);
-        $this->breadcrumbsShow($model);
+
+        \Breadcrumbs::push($model->breadcrumb());
 
         view()->share(['meta_title' => $model->breadcrumb()]);
 
@@ -127,11 +129,31 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * @param \Ivacuum\Generic\Models\Model $model
+     */
+    protected function breadcrumbsModelSubpage($model)
+    {
+        \Breadcrumbs::push(
+            $model->breadcrumb(),
+            str_replace('.', '/', $this->prefix)."/{$model->getRouteKey()}"
+        );
+
+        \Breadcrumbs::push(trans($this->view));
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     */
     protected function destroyModel($model)
     {
         $model->delete();
     }
 
+    /**
+     * @param  integer $id
+     * @return \Ivacuum\Generic\Models\Model
+     */
     protected function getModel($id)
     {
         $model = $this->newModel();
@@ -154,6 +176,9 @@ class Controller extends BaseController
         return view()->exists($this->view) ? $this->view : "acp.{$this->method}";
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     protected function newModel()
     {
         $model = $this->getModelName();
@@ -161,8 +186,30 @@ class Controller extends BaseController
         return new $model;
     }
 
-    protected function populateBreadcrumbs(...$parameters)
+    protected function redirectAfterDestroy()
     {
+        return [
+            'status' => 'OK',
+            'redirect' => action("{$this->class}@index"),
+        ];
+    }
+
+    protected function redirectAfterStore($model)
+    {
+        return redirect()->action("{$this->class}@index");
+    }
+
+    protected function redirectAfterUpdate($model, $method = 'index')
+    {
+        $goto = $this->request->input('goto', '');
+
+        if ($this->request->exists('_save')) {
+            return $goto
+                ? redirect()->action("{$this->class}@edit", [$model, 'goto' => $goto])
+                : redirect()->action("{$this->class}@edit", $model);
+        }
+
+        return $goto ? redirect($goto) : redirect()->action("{$this->class}@{$method}");
     }
 
     protected function rules($model = null)
@@ -178,6 +225,9 @@ class Controller extends BaseController
         return $model;
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     */
     protected function updateModel($model)
     {
         $model->update($this->request->all());
