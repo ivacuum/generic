@@ -22,7 +22,7 @@
       </span>
     </a>
     @foreach ($filters as $key => $value)
-      <a class="btn btn-default" href="{{ Request::fullUrlWithQuery(array_merge($filters, ['page' => null, $key => null])) }}">
+      <a class="btn btn-default" href="{{ Request::fullUrlWithQuery(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
         {{ $key }}: {{ $value }}
         <span class="text-danger">
           @svg (times)

@@ -10,7 +10,7 @@
         </a>
       @endcan
       @can('edit', $model)
-        <a class="list-group-item {{ $view === "$tpl.edit" ? 'active' : '' }}" href="{{ action("$self@edit", [$model, 'goto' => Request::fullUrl()]) }}">
+        <a class="list-group-item {{ $view === "$tpl.edit" ? 'active' : '' }}" href="{{ UrlHelper::edit($self, $model) }}">
           {{ trans("$tpl.edit") }}
         </a>
       @endcan
