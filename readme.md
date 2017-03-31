@@ -34,6 +34,7 @@
     'aliases' => [
         ...
         'Form' => Ivacuum\Generic\Facades\Form::class,
+        'UrlHelper' => Ivacuum\Generic\Facades\UrlHelper::class,
         'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
     ],
 
