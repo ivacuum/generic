@@ -7,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Ivacuum\Generic\Utilities\ExceptionHelper;
+use Laravel\Socialite\Two\InvalidStateException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -15,6 +16,7 @@ class Handler extends ExceptionHandler
         AuthenticationException::class,
         AuthorizationException::class,
         HttpException::class,
+        InvalidStateException::class,
         ModelNotFoundException::class,
         TokenMismatchException::class,
         ValidationException::class,
