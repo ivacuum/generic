@@ -1,32 +1,7 @@
 <?php namespace Ivacuum\Generic\Providers;
 
-use Carbon\Carbon;
-
 trait LocaleTrait
 {
-    protected function locale()
-    {
-        $locale = \Request::segment(1);
-        $locales = config('cfg.locales');
-        $default_locale = config('app.locale');
-
-        if (is_array($locales) && in_array($locale, array_keys(config('cfg.locales')))) {
-        } else {
-            $locale = $default_locale;
-        }
-
-        setlocale(LC_ALL, config("cfg.locales.{$locale}.posix"));
-        Carbon::setLocale($locale);
-
-        if ($locale === $default_locale) {
-            $locale = '';
-        } else {
-            \App::setLocale($locale);
-        }
-
-        return $locale;
-    }
-
     protected function bladeLang()
     {
         \Blade::directive('ru', function ($expression) {

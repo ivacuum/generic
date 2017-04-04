@@ -70,7 +70,7 @@ class ExceptionHelper
      */
     public static function validationSummary(ValidationException $e)
     {
-        $text = "Ошибка валидации ".\Request::fullUrl()."\n";
+        $text = "Ошибка валидации ".fullUrl()."\n";
         $text .= json_encode([
             'validator' => $e->validator->failed(),
             'request' => \Request::all(),

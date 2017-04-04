@@ -26,6 +26,11 @@ class Internal extends Controller
         return 'ok';
     }
 
+    public function ip()
+    {
+        return $this->request->ip();
+    }
+
     public function telegramWebhook()
     {
         \Log::info(json_encode($this->request->all()));

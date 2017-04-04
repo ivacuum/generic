@@ -190,13 +190,13 @@ class Controller extends BaseController
     {
         return [
             'status' => 'OK',
-            'redirect' => action("{$this->class}@index"),
+            'redirect' => path("{$this->class}@index"),
         ];
     }
 
     protected function redirectAfterStore($model)
     {
-        return redirect()->action("{$this->class}@index");
+        return redirect(path("{$this->class}@index"));
     }
 
     protected function redirectAfterUpdate($model, $method = 'index')
@@ -205,11 +205,11 @@ class Controller extends BaseController
 
         if ($this->request->exists('_save')) {
             return $goto
-                ? redirect()->action("{$this->class}@edit", [$model, 'goto' => $goto])
-                : redirect()->action("{$this->class}@edit", $model);
+                ? redirect(path("{$this->class}@edit", [$model, 'goto' => $goto]))
+                : redirect(path("{$this->class}@edit", $model));
         }
 
-        return $goto ? redirect($goto) : redirect()->action("{$this->class}@{$method}");
+        return $goto ? redirect($goto) : redirect(path("{$this->class}@{$method}"));
     }
 
     protected function rules($model = null)

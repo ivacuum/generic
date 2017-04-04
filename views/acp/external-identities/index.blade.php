@@ -14,7 +14,7 @@
   @foreach ($models as $model)
     <tr>
       <td class="text-right">
-        <a class="link" href="{{ action("$self@show", $model) }}">
+        <a class="link" href="{{ path("$self@show", $model) }}">
           {{ $model->id }}
         </a>
       </td>

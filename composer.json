@@ -13,6 +13,9 @@
     "laravel/framework": "5.4.*"
   },
   "autoload": {
+    "files": [
+      "src/Utilities/helpers.php"
+    ],
     "psr-4": {
       "Ivacuum\\Generic\\": "src/"
     }

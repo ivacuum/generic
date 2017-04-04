@@ -31,6 +31,12 @@
 
 `config/app.php`
 
+    'providers' => [
+        ...
+        // До сервис провайдеров проекта
+        Ivacuum\Generic\Providers\LocaleServiceProvider::class,
+    ],
+
     'aliases' => [
         ...
         'Form' => Ivacuum\Generic\Facades\Form::class,

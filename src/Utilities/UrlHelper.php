@@ -4,7 +4,7 @@ class UrlHelper
 {
     public function edit($self, $model)
     {
-        return action("$self@edit", [$model, 'goto' => self::go()]);
+        return path("$self@edit", [$model, 'goto' => self::go()]);
     }
 
     public function except(array $params = [])
@@ -14,7 +14,7 @@ class UrlHelper
 
     public function filter(array $query = [])
     {
-        return \Request::fullUrlWithQuery(array_merge([
+        return fullUrl(array_merge([
             'page' => null,
             '_pjax' => null,
         ], $query));
@@ -22,6 +22,6 @@ class UrlHelper
 
     public function go(array $query = [])
     {
-        return \Request::fullUrlWithQuery(array_merge(['_pjax' => null], $query));
+        return fullUrl(array_merge(['_pjax' => null], $query));
     }
 }

@@ -7,7 +7,7 @@
   @include('acp.tpl.back')
   {{ trans("$tpl.create") }}
 </h3>
-<form action="{{ action("$self@store") }}" class="form-horizontal" method="post">
+<form action="{{ path("$self@store") }}" class="form-horizontal" method="post">
 
   @include("$tpl.form")
   @include('acp.tpl.hidden_fields')

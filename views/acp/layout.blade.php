@@ -5,7 +5,7 @@
   <div class="col-sm-3">
     <div class="list-group text-center">
       @can('show', $model)
-        <a class="list-group-item {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ action("$self@show", $model) }}">
+        <a class="list-group-item {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ path("$self@show", $model) }}">
           {{ trans("$tpl.show") }}
         </a>
       @endcan
@@ -19,7 +19,7 @@
         @foreach ($show_with_count as $field)
           @php ($count_field = "{$field}_count")
           @if ($model->{$count_field})
-            <a class="list-group-item" href="{{ action("Acp\\".studly_case($field)."@index", [$model->getForeignKey() => $model->id]) }}">
+            <a class="list-group-item" href="{{ path("Acp\\".studly_case($field)."@index", [$model->getForeignKey() => $model->id]) }}">
               {{ trans("acp.{$field}.index") }}
               <span class="text-muted small">{{ $model->{$count_field} }}</span>
             </a>

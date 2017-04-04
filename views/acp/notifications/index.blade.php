@@ -14,7 +14,7 @@
   @foreach ($models as $model)
     <tr>
       <td>
-        <a class="link" href="{{ action("$self@show", $model->id) }}">
+        <a class="link" href="{{ path("$self@show", $model->id) }}">
           {{ str_replace('App\Notifications\\', '', $model->type) }}
         </a>
         <div class="text-muted small">

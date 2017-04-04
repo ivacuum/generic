@@ -31,7 +31,7 @@ class Facebook extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, $this->request));
 
-            return redirect()->action('Auth@login');
+            return redirect(path('Auth@login'));
         }
 
         /* @var $userdata \Laravel\Socialite\Two\User */
@@ -50,7 +50,7 @@ class Facebook extends Base
         if (is_null($userdata->email)) {
             $this->request->session()->flash('message', $this->noEmailMessage());
 
-            return redirect()->action('Auth@login');
+            return redirect(path('Auth@login'));
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {
@@ -83,6 +83,6 @@ class Facebook extends Base
      */
     protected function noEmailMessage()
     {
-        return new HtmlString('<div>Мы не можем вас зарегистрировать, так как не получили от Фэйсбука вашу электронную почту. Доступ к ее адресу можно разрешить при <a class="link" href="'.action('Auth\Facebook@index', ['rerequest' => 1]).'">повторной попытке</a></div>');
+        return new HtmlString('<div>Мы не можем вас зарегистрировать, так как не получили от Фэйсбука вашу электронную почту. Доступ к ее адресу можно разрешить при <a class="link" href="'.path('Auth\Facebook@index', ['rerequest' => 1]).'">повторной попытке</a></div>');
     }
 }

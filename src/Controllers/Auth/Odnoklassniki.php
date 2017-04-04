@@ -24,7 +24,7 @@ class Odnoklassniki extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, $this->request));
 
-            return redirect()->action('Auth@login');
+            return redirect(path('Auth@login'));
         }
 
         /* @var $userdata \Laravel\Socialite\Two\User */
@@ -43,7 +43,7 @@ class Odnoklassniki extends Base
         if (is_null($userdata->email)) {
             $this->request->session()->flash('message', $this->noEmailMessage());
 
-            return redirect()->action('Auth@login');
+            return redirect(path('Auth@login'));
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {

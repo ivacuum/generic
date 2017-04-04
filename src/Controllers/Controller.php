@@ -36,30 +36,20 @@ class Controller extends BaseController
             call_user_func_array([$this, 'alwaysCallBefore'], $parameters);
         }
 
-        $this->appendLocaleAndUri();
+        $this->appendLocale();
+        $this->appendRequestUri();
         $this->appendViewSharedVars();
 
         return parent::callAction($method, $parameters);
     }
 
-    protected function appendLocaleAndUri()
+    protected function appendLocale()
     {
-        $locale = $this->request->segment(1);
-        $locales = config('cfg.locales');
-
-        if (is_array($locales) && in_array($locale, array_keys($locales))) {
-            $request_uri = implode('/', array_slice($this->request->segments(), 1));
-        } else {
-            $request_uri = $this->request->path();
-        }
-
-        $this->appendRequestUri($request_uri);
-
-        $locale = \App::getLocale();
+        $locale = $this->request->server->get('LARAVEL_LOCALE');
 
         view()->share([
-            'locale' => $locale,
-            'locale_uri' => $locale === config('app.locale') ? '' : "/{$locale}",
+            'locale' => $locale ?: config('app.locale'),
+            'locale_uri' => $locale ? "/{$locale}" : '',
         ]);
     }
 

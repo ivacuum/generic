@@ -15,14 +15,14 @@
 @yield('toolbar')
 @if (!empty($filters = Request::except('filter', 'page', '_pjax')))
   <div class="my-3">
-    <a class="btn btn-default" href="{{ action("$self@index") }}">
+    <a class="btn btn-default" href="{{ path("$self@index") }}">
       {{ trans('acp.reset_filters') }}
       <span class="text-danger">
         @svg (times)
       </span>
     </a>
     @foreach ($filters as $key => $value)
-      <a class="btn btn-default" href="{{ Request::fullUrlWithQuery(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
+      <a class="btn btn-default" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
         {{ $key }}: {{ $value }}
         <span class="text-danger">
           @svg (times)
