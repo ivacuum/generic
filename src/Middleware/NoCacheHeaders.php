@@ -30,7 +30,9 @@ class NoCacheHeaders
         /* @var $response \Illuminate\Http\Response */
         $response = $next($request);
 
-        $response->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        if (method_exists($response, 'header')) {
+            $response->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        }
 
         return $response;
     }
