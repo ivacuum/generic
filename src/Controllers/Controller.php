@@ -47,9 +47,12 @@ class Controller extends BaseController
     {
         $locale = $this->request->server->get('LARAVEL_LOCALE');
 
+        $preffered_locale = \Request::getPreferredLanguage(array_keys(config('cfg.locales')));
+
         view()->share([
             'locale' => $locale ?: config('app.locale'),
             'locale_uri' => $locale ? "/{$locale}" : '',
+            'locale_preffered' => $preffered_locale,
         ]);
     }
 
