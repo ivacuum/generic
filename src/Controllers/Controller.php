@@ -63,11 +63,14 @@ class Controller extends BaseController
 
     protected function appendViewSharedVars()
     {
+        $first_time_visit = is_null(\Session::previousUrl());
+
         view()->share([
             'tpl' => $this->prefix,
             'goto' => $this->request->input('goto'),
             'self' => $this->class,
             'view' => $this->view,
+            'first_time_visit' => $first_time_visit,
         ]);
     }
 }
