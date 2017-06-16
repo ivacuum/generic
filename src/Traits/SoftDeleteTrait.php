@@ -6,15 +6,19 @@ trait SoftDeleteTrait
     {
         $query = $this->newQueryWithoutScopes()->where($this->getKeyName(), $this->getKey());
 
-        $time = $this->freshTimestamp();
-
-        $this->{$this->getUpdatedAtColumn()} = $time;
         $this->{$this->getStatusDeletedColumn()} = $this->getStatusDeletedValue();
 
-        $query->update([
-            $this->getUpdatedAtColumn() => $this->fromDateTime($time),
-            $this->getStatusDeletedColumn() => $this->getStatusDeletedValue(),
-        ]);
+        $columns = [$this->getStatusDeletedColumn() => $this->getStatusDeletedValue()];
+
+        if ($this->timestamps) {
+            $time = $this->freshTimestamp();
+
+            $this->{$this->getUpdatedAtColumn()} = $time;
+
+            $columns[$this->getUpdatedAtColumn()] = $this->fromDateTime($time);
+        }
+
+        $query->update($columns);
     }
 
     public function getStatusDeletedColumn()
