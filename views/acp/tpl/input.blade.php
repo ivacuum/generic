@@ -3,7 +3,7 @@
     {{ trans("model.{$entity}.{$name}") }}:
   </label>
   <div class="col-md-6">
-    <input {{ $required ? 'required' : '' }} type="{{ $type }}" class="form-control" name="{{ $name }}" value="{{ old($name, $model->{$name}) }}">
+    @include("acp.tpl.input-{$type}")
     @if ($errors->has($name))
       <span class="help-block">{{ $errors->first($name) }}</span>
     @endif
