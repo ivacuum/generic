@@ -3,6 +3,7 @@
 class Text extends Base
 {
     public $name;
+    public $placeholder = '';
     public $required = false;
     public $type = 'text';
 
@@ -11,15 +12,22 @@ class Text extends Base
         $this->name = $name;
     }
 
+    public function html()
+    {
+        return view('acp.tpl.input', $this->buildData());
+    }
+
+    public function placeholder($value)
+    {
+        $this->placeholder = $value;
+
+        return $this;
+    }
+
     public function required($value = true)
     {
         $this->required = $value === true ? true : false;
 
         return $this;
-    }
-
-    public function html()
-    {
-        return view('acp.tpl.input', $this->buildData());
     }
 }
