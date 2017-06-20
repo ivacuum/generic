@@ -3,9 +3,9 @@
 class Text extends Base
 {
     public $name;
-    public $placeholder = '';
-    public $required = false;
     public $type = 'text';
+    public $required = false;
+    public $placeholder = '';
 
     public function __construct($name)
     {

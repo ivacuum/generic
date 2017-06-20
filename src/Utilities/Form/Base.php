@@ -2,6 +2,7 @@
 
 abstract class Base
 {
+    public $help;
     public $model;
     public $entity = '';
 
@@ -14,6 +15,13 @@ abstract class Base
         }
 
         return $data;
+    }
+
+    public function help($text)
+    {
+        $this->help = $text;
+
+        return $this;
     }
 
     abstract public function html();

@@ -3,9 +3,9 @@
 class Radio extends Base
 {
     public $name;
-    public $required = false;
     public $type = 'radio';
     public $values = [];
+    public $required = false;
 
     public function __construct($name)
     {
