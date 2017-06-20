@@ -4,6 +4,11 @@ use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
 
+/**
+ * Вход через Гугл
+ *
+ * Настройка сайта: console.developers.google.com
+ */
 class Google extends Base
 {
     protected $provider = 'google';
