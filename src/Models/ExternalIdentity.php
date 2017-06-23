@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string  $email
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @property-read \App\User $user
+ *
+ * @mixin \Eloquent
  */
 class ExternalIdentity extends Model
 {

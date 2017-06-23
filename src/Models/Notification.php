@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $read_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @mixin \Eloquent
  */
 class Notification extends Model
 {
