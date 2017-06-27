@@ -11,6 +11,11 @@ class Form
         return $this;
     }
 
+    public function checkbox(...$parameters)
+    {
+        return (new Form\Checkbox(...$parameters))->model($this->model);
+    }
+
     public function radio(...$parameters)
     {
         return (new Form\Radio(...$parameters))->model($this->model);
