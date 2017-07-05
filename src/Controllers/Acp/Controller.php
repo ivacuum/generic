@@ -130,7 +130,7 @@ class Controller extends BaseController
     }
 
     /**
-     * @param \Ivacuum\Generic\Models\Model $model
+     * @param \Ivacuum\Generic\Models\Model|\Eloquent $model
      */
     protected function breadcrumbsModelSubpage($model)
     {
