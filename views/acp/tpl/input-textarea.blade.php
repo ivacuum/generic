@@ -1,0 +1,1 @@
+<textarea {{ $required ? 'required' : '' }} class="form-control textarea-autosized js-autosize-textarea" name="{{ $name }}" rows="2" placeholder="{{ $placeholder }}">{{ old($name, $model->{$name}) }}</textarea>

@@ -25,4 +25,9 @@ class Form
     {
         return (new Form\Text(...$parameters))->model($this->model);
     }
+
+    public function textarea(...$parameters)
+    {
+        return (new Form\Textarea(...$parameters))->model($this->model);
+    }
 }
