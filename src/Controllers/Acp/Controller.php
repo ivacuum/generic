@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class Controller extends BaseController
 {
     protected $show_with_count;
@@ -157,13 +159,15 @@ class Controller extends BaseController
     protected function getModel($id)
     {
         $model = $this->newModel();
-        $model = $model->where($model->getRouteKeyName(), '=', $id);
 
-        if ($this->method === 'show' && !is_null($this->show_with_count)) {
-            $model = $model->withCount($this->show_with_count);
-        }
-
-        return $model->firstOrFail();
+        return $model->where($model->getRouteKeyName(), '=', $id)
+            ->when(method_exists($model, 'forceDelete'), function (Builder $query) {
+                return $query->withTrashed();
+            })
+            ->when($this->method === 'show' && !is_null($this->show_with_count), function (Builder $query) {
+                return $query->withCount($this->show_with_count);
+            })
+            ->firstOrFail();
     }
 
     protected function getModelName()
