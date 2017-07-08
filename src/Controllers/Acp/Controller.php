@@ -161,7 +161,7 @@ class Controller extends BaseController
         $model = $this->newModel();
 
         return $model->where($model->getRouteKeyName(), '=', $id)
-            ->when(method_exists($model, 'forceDelete'), function (Builder $query) {
+            ->when(method_exists($model, 'bootSoftDeletes'), function (Builder $query) {
                 return $query->withTrashed();
             })
             ->when($this->method === 'show' && !is_null($this->show_with_count), function (Builder $query) {
