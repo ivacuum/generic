@@ -4,6 +4,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Controller extends BaseController
 {
+    protected $sort_dir = 'desc';
+    protected $sort_key = 'id';
+    protected $sortable_keys = ['id'];
     protected $show_with_count;
 
     public function create()
@@ -65,7 +68,15 @@ class Controller extends BaseController
 
         $this->authorize('list', $model);
 
-        view()->share(compact('model'));
+        $model_tpl = implode('.', array_map(function ($ary) {
+            return str_replace('_', '-', snake_case($ary));
+        }, explode('\\', str_replace('App\\', '', get_class($model)))));
+
+        list($sort_key, $sort_dir) = $this->getSortParams();
+
+        \UrlHelper::setSortKey($sort_key);
+
+        view()->share(compact('model', 'model_tpl', 'sort_dir', 'sort_key'));
     }
 
     public function show($id)
@@ -173,6 +184,22 @@ class Controller extends BaseController
     protected function getModelName()
     {
         return str_singular(str_replace('Acp\\', 'App\\', $this->class));
+    }
+
+    protected function getSortParams()
+    {
+        $sort_dir = $this->request->input('sd', $this->sort_dir);
+        $sort_key = $this->request->input('sk', $this->sort_key);
+
+        if (!in_array($sort_dir, ['asc', 'desc'])) {
+            $sort_dir = $this->sort_dir;
+        }
+
+        if (!in_array($sort_key, $this->sortable_keys)) {
+            $sort_key = $this->sort_key;
+        }
+
+        return [$sort_key, $sort_dir];
     }
 
     protected function getView()

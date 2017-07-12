@@ -13,7 +13,7 @@
   @endcan
 </h3>
 @yield('toolbar')
-@if (!empty($filters = Request::except('filter', 'page', '_pjax')))
+@if (!empty($filters = Request::except('filter', 'page', 'sd', 'sk', '_pjax')))
   <div class="my-3">
     <a class="btn btn-default" href="{{ path("$self@index") }}">
       {{ trans('acp.reset_filters') }}
