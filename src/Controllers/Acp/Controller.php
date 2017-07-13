@@ -74,7 +74,8 @@ class Controller extends BaseController
 
         list($sort_key, $sort_dir) = $this->getSortParams();
 
-        \UrlHelper::setSortKey($sort_key);
+        \UrlHelper::setSortKey($sort_key)
+            ->setDefaultSortDir($this->sort_dir);
 
         view()->share(compact('model', 'model_tpl', 'sort_dir', 'sort_key'));
     }

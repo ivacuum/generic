@@ -3,6 +3,7 @@
 class UrlHelper
 {
     protected $sort_key;
+    protected $default_sort_dir;
 
     public function edit($self, $model)
     {
@@ -27,6 +28,13 @@ class UrlHelper
         return fullUrl(array_merge(['_pjax' => null], $query));
     }
 
+    public function setDefaultSortDir($dir)
+    {
+        $this->default_sort_dir = $dir;
+
+        return $this;
+    }
+
     public function setSortKey($key)
     {
         $this->sort_key = $key;
@@ -34,14 +42,16 @@ class UrlHelper
         return $this;
     }
 
-    public function sort($key, $default_dir = 'desc')
+    public function sort($key, $default_dir = null)
     {
         if (!is_null($this->sort_key) && $this->sort_key != $key) {
             // При смене поля сортировки используется
             // направление сортировки по умолчанию
-            $dir = $default_dir === 'desc' ? null : $default_dir;
+            $dir = $default_dir === $this->default_sort_dir ? null : $default_dir;
         } else {
-            $dir = \Request::input('sd') === 'asc' ? null : 'asc';
+            $opposite_dir = $this->default_sort_dir === 'desc' ? 'asc' : 'desc';
+
+            $dir = \Request::input('sd') === $opposite_dir ? null : $opposite_dir;
         }
 
         return $this->filter([

@@ -1,4 +1,4 @@
-<a href="{{ UrlHelper::sort($key, $dir ?? 'desc') }}">
+<a href="{{ UrlHelper::sort($key, $order ?? 'desc') }}">
   @if (isset($svg))
     @svg ($svg)
   @else
