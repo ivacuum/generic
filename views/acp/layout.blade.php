@@ -17,12 +17,15 @@
       @yield('model_menu')
       @if (is_array($show_with_count))
         @foreach ($show_with_count as $field)
-          @can('list', "App\\".studly_case(str_singular($field)))
+          @php ($related = $model->{$field}()->getRelated())
+          @can('list', $related)
+            @php ($controller = \Ivacuum\Generic\Utilities\NamingHelper::controllerName($related))
+            @php ($trans_field = \Ivacuum\Generic\Utilities\NamingHelper::transField($related))
             @php ($count_field = "{$field}_count")
             @if ($model->{$count_field})
-              <a class="list-group-item" href="{{ path("Acp\\".studly_case($field)."@index", [$model->getForeignKey() => $model->id]) }}">
-                {{ trans("acp.{$field}.index") }}
-                <span class="text-muted small">{{ $model->{$count_field} }}</span>
+              <a class="list-group-item" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->id]) }}">
+                {{ trans("acp.{$trans_field}.index") }}
+                <span class="text-muted small">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
             @endif
           @endcan
