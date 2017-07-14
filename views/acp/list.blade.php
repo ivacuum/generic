@@ -1,19 +1,28 @@
 @extends('acp.base')
 
 @section('content')
-<h3 class="mt-0">
-  {{ trans("$tpl.index") }}
-  @if ($models instanceof Illuminate\Support\Collection)
-    <small>{{ ViewHelper::number(sizeof($models)) }}</small>
-  @else
-    <small>{{ ViewHelper::number($models->total()) }}</small>
-  @endif
-  @can('create', $model)
-    @include('acp.tpl.create')
-  @endcan
-</h3>
+<div class="heading-menu">
+  <h3 class="mt-0">
+    {{ trans("$tpl.index") }}
+    @if ($models instanceof Illuminate\Support\Collection)
+      <small>{{ ViewHelper::number(sizeof($models)) }}</small>
+    @else
+      <small>{{ ViewHelper::number($models->total()) }}</small>
+    @endif
+    @can('create', $model)
+      @include('acp.tpl.create')
+    @endcan
+    @if (!empty($search_form))
+      <form class="heading-menu-search-form">
+        <input type="text" name="q" class="form-control" placeholder="Поиск..." value="{{ $q ?? '' }}">
+      </form>
+    @endif
+  </h3>
+</div>
+
 @yield('toolbar')
-@if (!empty($filters = Request::except('filter', 'page', 'sd', 'sk', '_pjax')))
+
+@if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk', '_pjax'])))
   <div class="my-3">
     <a class="btn btn-default" href="{{ path("$self@index") }}">
       {{ trans('acp.reset_filters') }}
@@ -31,11 +40,13 @@
     @endforeach
   </div>
 @endif
+
 @if (sizeof($models))
   @yield('content-list')
 @else
   @yield('content-list-empty')
 @endif
+
 @if ($models instanceof Illuminate\Contracts\Pagination\Paginator)
   @include('tpl.paginator', ['paginator' => $models])
 @endif
