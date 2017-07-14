@@ -9,14 +9,16 @@
     @else
       <small>{{ ViewHelper::number($models->total()) }}</small>
     @endif
+    @yield('heading-after-title')
     @can('create', $model)
       @include('acp.tpl.create')
     @endcan
     @if (!empty($search_form))
       <form class="heading-menu-search-form">
-        <input type="text" name="q" class="form-control" placeholder="Поиск..." value="{{ $q ?? '' }}">
+        <input type="text" name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}">
       </form>
     @endif
+    @yield('heading-after-search')
   </h3>
 </div>
 
