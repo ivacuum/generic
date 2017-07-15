@@ -4,6 +4,7 @@ class Textarea extends Base
 {
     public $name;
     public $type = 'textarea';
+    public $wide = false;
     public $required = false;
     public $placeholder = '';
 
@@ -14,7 +15,9 @@ class Textarea extends Base
 
     public function html()
     {
-        return view('acp.tpl.input', $this->buildData());
+        $tpl = $this->wide ? 'input-textarea-wide' : 'input';
+
+        return view("acp.tpl.$tpl", $this->buildData());
     }
 
     public function placeholder($value)
@@ -27,6 +30,13 @@ class Textarea extends Base
     public function required($value = true)
     {
         $this->required = $value === true ? true : false;
+
+        return $this;
+    }
+
+    public function wide($value = true)
+    {
+        $this->wide = $value === true ? true : false;
 
         return $this;
     }
