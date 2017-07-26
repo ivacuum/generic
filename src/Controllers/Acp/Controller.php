@@ -113,9 +113,9 @@ class Controller extends BaseController
 
     public function storeGeneric()
     {
+        $this->authorize('create', $this->newModel());
         $this->sanitizeRequest();
         $this->validate($this->request, $this->rules());
-        $this->authorize('create', $this->newModel());
     }
 
     public function update($id)
