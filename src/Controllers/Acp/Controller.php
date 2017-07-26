@@ -113,6 +113,7 @@ class Controller extends BaseController
 
     public function storeGeneric()
     {
+        $this->sanitizeRequest();
         $this->validate($this->request, $this->rules());
         $this->authorize('create', $this->newModel());
     }
@@ -131,6 +132,7 @@ class Controller extends BaseController
         $model = $this->getModel($id);
 
         $this->authorize('edit', $model);
+        $this->sanitizeRequest();
         $this->validate($this->request, $this->rules($model));
 
         return $model;
@@ -143,6 +145,20 @@ class Controller extends BaseController
         view()->share([
             'show_with_count' => $this->show_with_count,
         ]);
+    }
+
+    protected function sanitizeData(array $data)
+    {
+        return;
+    }
+
+    protected function sanitizeRequest()
+    {
+        $data = $this->request->all();
+
+        if (is_array($sanitized_data = $this->sanitizeData($data))) {
+            $this->request->replace($sanitized_data);
+        }
     }
 
     /**
