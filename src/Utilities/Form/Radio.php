@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Utilities\Form;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 class Radio extends Base
 {
     public $name;
@@ -24,9 +26,17 @@ class Radio extends Base
         return $this;
     }
 
-    public function values(array $values)
+    /**
+     * @param  \Illuminate\Contracts\Support\Arrayable|array $values
+     * @return $this
+     */
+    public function values($values)
     {
-        $this->values = $values;
+        if ($values instanceof Arrayable) {
+            $this->values = $values->toArray();
+        } else {
+            $this->values = $values;
+        }
 
         return $this;
     }
