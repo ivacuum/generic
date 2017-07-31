@@ -21,6 +21,11 @@ class Form
         return (new Form\Radio(...$parameters))->model($this->model);
     }
 
+    public function select(...$parameters)
+    {
+        return (new Form\Select(...$parameters))->model($this->model);
+    }
+
     public function text(...$parameters)
     {
         return (new Form\Text(...$parameters))->model($this->model);
