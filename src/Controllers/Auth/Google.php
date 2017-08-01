@@ -44,9 +44,7 @@ class Google extends Base
         }
 
         if (is_null($userdata->email)) {
-            $this->request->session()->flash('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
-
-            return redirect(path('Auth@login'));
+            return redirect(path('Auth@login'))->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {

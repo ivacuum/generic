@@ -47,9 +47,7 @@ class Vk extends Base
         }
 
         if (is_null($userdata->email)) {
-            $this->request->session()->flash('message', $this->noEmailMessage());
-
-            return redirect(path('Auth@login'));
+            return redirect(path('Auth@login'))->with('message', $this->noEmailMessage());
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {
