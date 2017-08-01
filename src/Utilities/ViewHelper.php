@@ -92,9 +92,16 @@ class ViewHelper
         return $this->decimal->format($number);
     }
 
-    public function paginatorIteration(LengthAwarePaginator $paginator, $loop)
+    public function paginatorIteration($paginator, $loop)
     {
-        return ($paginator->currentPage() - 1) * $paginator->perPage() + $loop->iteration;
+        $page = $per_page = 0;
+
+        if ($paginator instanceof LengthAwarePaginator) {
+            $page = $paginator->currentPage() - 1;
+            $per_page = $paginator->perPage();
+        }
+
+        return $page * $per_page + $loop->iteration;
     }
 
     public function plural($key, $count)
