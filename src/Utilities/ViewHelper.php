@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
 
 class ViewHelper
@@ -89,6 +90,11 @@ class ViewHelper
     public function number($number)
     {
         return $this->decimal->format($number);
+    }
+
+    public function paginatorIteration(LengthAwarePaginator $paginator, $loop)
+    {
+        return ($paginator->currentPage() - 1) * $paginator->perPage() + $loop->iteration;
     }
 
     public function plural($key, $count)
