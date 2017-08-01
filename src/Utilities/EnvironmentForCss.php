@@ -37,11 +37,14 @@ class EnvironmentForCss
         return [];
     }
 
+    public function isMobile()
+    {
+        return preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|Opera Mini/i', $this->user_agent);
+    }
+
     public function mobileOrDesktopClasses()
     {
-        return preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|Opera Mini/i', $this->user_agent)
-            ? ['is-mobile']
-            : ['is-desktop'];
+        return $this->isMobile() ? ['is-mobile'] : ['is-desktop'];
     }
 
     public function operatingSystemClasses()

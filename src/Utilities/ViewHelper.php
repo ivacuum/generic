@@ -48,11 +48,6 @@ class ViewHelper
         return new HtmlString('<input hidden type="text" name="mail" value="'.old("mail").'">');
     }
 
-    public function isMobile($user_agent)
-    {
-        return preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|Opera Mini/i', $user_agent);
-    }
-
     public function metaTitle($meta_title, $view)
     {
         if ($meta_title) {
