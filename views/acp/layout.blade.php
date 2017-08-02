@@ -23,7 +23,7 @@
             @php ($trans_field = \Ivacuum\Generic\Utilities\NamingHelper::transField($related))
             @php ($count_field = "{$field}_count")
             @if ($model->{$count_field})
-              <a class="list-group-item" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->id]) }}">
+              <a class="list-group-item" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
                 <span class="text-muted small">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
