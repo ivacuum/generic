@@ -175,11 +175,16 @@ class Controller extends BaseController
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @return bool|null
      */
     protected function destroyModel($model)
     {
-        $model->delete();
+        if (method_exists($model, 'bootSoftDeletes') && $model->trashed()) {
+            return $model->forceDelete();
+        }
+
+        return $model->delete();
     }
 
     /**
