@@ -43,6 +43,15 @@ class Controller extends BaseController
         return parent::callAction($method, $parameters);
     }
 
+    public function validateArray(array $data, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
+
+        if ($validator->fails()) {
+            $this->throwValidationException($this->request, $validator);
+        }
+    }
+
     protected function appendLocale()
     {
         $locale = $this->request->server->get('LARAVEL_LOCALE');
