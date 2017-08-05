@@ -1,10 +1,13 @@
 <?php namespace Ivacuum\Generic\Utilities\Form;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 abstract class Base
 {
     public $help;
     public $model;
     public $entity = '';
+    public $classes = [];
 
     public function buildData()
     {
@@ -15,6 +18,21 @@ abstract class Base
         }
 
         return $data;
+    }
+
+    /**
+     * @param  \Illuminate\Contracts\Support\Arrayable|array $values
+     * @return $this
+     */
+    public function classes($values)
+    {
+        if ($values instanceof Arrayable) {
+            $this->classes = $values->toArray();
+        } else {
+            $this->classes = $values;
+        }
+
+        return $this;
     }
 
     public function help($text)

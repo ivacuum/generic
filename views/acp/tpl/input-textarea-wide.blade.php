@@ -3,7 +3,7 @@
     <label class="control-label mb-2 {{ $required ? 'required' : '' }}">
       {{ trans("model.{$entity}.{$name}") }}:
     </label>
-    <textarea {{ $required ? 'required' : '' }} class="form-control textarea-autosized textarea-borderless-focus js-autosize-textarea" name="{{ $name }}" rows="2" placeholder="{{ $placeholder }}">{{ old($name, $model->{$name}) }}</textarea>
+    <textarea {{ $required ? 'required' : '' }} class="form-control textarea-autosized textarea-borderless-focus js-autosize-textarea {{ implode(' ', $classes) }}" name="{{ $name }}" rows="2" placeholder="{{ $placeholder }}">{{ old($name, $model->{$name}) }}</textarea>
     @if ($help)
       <span class="help-block">{{ $help }}</span>
     @endif
