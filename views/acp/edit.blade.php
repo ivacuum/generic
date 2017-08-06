@@ -3,7 +3,7 @@
 <?php Form::model($model); ?>
 
 @section('content')
-<form action="{{ path("$self@update", $model) }}" class="form-horizontal" method="post">
+<form action="{{ path("$self@update", $model) }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 
   @include("$tpl.form")
 
