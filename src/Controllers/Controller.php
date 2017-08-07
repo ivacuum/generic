@@ -28,6 +28,8 @@ class Controller extends BaseController
         }, explode('\\', $this->class)));
 
         $this->view = $this->prefix.".".snake_case($this->method);
+
+        $this->appendBreadcrumbs();
     }
 
     public function callAction($method, $parameters)
@@ -50,6 +52,10 @@ class Controller extends BaseController
         if ($validator->fails()) {
             $this->throwValidationException($this->request, $validator);
         }
+    }
+
+    protected function appendBreadcrumbs()
+    {
     }
 
     protected function appendLocale()
