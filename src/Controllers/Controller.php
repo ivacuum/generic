@@ -24,7 +24,7 @@ class Controller extends BaseController
         $this->method = array_last(explode('@', \Route::currentRouteAction()));
 
         $this->prefix = implode('.', array_map(function ($ary) {
-            return str_replace('_', '-', snake_case($ary));
+            return snake_case($ary, '-');
         }, explode('\\', $this->class)));
 
         $this->view = $this->prefix.".".snake_case($this->method);

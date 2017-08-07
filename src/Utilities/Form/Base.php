@@ -51,7 +51,7 @@ abstract class Base
         $class = str_replace('App\\', '', get_class($model));
 
         $this->entity = implode('.', array_map(function ($ary) {
-            return str_replace('_', '-', snake_case($ary));
+            return snake_case($ary, '-');
         }, explode('\\', $class)));
 
         return $this;
