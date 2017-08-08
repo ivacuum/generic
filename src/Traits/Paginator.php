@@ -4,7 +4,7 @@ use Ivacuum\Generic\Scopes\PaginatorScope;
 
 trait Paginator
 {
-    public static function bootPaginator()
+    protected static function bootPaginator()
     {
         static::addGlobalScope(new PaginatorScope);
     }
