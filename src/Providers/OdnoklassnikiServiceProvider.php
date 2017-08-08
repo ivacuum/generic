@@ -1,13 +1,13 @@
 <?php namespace Ivacuum\Generic\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use Ivacuum\Generic\Socialite\OdnoklassnikiProvider;
 
-trait OdnoklassnikiTrait
+class OdnoklassnikiServiceProvider extends ServiceProvider
 {
-    /* @var \Illuminate\Foundation\Application */
-    protected $app;
+    protected $defer;
 
-    protected function odnoklassniki()
+    public function register()
     {
         $this->app->singleton(OdnoklassnikiProvider::class, function ($app) {
             $config = $app['config']['services.odnoklassniki'];
@@ -19,5 +19,10 @@ trait OdnoklassnikiTrait
                 $config['redirect']
             );
         });
+    }
+
+    public function provides()
+    {
+        return [OdnoklassnikiProvider::class];
     }
 }

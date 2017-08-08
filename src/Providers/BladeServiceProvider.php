@@ -1,8 +1,17 @@
 <?php namespace Ivacuum\Generic\Providers;
 
-trait BladeTrait
+use Illuminate\Support\ServiceProvider;
+
+class BladeServiceProvider extends ServiceProvider
 {
-    protected function bladeLang()
+    public function register()
+    {
+        $this->lang();
+        $this->prop();
+        $this->svg();
+    }
+
+    protected function lang()
     {
         \Blade::directive('ru', function ($expression) {
             return '<?php if ($locale === \'ru\'): ?>';
@@ -21,10 +30,17 @@ trait BladeTrait
         });
     }
 
-    protected function bladeSvg()
+    protected function prop()
+    {
+        \Blade::directive('prop', function ($expression) {
+            return '<?php echo \Ivacuum\Generic\Utilities\Vue::prop($expression); ?>';
+        });
+    }
+
+    protected function svg()
     {
         \Blade::directive('svg', function ($expression) {
-            return "<?php require base_path(\"resources/svg/$expression.html\"); ?>";
+            return "<?php require base_path(\"resources/svg/$expression.svg\"); ?>";
         });
     }
 }

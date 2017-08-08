@@ -1,8 +1,10 @@
 <?php namespace Ivacuum\Generic\Providers;
 
-trait FastcgiTrait
+use Illuminate\Support\ServiceProvider;
+
+class FastcgiServiceProvider extends ServiceProvider
 {
-    protected function fastcgiFinishRequest()
+    public function register()
     {
         if (function_exists('fastcgi_finish_request')) {
             register_shutdown_function('fastcgi_finish_request');

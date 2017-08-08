@@ -1,11 +1,10 @@
 <?php namespace Ivacuum\Generic\Providers;
 
-trait DebugbarTrait
-{
-    /* @var \Illuminate\Foundation\Application */
-    protected $app;
+use Illuminate\Support\ServiceProvider;
 
-    protected function debugbar()
+class DebugbarServiceProvider extends ServiceProvider
+{
+    public function register()
     {
         if ($this->app->isLocal()) {
             if (\Request::cookie('debugbar', false)) {

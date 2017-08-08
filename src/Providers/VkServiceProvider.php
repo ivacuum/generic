@@ -1,13 +1,13 @@
 <?php namespace Ivacuum\Generic\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use Ivacuum\Generic\Socialite\VkProvider;
 
-trait VkTrait
+class VkServiceProvider extends ServiceProvider
 {
-    /* @var \Illuminate\Foundation\Application */
-    protected $app;
+    protected $defer;
 
-    protected function vk()
+    public function register()
     {
         $this->app->singleton(VkProvider::class, function ($app) {
             $config = $app['config']['services.vk'];
@@ -19,5 +19,10 @@ trait VkTrait
                 $config['redirect']
             );
         });
+    }
+
+    public function provides()
+    {
+        return [VkProvider::class];
     }
 }
