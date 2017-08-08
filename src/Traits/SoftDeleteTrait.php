@@ -21,6 +21,11 @@ trait SoftDeleteTrait
         $query->update($columns);
     }
 
+    public function trashed()
+    {
+        return (int) $this->{$this->getStatusDeletedColumn()} === (int) $this->getStatusDeletedValue();
+    }
+
     public function getStatusDeletedColumn()
     {
         return defined('static::STATUS_DELETED_COLUMN') ? static::STATUS_DELETED_COLUMN : 'status';

@@ -182,6 +182,8 @@ class Controller extends BaseController
     {
         if (method_exists($model, 'bootSoftDeletes') && $model->trashed()) {
             return $model->forceDelete();
+        } elseif (method_exists($model, 'softDelete') && !$model->trashed()) {
+            return $model->softDelete();
         }
 
         return $model->delete();
