@@ -1,13 +1,13 @@
 <?php namespace Ivacuum\Generic\Services;
 
-use Foolz\SphinxQL\Connection;
+use Foolz\SphinxQL\Drivers\SimpleConnection;
 use Foolz\SphinxQL\SphinxQL;
 
 class Sphinx
 {
     protected $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(SimpleConnection $connection)
     {
         $this->connection = $connection;
     }
