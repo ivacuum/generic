@@ -7,18 +7,10 @@ class MetricsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if ($this->app->environment('local', 'production')) {
+        if (in_array($this->app->environment(), ['local', 'production'])) {
             $this->pushStats();
             $this->triggerStatsOnEvents();
-            $this->export();
         }
-    }
-
-    protected function export()
-    {
-        register_shutdown_function(function () {
-            \MetricsHelper::export();
-        });
     }
 
     protected function pushStats()
