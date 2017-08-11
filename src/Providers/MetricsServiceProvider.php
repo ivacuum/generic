@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Providers;
 
 use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Queue\Events\WorkerStopping;
 use Illuminate\Support\ServiceProvider;
 
 class MetricsServiceProvider extends ServiceProvider
@@ -32,6 +33,10 @@ class MetricsServiceProvider extends ServiceProvider
     {
         \Event::listen(NotificationSent::class, function () {
             event(new \Ivacuum\Generic\Events\Stats\NotificationSent);
+        });
+
+        \Event::listen(WorkerStopping::class, function () {
+            \Log::info("Worker is stopping...\n");
         });
     }
 }
