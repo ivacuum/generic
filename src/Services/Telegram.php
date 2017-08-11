@@ -22,10 +22,14 @@ class Telegram
 
         event(new \Ivacuum\Generic\Events\Stats\TelegramSent);
 
-        register_shutdown_function(
-            [$this->telegram, 'sendMessage'],
-            compact('chat_id', 'text', 'disable_web_page_preview')
-        );
+        if (\App::runningInConsole()) {
+            $this->telegram->sendMessage(compact('chat_id', 'text', 'disable_web_page_preview'));
+        } else {
+            register_shutdown_function(
+                [$this->telegram, 'sendMessage'],
+                compact('chat_id', 'text', 'disable_web_page_preview')
+            );
+        }
     }
 
     public function notifyAdminProduction($text)
