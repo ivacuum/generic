@@ -6,7 +6,7 @@ class FastcgiServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        if (function_exists('fastcgi_finish_request')) {
+        if (!\App::runningInConsole() && function_exists('fastcgi_finish_request')) {
             register_shutdown_function('fastcgi_finish_request');
         }
     }
