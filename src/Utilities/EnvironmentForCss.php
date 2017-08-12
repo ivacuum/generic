@@ -28,10 +28,10 @@ class EnvironmentForCss
             return ['firefox'];
         } elseif (preg_match('/safari/', $this->user_agent) && !preg_match('/chrome/', $this->user_agent)) {
             return ['safari'];
+        } elseif (preg_match('/opera|opr/', $this->user_agent)) {
+            return ['opera'];
         } elseif (preg_match('/chrome/', $this->user_agent)) {
             return ['chrome'];
-        } elseif (preg_match('/opera/', $this->user_agent)) {
-            return ['opera'];
         }
 
         return [];
