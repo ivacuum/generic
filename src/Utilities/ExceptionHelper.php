@@ -74,7 +74,7 @@ class ExceptionHelper
         $text .= json_encode([
             'validator' => $e->validator->failed(),
             'request' => \Request::all(),
-            'browser' => \Request::userAgent(),
+            'browser' => UserAgent::tidy(\Request::userAgent()),
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         return $text;
