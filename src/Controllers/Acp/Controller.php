@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use Illuminate\Database\Eloquent\Builder;
+use Ivacuum\Generic\Utilities\ModelHelper;
 
 class Controller extends BaseController
 {
@@ -33,7 +34,7 @@ class Controller extends BaseController
 
         $this->destroyModel($model);
 
-        return $this->redirectAfterDestroy();
+        return $this->redirectAfterDestroy($model);
     }
 
     public function destroyGeneric($id)
@@ -180,9 +181,11 @@ class Controller extends BaseController
      */
     protected function destroyModel($model)
     {
-        if (method_exists($model, 'bootSoftDeletes') && $model->trashed()) {
+        if (ModelHelper::hasSoftDeleteLaravel($model) && $model->trashed()) {
+            // Первый раз delete(), затем forceDelete()
             return $model->forceDelete();
-        } elseif (method_exists($model, 'softDelete') && !$model->trashed()) {
+        } elseif (ModelHelper::hasSoftDeleteIvacuum($model) && !$model->trashed()) {
+            // Первый раз softDelete(), затем delete()
             return $model->softDelete();
         }
 
@@ -198,7 +201,7 @@ class Controller extends BaseController
         $model = $this->newModel();
 
         return $model->where($model->getRouteKeyName(), '=', $id)
-            ->when(method_exists($model, 'bootSoftDeletes'), function (Builder $query) {
+            ->when(ModelHelper::hasSoftDeleteLaravel($model), function (Builder $query) {
                 return $query->withTrashed();
             })
             ->when($this->method === 'show' && !is_null($this->show_with_count), function (Builder $query) {
@@ -243,8 +246,21 @@ class Controller extends BaseController
         return new $model;
     }
 
-    protected function redirectAfterDestroy()
+    /**
+     * Перенаправление после удаления записи
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @return array
+     */
+    protected function redirectAfterDestroy($model)
     {
+        if (ModelHelper::exists($model)) {
+            return [
+                'status' => 'OK',
+                'redirect' => path("{$this->class}@show", $model),
+            ];
+        }
+
         return [
             'status' => 'OK',
             'redirect' => path("{$this->class}@index"),
