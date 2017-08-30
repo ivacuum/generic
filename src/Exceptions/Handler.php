@@ -1,6 +1,5 @@
 <?php namespace Ivacuum\Generic\Exceptions;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -8,18 +7,11 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Ivacuum\Generic\Utilities\ExceptionHelper;
 use Laravel\Socialite\Two\InvalidStateException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
     protected $dontReport = [
-        AuthenticationException::class,
-        AuthorizationException::class,
-        HttpException::class,
         InvalidStateException::class,
-        ModelNotFoundException::class,
-        TokenMismatchException::class,
-        ValidationException::class,
     ];
 
     protected $report_validation_exception = true;
@@ -42,7 +34,7 @@ class Handler extends ExceptionHandler
     /**
      * @param  \Illuminate\Http\Request $request
      * @param  \Exception $e
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, \Exception $e)
     {
