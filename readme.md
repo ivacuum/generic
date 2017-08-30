@@ -39,28 +39,8 @@ Route::get('auth/vk/callback', 'Auth\Vk@callback');
 'providers' => [
     ...
     // До сервис провайдеров проекта
+    // Для поддержки локализаций
     Ivacuum\Generic\Providers\LocaleServiceProvider::class,
-    
-    // В любом месте
-    Ivacuum\Generic\Providers\BladeServiceProvider::class,
-    Ivacuum\Generic\Providers\BroadcastServiceProvider::class,
-    Ivacuum\Generic\Providers\DebugbarServiceProvider::class,
-    Ivacuum\Generic\Providers\FastcgiServiceProvider::class,
-    Ivacuum\Generic\Providers\MetricsServiceProvider::class,
-    Ivacuum\Generic\Providers\OdnoklassnikiServiceProvider::class,
-    Ivacuum\Generic\Providers\QueueServiceProvider::class,
-    Ivacuum\Generic\Providers\SftpServiceProvider::class,
-    Ivacuum\Generic\Providers\SphinxServiceProvider::class,
-    Ivacuum\Generic\Providers\ValidatorServiceProvider::class,
-    Ivacuum\Generic\Providers\VkServiceProvider::class,
-],
-
-'aliases' => [
-    ...
-    'Form' => Ivacuum\Generic\Facades\Form::class,
-    'UrlHelper' => Ivacuum\Generic\Facades\UrlHelper::class,
-    'Breadcrumbs' => Ivacuum\Generic\Facades\Breadcrumbs::class,
-    'MetricsHelper' => Ivacuum\Generic\Facades\MetricsHelper::class,
 ],
 ```
 
