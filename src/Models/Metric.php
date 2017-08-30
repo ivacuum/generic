@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string  $event
  * @property integer $count
  *
- * @method static \Illuminate\Database\Eloquent\Builder week()
- *
  * @mixin \Eloquent
  */
 class Metric extends Model
