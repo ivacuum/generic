@@ -15,7 +15,7 @@
     @endcan
     @if (!empty($search_form))
       <form class="heading-menu-search-form">
-        <input type="text" name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}">
+        <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}">
       </form>
     @endif
     @yield('heading-after-search')

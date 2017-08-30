@@ -8,6 +8,7 @@ abstract class Base
     public $model;
     public $entity = '';
     public $classes = [];
+    public $default;
 
     public function buildData()
     {
@@ -31,6 +32,13 @@ abstract class Base
         } else {
             $this->classes = $values;
         }
+
+        return $this;
+    }
+
+    public function default($value) : self
+    {
+        $this->default = $value;
 
         return $this;
     }
