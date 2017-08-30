@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $notifiable_id
  * @property string  $notifiable_type
  * @property string  $data
- * @property \Carbon\Carbon $read_at
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $read_at
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
  *
  * @mixin \Eloquent
  */

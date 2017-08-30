@@ -4,13 +4,15 @@ class Breadcrumbs
 {
     protected $breadcrumbs = [];
 
-    public function get()
+    public function get() : array
     {
         return $this->breadcrumbs;
     }
 
-    public function push($title, $url = null)
+    public function push($title, $url = null) : self
     {
         $this->breadcrumbs[] = compact('title', 'url');
+
+        return $this;
     }
 }

@@ -1,13 +1,12 @@
 <?php namespace Ivacuum\Generic\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Метрика
  *
- * @property \Carbon\Carbon $date
+ * @property \Illuminate\Support\Carbon $date
  * @property string  $event
  * @property integer $count
  *
@@ -20,7 +19,7 @@ class Metric extends Model
 
     public function scopeWeek(Builder $query)
     {
-        return $query->where('date', '>', Carbon::now()->subWeek()->toDateString());
+        return $query->where('date', '>', now()->subWeek()->toDateString());
     }
 
     public static function possibleMetrics()

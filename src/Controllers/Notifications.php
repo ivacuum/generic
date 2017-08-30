@@ -6,7 +6,7 @@ class Notifications extends Controller
 {
     public function index()
     {
-        $user = $this->request->user();
+        $user = request()->user();
         $notifications = $user->notifications;
 
         $user->markNotificationsAsRead();

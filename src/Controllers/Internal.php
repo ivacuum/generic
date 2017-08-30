@@ -8,9 +8,9 @@ class Internal extends Controller
     public function ciBuildNotifier(Telegram $telegram)
     {
         $emoji = '';
-        $number = $this->request->input('build.number');
-        $status = strtolower($this->request->input('build.status'));
-        $project = $this->request->input('name');
+        $number = request()->input('build.number');
+        $status = strtolower(request()->input('build.status'));
+        $project = request()->input('name');
         $status_text = '';
 
         if ($status === 'success') {
@@ -28,11 +28,11 @@ class Internal extends Controller
 
     public function ip()
     {
-        return $this->request->ip();
+        return request()->ip();
     }
 
     public function telegramWebhook()
     {
-        \Log::info(json_encode($this->request->all()));
+        \Log::info(json_encode(request()->all()));
     }
 }

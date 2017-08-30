@@ -1,6 +1,5 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
 
@@ -21,7 +20,7 @@ class ViewHelper
     }
 
     /**
-     * @param  \Carbon\Carbon|null $date
+     * @param  \Illuminate\Support\Carbon|null $date
      * @return string
      */
     public function dateShort($date)
@@ -33,7 +32,7 @@ class ViewHelper
         }
 
         if (empty($year)) {
-            $year = Carbon::now()->year;
+            $year = now()->year;
         }
 
         if ($date->year === $year) {

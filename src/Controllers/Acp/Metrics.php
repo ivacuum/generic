@@ -1,7 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use App\Metric as Model;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class Metrics extends BaseController
 {
@@ -23,8 +23,8 @@ class Metrics extends BaseController
         \Breadcrumbs::push($event);
 
         $metrics = Model::where('event', $event)->get();
-        $first_day = sizeof($metrics) ? Carbon::parse($metrics->first()->date) : Carbon::now();
-        $last_day = sizeof($metrics) ? Carbon::parse($metrics->last()->date) : Carbon::now();
+        $first_day = sizeof($metrics) ? Carbon::parse($metrics->first()->date) : now();
+        $last_day = sizeof($metrics) ? Carbon::parse($metrics->last()->date) : now();
         $metrics = $metrics->pluck('count', 'date');
 
         return view($this->view, compact('event', 'first_day', 'last_day', 'metrics'));
