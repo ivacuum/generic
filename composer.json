@@ -20,6 +20,27 @@
       "Ivacuum\\Generic\\": "src/"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Ivacuum\\Generic\\Providers\\BladeServiceProvider",
+        "Ivacuum\\Generic\\Providers\\BroadcastServiceProvider",
+        "Ivacuum\\Generic\\Providers\\DebugbarServiceProvider",
+        "Ivacuum\\Generic\\Providers\\FastcgiServiceProvider",
+        "Ivacuum\\Generic\\Providers\\MetricsServiceProvider",
+        "Ivacuum\\Generic\\Providers\\QueueServiceProvider",
+        "Ivacuum\\Generic\\Providers\\SftpServiceProvider",
+        "Ivacuum\\Generic\\Providers\\ValidatorServiceProvider",
+        "Ivacuum\\Generic\\Providers\\VkServiceProvider"
+      ],
+      "aliases": {
+        "Form": "Ivacuum\\Generic\\Facades\\Form",
+        "UrlHelper": "Ivacuum\\Generic\\Facades\\UrlHelper",
+        "Breadcrumbs": "Ivacuum\\Generic\\Facades\\Breadcrumbs",
+        "MetricsHelper": "Ivacuum\\Generic\\Facades\\MetricsHelper"
+      }
+    }
+  },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true
