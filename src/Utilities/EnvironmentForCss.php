@@ -37,6 +37,11 @@ class EnvironmentForCss
         return [];
     }
 
+    public function isCrawler()
+    {
+        return preg_match('/(bot|spider)\//i', $this->user_agent);
+    }
+
     public function isMobile()
     {
         return preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|Opera Mini/i', $this->user_agent);
