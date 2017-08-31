@@ -267,24 +267,6 @@ class Controller extends BaseController
         ];
     }
 
-    protected function redirectAfterStore($model)
-    {
-        return redirect(path("{$this->class}@index"));
-    }
-
-    protected function redirectAfterUpdate($model, $method = 'index')
-    {
-        $goto = $this->request->input('goto', '');
-
-        if ($this->request->exists('_save')) {
-            return $goto
-                ? redirect(path("{$this->class}@edit", [$model, 'goto' => $goto]))
-                : redirect(path("{$this->class}@edit", $model));
-        }
-
-        return $goto ? redirect($goto) : redirect(path("{$this->class}@{$method}"));
-    }
-
     protected function rules($model = null)
     {
         return [];
