@@ -78,7 +78,7 @@ class Controller extends BaseController
         \UrlHelper::setSortKey($sort_key)
             ->setDefaultSortDir($this->sort_dir);
 
-        $q = $this->request->input('q');
+        $q = request('q');
 
         view()->share(compact('model', 'model_tpl', 'q', 'sort_dir', 'sort_key'));
     }
@@ -116,7 +116,7 @@ class Controller extends BaseController
     {
         $this->authorize('create', $this->newModel());
         $this->sanitizeRequest();
-        $this->validate($this->request, $this->rules());
+        $this->validateArray($this->requestDataForModel(), $this->rules());
     }
 
     public function update($id)
@@ -134,7 +134,7 @@ class Controller extends BaseController
 
         $this->authorize('edit', $model);
         $this->sanitizeRequest();
-        $this->validate($this->request, $this->rules($model));
+        $this->validateArray($this->requestDataForModel(), $this->rules($model));
 
         return $model;
     }
@@ -155,10 +155,10 @@ class Controller extends BaseController
 
     protected function sanitizeRequest()
     {
-        $data = $this->request->all();
+        $data = request()->all();
 
         if (is_array($sanitized_data = $this->sanitizeData($data))) {
-            $this->request->replace($sanitized_data);
+            request()->replace($sanitized_data);
         }
     }
 
@@ -217,8 +217,8 @@ class Controller extends BaseController
 
     protected function getSortParams()
     {
-        $sort_dir = $this->request->input('sd', $this->sort_dir);
-        $sort_key = $this->request->input('sk', $this->sort_key);
+        $sort_dir = request('sd', $this->sort_dir);
+        $sort_key = request('sk', $this->sort_key);
 
         if (!in_array($sort_dir, ['asc', 'desc'])) {
             $sort_dir = $this->sort_dir;
@@ -267,6 +267,11 @@ class Controller extends BaseController
         ];
     }
 
+    protected function requestDataForModel()
+    {
+        return request()->except('_token', 'goto', 'mail');
+    }
+
     protected function rules($model = null)
     {
         return [];
@@ -274,7 +279,7 @@ class Controller extends BaseController
 
     protected function storeModel()
     {
-        $model = $this->newModel()->fill($this->request->all());
+        $model = $this->newModel()->fill($this->requestDataForModel());
         $model->save();
 
         return $model;
@@ -285,6 +290,6 @@ class Controller extends BaseController
      */
     protected function updateModel($model)
     {
-        $model->update($this->request->all());
+        $model->update($this->requestDataForModel());
     }
 }
