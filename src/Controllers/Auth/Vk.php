@@ -12,7 +12,7 @@ class Vk extends Base
 
     public function index(VkProvider $vk)
     {
-        $revoke = $this->request->input('revoke');
+        $revoke = request('revoke');
 
         if ($revoke) {
             $vk = $vk->revoke();
@@ -25,10 +25,10 @@ class Vk extends Base
 
     public function callback(VkProvider $vk)
     {
-        $error = $this->request->input('error');
+        $error = request('error');
 
         if ($error) {
-            event(new ExternalIdentityLoginError($this->provider, $this->request));
+            event(new ExternalIdentityLoginError($this->provider, request()));
 
             return redirect(path('Auth@login'));
         }

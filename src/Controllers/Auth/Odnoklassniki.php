@@ -19,10 +19,10 @@ class Odnoklassniki extends Base
 
     public function callback(OdnoklassnikiProvider $odnoklassniki)
     {
-        $error = $this->request->input('error');
+        $error = request('error');
 
         if ($error) {
-            event(new ExternalIdentityLoginError($this->provider, $this->request));
+            event(new ExternalIdentityLoginError($this->provider, request()));
 
             return redirect(path('Auth@login'));
         }

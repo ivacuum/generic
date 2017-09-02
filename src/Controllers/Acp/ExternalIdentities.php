@@ -7,8 +7,8 @@ class ExternalIdentities extends Controller
 {
     public function index()
     {
-        $user_id = $this->request->input('user_id');
-        $provider = $this->request->input('provider');
+        $user_id = request('user_id');
+        $provider = request('provider');
 
         $models = Model::orderBy('id', 'desc')
             ->unless(is_null($user_id), function (Builder $query) use ($user_id) {

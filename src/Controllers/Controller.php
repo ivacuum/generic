@@ -50,7 +50,7 @@ class Controller extends BaseController
         $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
-            $this->throwValidationException($this->request, $validator);
+            $this->throwValidationException(request(), $validator);
         }
     }
 
@@ -60,7 +60,7 @@ class Controller extends BaseController
 
     protected function appendLocale()
     {
-        $locale = $this->request->server->get('LARAVEL_LOCALE');
+        $locale = request()->server->get('LARAVEL_LOCALE');
 
         $preffered_locale = \Request::getPreferredLanguage(array_keys(config('cfg.locales')));
 
@@ -73,7 +73,7 @@ class Controller extends BaseController
 
     protected function appendRequestUri($uri = null)
     {
-        view()->share('request_uri', $uri ?? $this->request->path());
+        view()->share('request_uri', $uri ?? request()->path());
     }
 
     protected function appendViewSharedVars()
@@ -82,7 +82,7 @@ class Controller extends BaseController
 
         view()->share([
             'tpl' => $this->prefix,
-            'goto' => $this->request->input('goto'),
+            'goto' => request('goto'),
             'self' => $this->class,
             'view' => $this->view,
             'first_time_visit' => $first_time_visit,
@@ -96,9 +96,9 @@ class Controller extends BaseController
 
     protected function redirectAfterUpdate($model, $method = 'index')
     {
-        $goto = $this->request->input('goto', '');
+        $goto = request('goto', '');
 
-        if ($this->request->exists('_save')) {
+        if (request()->exists('_save')) {
             return $goto
                 ? redirect(path("{$this->class}@edit", [$model, 'goto' => $goto]))
                 : redirect(path("{$this->class}@edit", $model));

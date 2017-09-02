@@ -11,7 +11,7 @@ class Facebook extends Base
 
     public function index()
     {
-        $rerequest = $this->request->input('rerequest');
+        $rerequest = request('rerequest');
 
         $driver = $this->driver();
 
@@ -26,10 +26,10 @@ class Facebook extends Base
 
     public function callback()
     {
-        $error = $this->request->input('error');
+        $error = request('error');
 
         if ($error) {
-            event(new ExternalIdentityLoginError($this->provider, $this->request));
+            event(new ExternalIdentityLoginError($this->provider, request()));
 
             return redirect(path('Auth@login'));
         }

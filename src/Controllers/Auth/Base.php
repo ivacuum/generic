@@ -108,10 +108,10 @@ abstract class Base extends Controller
      */
     protected function saveUrlIntended()
     {
-        $goto = $this->request->input('goto');
+        $goto = request('goto');
 
         if ($goto) {
-            $this->request->session()->put('url.intended', $goto);
+            request()->session()->put('url.intended', $goto);
         }
 
         return true;
