@@ -30,7 +30,7 @@ class Google extends Base
             return redirect(path('Auth@login'));
         }
 
-        /* @var $userdata \Laravel\Socialite\Two\User */
+        /* @var \Laravel\Socialite\Two\User $userdata */
         $userdata = $this->driver()->user();
         $identity = $this->externalIdentity($userdata);
 

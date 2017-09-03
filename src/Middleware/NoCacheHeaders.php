@@ -27,7 +27,7 @@ class NoCacheHeaders
             return $next($request);
         }
 
-        /* @var $response \Illuminate\Http\Response */
+        /* @var \Illuminate\Http\Response $response */
         $response = $next($request);
 
         if (method_exists($response, 'header')) {

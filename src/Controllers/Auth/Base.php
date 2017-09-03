@@ -111,7 +111,7 @@ abstract class Base extends Controller
         $goto = request('goto');
 
         if ($goto) {
-            request()->session()->put('url.intended', $goto);
+            session(['url.intended' => $goto]);
         }
 
         return true;
