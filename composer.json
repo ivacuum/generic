@@ -37,6 +37,7 @@
       ],
       "aliases": {
         "Form": "Ivacuum\\Generic\\Facades\\Form",
+        "Sphinx": "Ivacuum\\Generic\\Facades\\Sphinx",
         "UrlHelper": "Ivacuum\\Generic\\Facades\\UrlHelper",
         "Breadcrumbs": "Ivacuum\\Generic\\Facades\\Breadcrumbs",
         "MetricsHelper": "Ivacuum\\Generic\\Facades\\MetricsHelper"
