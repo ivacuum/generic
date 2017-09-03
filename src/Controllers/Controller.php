@@ -42,6 +42,8 @@ class Controller extends BaseController
         $this->appendRequestUri();
         $this->appendViewSharedVars();
 
+        $this->appendCustomVars();
+
         return parent::callAction($method, $parameters);
     }
 
@@ -55,6 +57,10 @@ class Controller extends BaseController
     }
 
     protected function appendBreadcrumbs()
+    {
+    }
+
+    protected function appendCustomVars()
     {
     }
 
