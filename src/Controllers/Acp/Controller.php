@@ -73,7 +73,7 @@ class Controller extends BaseController
             return snake_case($ary, '-');
         }, explode('\\', str_replace('App\\', '', get_class($model)))));
 
-        list($sort_key, $sort_dir) = $this->getSortParams();
+        [$sort_key, $sort_dir] = $this->getSortParams();
 
         \UrlHelper::setSortKey($sort_key)
             ->setDefaultSortDir($this->sort_dir);
