@@ -49,11 +49,11 @@ class Controller extends BaseController
 
     public function validateArray(array $data, array $rules, array $messages = [], array $customAttributes = [])
     {
-        $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
+        $this->getValidationFactory()
+            ->make($data, $rules, $messages, $customAttributes)
+            ->validate();
 
-        if ($validator->fails()) {
-            $this->throwValidationException(request(), $validator);
-        }
+        return request(array_keys($rules));
     }
 
     protected function appendBreadcrumbs()
