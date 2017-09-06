@@ -31,7 +31,7 @@ class Facebook extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, request()));
 
-            return redirect(path('Auth@login'));
+            return redirect(path('Auth\SignIn@index'));
         }
 
         /* @var \Laravel\Socialite\Two\User $userdata */
@@ -48,7 +48,7 @@ class Facebook extends Base
         }
 
         if (is_null($userdata->email)) {
-            return redirect(path('Auth@login'))->with('message', $this->noEmailMessage());
+            return redirect(path('Auth\SignIn@index'))->with('message', $this->noEmailMessage());
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {

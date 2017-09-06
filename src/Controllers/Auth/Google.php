@@ -27,7 +27,7 @@ class Google extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, request()));
 
-            return redirect(path('Auth@login'));
+            return redirect(path('Auth\SignIn@index'));
         }
 
         /* @var \Laravel\Socialite\Two\User $userdata */
@@ -44,7 +44,7 @@ class Google extends Base
         }
 
         if (is_null($userdata->email)) {
-            return redirect(path('Auth@login'))->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
+            return redirect(path('Auth\SignIn@index'))->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
         }
 
         if (is_null($user = $this->findUserByEmail($userdata->email))) {
