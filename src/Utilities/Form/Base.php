@@ -36,7 +36,7 @@ abstract class Base
         return $this;
     }
 
-    public function default($value) : self
+    public function default($value): self
     {
         $this->default = $value;
 
