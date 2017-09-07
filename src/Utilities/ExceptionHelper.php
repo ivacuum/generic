@@ -5,14 +5,27 @@ use Ivacuum\Generic\Services\Telegram;
 
 class ExceptionHelper
 {
-    public static function log(\Exception $e)
+    public static function log(\Exception $e): void
     {
         app(Telegram::class)->notifyAdmin(static::summary($e));
     }
 
-    public static function logValidation(ValidationException $e)
+    public static function isSpammerTrapped(ValidationException $e): bool
     {
         if (isset($e->validator->failed()['mail']['Empty'])) {
+            return true;
+        }
+
+        if ($e->validator->errors()->first('mail')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function logValidation(ValidationException $e): bool
+    {
+        if (static::isSpammerTrapped($e)) {
             return false;
         }
 
@@ -27,7 +40,7 @@ class ExceptionHelper
      * @param  \Exception $e
      * @return array
      */
-    public static function normalize(\Exception $e)
+    public static function normalize(\Exception $e): array
     {
         return [
             'class'   => get_class($e),
@@ -48,7 +61,7 @@ class ExceptionHelper
      * @param  \Exception $e
      * @return string
      */
-    public static function summary(\Exception $e)
+    public static function summary(\Exception $e): string
     {
         $data = static::normalize($e);
 
@@ -68,7 +81,7 @@ class ExceptionHelper
      * @param  \Illuminate\Validation\ValidationException $e
      * @return string
      */
-    public static function validationSummary(ValidationException $e)
+    public static function validationSummary(ValidationException $e): string
     {
         $text = "Ошибка валидации ".fullUrl()."\n";
         $text .= json_encode([
