@@ -4,6 +4,7 @@
 
 @section('content')
 <form action="{{ path("$self@update", $model) }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+  {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")
 

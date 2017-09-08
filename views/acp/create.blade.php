@@ -8,6 +8,7 @@
   {{ trans("$tpl.create") }}
 </h3>
 <form action="{{ path("$self@store") }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+  {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")
   @include('acp.tpl.hidden_fields')
