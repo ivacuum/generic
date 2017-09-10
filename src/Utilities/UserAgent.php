@@ -10,6 +10,8 @@ class UserAgent
      */
     public static function tidy($ua)
     {
+        // ; .NET CLR \d\.+
+        // " Windows NT 5.2;" = Windows Server 2003 or Windows XP x64
         $ua = str_replace([
             '(KHTML, like Gecko) ',
             'Mozilla/4.0 ',
