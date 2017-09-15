@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use Illuminate\Database\Eloquent\Builder;
+use Ivacuum\Generic\Rules\ConcurrencyControl;
 use Ivacuum\Generic\Utilities\ModelHelper;
 
 class Controller extends BaseController
@@ -135,6 +136,7 @@ class Controller extends BaseController
         $this->authorize('edit', $model);
         $this->sanitizeRequest();
         $this->validateArray($this->requestDataForModel(), $this->rules($model));
+        $this->concurrencyControl($model);
 
         return $model;
     }
@@ -145,6 +147,17 @@ class Controller extends BaseController
 
         view()->share([
             'show_with_count' => $this->show_with_count,
+        ]);
+    }
+
+    protected function concurrencyControl($model)
+    {
+        if (!request()->has(ConcurrencyControl::FIELD)) {
+            return;
+        }
+
+        request()->validate([
+            ConcurrencyControl::FIELD => [new ConcurrencyControl($model->updated_at)]
         ]);
     }
 

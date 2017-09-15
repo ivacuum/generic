@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
+use Ivacuum\Generic\Rules\ConcurrencyControl;
 
 class ViewHelper
 {
@@ -40,6 +41,11 @@ class ViewHelper
         }
 
         return $date->formatLocalized('%e %b %Y');
+    }
+
+    public function inputHiddenConcurrencyControl($value)
+    {
+        return new HtmlString('<input hidden type="text" name="'.ConcurrencyControl::FIELD.'" value="'.md5($value).'">');
     }
 
     public function inputHiddenMail()
