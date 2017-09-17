@@ -282,7 +282,7 @@ class Controller extends BaseController
 
     protected function requestDataForModel()
     {
-        return request()->except('_token', 'goto', 'mail');
+        return request()->except(ConcurrencyControl::FIELD, '_token', 'goto', 'mail');
     }
 
     protected function rules($model = null)
