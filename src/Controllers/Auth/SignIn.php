@@ -9,7 +9,6 @@ class SignIn extends Controller
 {
     use ThrottlesLogins;
 
-    protected $remember = true;
     protected $username = 'email';
 
     public function index()
@@ -67,7 +66,7 @@ class SignIn extends Controller
     protected function attemptLogin(Request $request)
     {
         return \Auth::attempt(
-            $this->credentials($request), !$request->has('foreign')
+            $this->credentials($request), !$request->filled('foreign')
         );
     }
 
