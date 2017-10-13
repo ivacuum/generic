@@ -43,10 +43,10 @@ class ExceptionHelper
     public static function normalize(\Exception $e): array
     {
         return [
-            'class'   => get_class($e),
+            'class' => get_class($e),
             'message' => $e->getMessage(),
-            'code'    => $e->getCode(),
-            'file'    => "{$e->getFile()}:{$e->getLine()}",
+            'code' => $e->getCode(),
+            'file' => "{$e->getFile()}:{$e->getLine()}",
         ];
     }
 
@@ -66,12 +66,13 @@ class ExceptionHelper
         $data = static::normalize($e);
 
         return sprintf(
-            "%s\n%s%s\n%s\n%s",
+            "%s\n%s%s\n%s\n%s\n%s",
             str_replace('App\Http\Controllers\\', '', \Route::currentRouteAction()),
             $data['class'],
             $data['code'] ? " (code: {$data['code']})" : '',
             $data['message'],
-            $data['file']
+            $data['file'],
+            fullUrl()
         );
     }
 
