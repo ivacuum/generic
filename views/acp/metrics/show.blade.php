@@ -1,7 +1,10 @@
 @extends('acp.base')
 
 @section('content')
-<h2 class="mt-0 text-break-word">{{ $event }}</h2>
+<h2 class="mt-0 text-break-word">
+  {{ $event }}
+  <small>{{ ViewHelper::number($metrics->sum()) }}</small>
+</h2>
 <table class="table-stats table-adaptive">
   <thead>
     <tr>
