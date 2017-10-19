@@ -1,7 +1,6 @@
 <?php namespace Ivacuum\Generic\Commands;
 
 use App\Metric;
-use Ivacuum\Generic\Commands\Command;
 
 class MetricRename extends Command
 {
