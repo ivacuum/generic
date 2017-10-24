@@ -28,7 +28,7 @@ class Notification extends Model
         return $this->morphTo();
     }
 
-    public function breadcrumb()
+    public function breadcrumb(): string
     {
         return $this->id;
     }

@@ -22,7 +22,7 @@ class Metric extends Model
         return $query->where('date', '>', now()->subWeek()->toDateString());
     }
 
-    public static function possibleMetrics()
+    public static function possibleMetrics(): array
     {
         foreach (glob(app_path('Events/Stats/*.php')) as $file) {
             $events[] = pathinfo($file, PATHINFO_FILENAME);

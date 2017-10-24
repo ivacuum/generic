@@ -39,7 +39,7 @@ class ImageConverter
      * @return \Illuminate\Http\UploadedFile
      * @throws \Exception
      */
-    public function convert($source)
+    public function convert(string $source): UploadedFile
     {
         $destination = $this->tempFile();
 
@@ -67,7 +67,7 @@ class ImageConverter
         return new UploadedFile($destination, basename($source));
     }
 
-    public function crop($width, $height)
+    public function crop(int $width, int $height): self
     {
         $this->crop = "-crop {$width}x{$height}+0+0";
         $this->gravity('center');
@@ -83,7 +83,7 @@ class ImageConverter
      * @return $this
      * @throws \Exception
      */
-    public function filter($filter)
+    public function filter(string $filter): self
     {
         if (!in_array($filter, $this->filters)) {
             throw new \Exception("Фильтр [{$filter}] не найден");
@@ -99,14 +99,14 @@ class ImageConverter
      *
      * @return $this
      */
-    public function firstFrame()
+    public function firstFrame(): self
     {
         $this->first_frame = true;
 
         return $this;
     }
 
-    public function gravity($gravity)
+    public function gravity(string $gravity): self
     {
         $gravity = strtolower($gravity);
 
@@ -127,7 +127,7 @@ class ImageConverter
      * @param  string  $mark
      * @return $this
      */
-    public function resize($width, $height, $mark = '>')
+    public function resize(int $width, int $height, string $mark = '>'): self
     {
         $this->size = "-size {$width}x{$height}";
         $this->resize = "-resize '{$width}x{$height}{$mark}'";
@@ -141,7 +141,7 @@ class ImageConverter
      * @param  string $source
      * @return string
      */
-    public function source($source)
+    public function source(string $source): string
     {
         if ($this->first_frame) {
             return "{$source}[0]";
@@ -156,7 +156,7 @@ class ImageConverter
      * @param  integer $quality 1–100
      * @return $this
      */
-    public function quality($quality)
+    public function quality(int $quality): self
     {
         $this->quality = "-quality {$quality}";
 
@@ -169,7 +169,7 @@ class ImageConverter
      *
      * @return string
      */
-    protected function tempFile()
+    protected function tempFile(): string
     {
         $filename = str_random(6);
         $destination = storage_path("app/resize-{$filename}");

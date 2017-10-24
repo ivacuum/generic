@@ -15,7 +15,7 @@ class ViewHelper
         $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '&nbsp;');
     }
 
-    public function avatarBg($id)
+    public function avatarBg($id): string
     {
         return config('cfg.avatar_bg')[$id % 15];
     }
@@ -24,7 +24,7 @@ class ViewHelper
      * @param  \Illuminate\Support\Carbon|null $date
      * @return string
      */
-    public function dateShort($date)
+    public function dateShort($date): string
     {
         static $year;
 
@@ -53,7 +53,7 @@ class ViewHelper
         return new HtmlString('<input hidden type="text" name="mail" value="'.old("mail").'">');
     }
 
-    public function metaTitle($meta_title, $view, $replace = [])
+    public function metaTitle(string $meta_title, string $view, array $replace = []): string
     {
         if ($meta_title) {
             return $meta_title;
@@ -70,7 +70,7 @@ class ViewHelper
         return config('cfg.sitename');
     }
 
-    public function modelFieldTrans($model, $field)
+    public function modelFieldTrans(string $model, string $field): string
     {
         $trans_key = "model.$model.$field";
 
@@ -87,12 +87,12 @@ class ViewHelper
         return $trans_key;
     }
 
-    public function number($number)
+    public function number(int $number): string
     {
         return $this->decimal->format($number);
     }
 
-    public function paginatorIteration($paginator, $loop)
+    public function paginatorIteration($paginator, $loop): int
     {
         $page = $per_page = 0;
 
@@ -104,12 +104,12 @@ class ViewHelper
         return $page * $per_page + $loop->iteration;
     }
 
-    public function plural($key, $count)
+    public function plural(string $key, int $count): string
     {
         return trans_choice("plural.{$key}", $count, ['x' => $this->number($count)]);
     }
 
-    public function size($bytes)
+    public function size(int $bytes): string
     {
         $units = [
             trans('size.b'),

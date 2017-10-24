@@ -9,7 +9,7 @@ class Radio extends Base
     public $values = [];
     public $required = false;
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -19,9 +19,9 @@ class Radio extends Base
         return view('acp.tpl.input', $this->buildData());
     }
 
-    public function required($value = true)
+    public function required(bool $value = true): self
     {
-        $this->required = $value === true ? true : false;
+        $this->required = $value;
 
         return $this;
     }
@@ -30,7 +30,7 @@ class Radio extends Base
      * @param  \Illuminate\Contracts\Support\Arrayable|array $values
      * @return $this
      */
-    public function values($values)
+    public function values($values): self
     {
         if ($values instanceof Arrayable) {
             $this->values = $values->toArray();

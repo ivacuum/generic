@@ -10,7 +10,7 @@ abstract class Base
     public $classes = [];
     public $default;
 
-    public function buildData()
+    public function buildData(): array
     {
         $data = [];
 
@@ -25,7 +25,7 @@ abstract class Base
      * @param  \Illuminate\Contracts\Support\Arrayable|array $values
      * @return $this
      */
-    public function classes($values)
+    public function classes($values): self
     {
         if ($values instanceof Arrayable) {
             $this->classes = $values->toArray();
@@ -43,7 +43,7 @@ abstract class Base
         return $this;
     }
 
-    public function help($text)
+    public function help($text): self
     {
         $this->help = $text;
 
@@ -52,7 +52,7 @@ abstract class Base
 
     abstract public function html();
 
-    public function model($model)
+    public function model($model): self
     {
         $this->model = $model;
 

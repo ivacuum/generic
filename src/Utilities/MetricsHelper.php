@@ -20,7 +20,7 @@ class MetricsHelper
         $this->setupExport(\App::environment());
     }
 
-    public function export()
+    public function export(): bool
     {
         if (empty($this->metrics)) {
             return false;
@@ -48,14 +48,14 @@ class MetricsHelper
         return true;
     }
 
-    public function finish($timer)
+    public function finish(string $timer): void
     {
         $time = round((microtime(true) - $this->timers[$timer]) * 1000, 2);
 
         $this->pushRaw("Timer {$timer} = {$time}ms");
     }
 
-    public function push(array $data)
+    public function push(array $data): void
     {
         $this->metrics[] = $data;
 
@@ -64,7 +64,7 @@ class MetricsHelper
         }
     }
 
-    public function pushRaw($data)
+    public function pushRaw(string $data): void
     {
         $this->metrics[] = ['event' => 'RAW', 'raw' => $data];
 
@@ -73,12 +73,12 @@ class MetricsHelper
         }
     }
 
-    public function resetMetrics()
+    public function resetMetrics(): void
     {
         $this->metrics = [];
     }
 
-    public function setupExport($environment)
+    public function setupExport(string $environment): void
     {
         if (in_array($environment, ['local', 'production']) && !$this->console) {
             register_shutdown_function(function () {
@@ -87,7 +87,7 @@ class MetricsHelper
         }
     }
 
-    public function start($timer)
+    public function start(string $timer): void
     {
         $this->timers[$timer] = microtime(true);
     }

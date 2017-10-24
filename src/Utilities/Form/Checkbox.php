@@ -7,7 +7,7 @@ class Checkbox extends Base
     public $values = [];
     public $required = false;
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -17,14 +17,14 @@ class Checkbox extends Base
         return view('acp.tpl.input', $this->buildData());
     }
 
-    public function required($value = true)
+    public function required(bool $value = true): self
     {
-        $this->required = $value === true ? true : false;
+        $this->required = $value;
 
         return $this;
     }
 
-    public function values(array $values)
+    public function values(array $values): self
     {
         $this->values = $values;
 

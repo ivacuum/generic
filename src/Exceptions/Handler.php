@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
         return response()->view('errors.500', ['exception' => $e], 500);
     }
 
-    protected function reportTelegram(\Exception $e)
+    protected function reportTelegram(\Exception $e): void
     {
         ExceptionHelper::log($e);
 
@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    protected function reportValidationException(\Exception $e)
+    protected function reportValidationException(\Exception $e): void
     {
         if ($e instanceof ValidationException
             && $this->report_validation_exception

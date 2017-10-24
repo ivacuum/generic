@@ -8,7 +8,7 @@ class UserAgent
      * @param  string $ua
      * @return string
      */
-    public static function tidy($ua)
+    public static function tidy(string $ua): string
     {
         // ; .NET CLR \d\.+
         // " Windows NT 5.2;" = Windows Server 2003 or Windows XP x64

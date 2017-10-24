@@ -22,7 +22,7 @@ class ExifHelper
      * @param  array  $exif
      * @return array|boolean
      */
-    public static function latLon($exif)
+    public static function latLon($exif): array
     {
         if (!isset($exif['GPSLatitude']) ||
             !isset($exif['GPSLongitude']) ||

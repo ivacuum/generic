@@ -9,7 +9,7 @@ class Breadcrumbs
         return $this->breadcrumbs;
     }
 
-    public function push($title, $url = null): self
+    public function push(string $title, ?string $url = null): self
     {
         $this->breadcrumbs[] = compact('title', 'url');
 

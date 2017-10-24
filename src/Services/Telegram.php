@@ -11,7 +11,7 @@ class Telegram
         $this->telegram = $telegram;
     }
 
-    public function notifyAdmin($text)
+    public function notifyAdmin(string $text): void
     {
         if (\App::isLocal()) {
             $text = "\xF0\x9F\x9A\xA7 local\n{$text}";
@@ -32,10 +32,10 @@ class Telegram
         }
     }
 
-    public function notifyAdminProduction($text)
+    public function notifyAdminProduction(string $text): void
     {
-        if (!\App::environment('production')) {
-            return false;
+        if (\App::environment() !== 'production') {
+            return;
         }
 
         $this->notifyAdmin($text);

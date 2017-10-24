@@ -2,7 +2,7 @@
 
 class TextImagesParser
 {
-    public function parse($text)
+    public function parse(string $text): string
     {
         $text = str_replace(["\r\n", "\r"], "\n", $text);
         $text = trim($text, "\n");
@@ -31,7 +31,7 @@ class TextImagesParser
         return implode("\n", $result);
     }
 
-    protected function fotoramaMarkup(&$result, array $images)
+    protected function fotoramaMarkup(array &$result, array $images): void
     {
         $result[] = '<div class="pic-container shortcuts-item">';
         $result[] = '<div class="pic-centered-container">';
@@ -46,7 +46,7 @@ class TextImagesParser
         $result[] = '</div>';
     }
 
-    protected function singleImageMarkup(&$result, $image)
+    protected function singleImageMarkup(array &$result, string $image): void
     {
         $result[] = '<div class="pic-container shortcuts-item">';
         $result[] = '<div class="pic-centered-container">';

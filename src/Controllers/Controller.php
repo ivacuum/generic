@@ -56,15 +56,15 @@ class Controller extends BaseController
         return request(array_keys($rules));
     }
 
-    protected function appendBreadcrumbs()
+    protected function appendBreadcrumbs(): void
     {
     }
 
-    protected function appendCustomVars()
+    protected function appendCustomVars(): void
     {
     }
 
-    protected function appendLocale()
+    protected function appendLocale(): void
     {
         $locale = request()->server->get('LARAVEL_LOCALE');
 
@@ -77,12 +77,12 @@ class Controller extends BaseController
         ]);
     }
 
-    protected function appendRequestUri($uri = null)
+    protected function appendRequestUri(?string $uri = null): void
     {
         view()->share('request_uri', $uri ?? request()->path());
     }
 
-    protected function appendViewSharedVars()
+    protected function appendViewSharedVars(): void
     {
         $first_time_visit = is_null(\Session::previousUrl());
 

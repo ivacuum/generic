@@ -13,17 +13,18 @@ class GoogleGeocoder
         $this->client = new Client(['base_uri' => self::ENDPOINT]);
     }
 
-    public function geocode($address)
+    public function geocode(string $address): array
     {
         return $this->query($address);
     }
 
-    public function reverse($lat, $lon)
+    public function reverse(string $lat, string $lon): array
     {
+        // Можно добавить преобразование , в .
         return $this->query("{$lat} {$lon}");
     }
 
-    protected function query($query)
+    protected function query(string $query): array
     {
         $response = $this->client->get('', ['query' => [
             'address' => $query,
@@ -39,9 +40,9 @@ class GoogleGeocoder
 
         foreach ($json->results as $item) {
             $result[] = [
+                'lat' => $item->geometry->location->lat,
+                'lon' => $item->geometry->location->lng,
                 'address' => $item->formatted_address,
-                'lat'     => $item->geometry->location->lat,
-                'lon'     => $item->geometry->location->lng,
                 'lower_corner_lat' => $item->geometry->bounds->southwest->lat,
                 'lower_corner_lon' => $item->geometry->bounds->southwest->lng,
                 'upper_corner_lat' => $item->geometry->bounds->northeast->lat,

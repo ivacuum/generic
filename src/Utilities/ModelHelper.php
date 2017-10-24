@@ -6,7 +6,7 @@ class ModelHelper
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
-    public static function exists($model)
+    public static function exists($model): bool
     {
         if (static::hasSoftDeleteLaravel($model)) {
             return !is_null($model::withTrashed()->find($model->getKey()));
@@ -15,17 +15,17 @@ class ModelHelper
         return !is_null($model::find($model->getKey()));
     }
 
-    public static function hasSoftDelete($model)
+    public static function hasSoftDelete($model): bool
     {
         return static::hasSoftDeleteLaravel($model) || static::hasSoftDeleteIvacuum($model);
     }
 
-    public static function hasSoftDeleteIvacuum($model)
+    public static function hasSoftDeleteIvacuum($model): bool
     {
         return method_exists($model, 'softDelete');
     }
 
-    public static function hasSoftDeleteLaravel($model)
+    public static function hasSoftDeleteLaravel($model): bool
     {
         return method_exists($model, 'bootSoftDeletes');
     }

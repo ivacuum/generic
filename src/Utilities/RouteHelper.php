@@ -2,7 +2,7 @@
 
 class RouteHelper
 {
-    public static function crud($controller, $prefix = null, $param = 'id')
+    public static function crud(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
         $prefix = static::prefix($controller, $prefix);
 
@@ -15,7 +15,7 @@ class RouteHelper
         \Route::get("{$prefix}/{{$param}}/edit", "{$controller}@edit");
     }
 
-    public static function withoutCreate($controller, $prefix = null, $param = 'id')
+    public static function withoutCreate(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
         $prefix = static::prefix($controller, $prefix);
 
@@ -26,7 +26,7 @@ class RouteHelper
         \Route::get("{$prefix}/{{$param}}/edit", "{$controller}@edit");
     }
 
-    public static function withoutCreateAndEdit($controller, $prefix = null, $param = 'id')
+    public static function withoutCreateAndEdit(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
         $prefix = static::prefix($controller, $prefix);
 
@@ -35,7 +35,7 @@ class RouteHelper
         \Route::delete("{$prefix}/{{$param}}", "{$controller}@destroy");
     }
 
-    protected static function prefix($controller, $prefix)
+    protected static function prefix(string $controller, ?string $prefix): string
     {
         if ($prefix !== null) {
             return $prefix;

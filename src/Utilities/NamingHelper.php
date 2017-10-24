@@ -8,7 +8,7 @@ class NamingHelper
      * @param  object $class
      * @return string
      */
-    public static function controllerName($class)
+    public static function controllerName($class): string
     {
         return str_plural(class_basename($class));
     }
@@ -19,7 +19,7 @@ class NamingHelper
      * @param  string $class_string
      * @return string
      */
-    public static function kebab($class_string)
+    public static function kebab(string $class_string): string
     {
         return implode('.', array_map(function ($item) {
             return kebab_case($item);
@@ -32,7 +32,7 @@ class NamingHelper
      * @param  object $class
      * @return string
      */
-    public static function transField($class)
+    public static function transField($class): string
     {
         return self::kebab(self::controllerName($class));
     }

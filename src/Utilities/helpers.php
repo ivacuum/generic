@@ -6,7 +6,7 @@ if (!function_exists('canonical')) {
      *
      * @return string
      */
-    function canonical()
+    function canonical(): string
     {
         $request = app('request');
 
@@ -27,7 +27,7 @@ if (!function_exists('fullUrl')) {
      * @param  array  $params
      * @return string
      */
-    function fullUrl(array $params = [])
+    function fullUrl(array $params = []): string
     {
         $request = app('request');
 
@@ -48,11 +48,11 @@ if (!function_exists('path')) {
      * Адрес страницы, соответствующий контроллеру
      *
      * @param  string $name
-     * @param  array  $parameters
+     * @param  array|string  $parameters
      * @param  bool   $absolute
      * @return string
      */
-    function path($name, $parameters = [], $absolute = false)
+    function path(string $name, $parameters = [], bool $absolute = false): string
     {
         static $prefix;
 

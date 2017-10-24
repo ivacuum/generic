@@ -8,7 +8,7 @@ class Textarea extends Base
     public $required = false;
     public $placeholder = '';
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -20,23 +20,23 @@ class Textarea extends Base
         return view("acp.tpl.$tpl", $this->buildData());
     }
 
-    public function placeholder($value)
+    public function placeholder(string $value): self
     {
         $this->placeholder = $value;
 
         return $this;
     }
 
-    public function required($value = true)
+    public function required(bool $value = true): self
     {
-        $this->required = $value === true ? true : false;
+        $this->required = $value;
 
         return $this;
     }
 
-    public function wide($value = true)
+    public function wide(bool $value = true): self
     {
-        $this->wide = $value === true ? true : false;
+        $this->wide = $value;
 
         return $this;
     }

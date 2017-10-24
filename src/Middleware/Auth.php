@@ -29,7 +29,7 @@ class Auth extends Authenticate
      * @param  \App\User $user
      * @throws \Illuminate\Auth\AuthenticationException
      */
-    protected function checkStatus($user)
+    protected function checkStatus($user): void
     {
         if (!$this->isUserActive($user)) {
             \Auth::logout();
@@ -42,7 +42,7 @@ class Auth extends Authenticate
      * @param  \App\User $user
      * @return bool
      */
-    protected function isUserActive($user)
+    protected function isUserActive($user): int
     {
         return (int) $user->status === User::STATUS_ACTIVE;
     }

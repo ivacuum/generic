@@ -4,12 +4,12 @@ class EnvironmentForCss
 {
     protected $user_agent;
 
-    public function __construct($user_agent)
+    public function __construct(string $user_agent)
     {
         $this->user_agent = mb_strtolower($user_agent);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return implode(' ', array_merge(
             $this->browserClasses(),
@@ -18,7 +18,7 @@ class EnvironmentForCss
         ));
     }
 
-    public function browserClasses()
+    public function browserClasses(): array
     {
         if (preg_match('/msie|trident/', $this->user_agent) && !preg_match('/opera/', $this->user_agent)) {
             return ['ie'];
@@ -37,22 +37,22 @@ class EnvironmentForCss
         return [];
     }
 
-    public function isCrawler()
+    public function isCrawler(): bool
     {
         return preg_match('/(bot|spider)\//i', $this->user_agent);
     }
 
-    public function isMobile()
+    public function isMobile(): bool
     {
         return preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|Opera Mini/i', $this->user_agent);
     }
 
-    public function mobileOrDesktopClasses()
+    public function mobileOrDesktopClasses(): array
     {
         return $this->isMobile() ? ['is-mobile'] : ['is-desktop'];
     }
 
-    public function operatingSystemClasses()
+    public function operatingSystemClasses(): array
     {
         if (preg_match('/win/', $this->user_agent)) {
             return ['windows'];
@@ -68,5 +68,4 @@ class EnvironmentForCss
 
         return [];
     }
-
 }

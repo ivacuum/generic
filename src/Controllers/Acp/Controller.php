@@ -141,7 +141,7 @@ class Controller extends BaseController
         return $model;
     }
 
-    protected function appendViewSharedVars()
+    protected function appendViewSharedVars(): void
     {
         parent::appendViewSharedVars();
 

@@ -5,17 +5,17 @@ class UrlHelper
     protected $sort_key;
     protected $default_sort_dir;
 
-    public function edit($self, $model)
+    public function edit(string $self, $model): string
     {
         return path("$self@edit", [$model, 'goto' => self::go()]);
     }
 
-    public function except(array $params = [])
+    public function except(array $params = []): array
     {
         return \Request::except(array_merge(['_pjax'], $params));
     }
 
-    public function filter(array $query = [])
+    public function filter(array $query = []): string
     {
         return fullUrl(array_merge([
             'page' => null,
@@ -23,28 +23,28 @@ class UrlHelper
         ], $query));
     }
 
-    public function go(array $query = [])
+    public function go(array $query = []): string
     {
         return fullUrl(array_merge(['_pjax' => null], $query));
     }
 
-    public function setDefaultSortDir($dir)
+    public function setDefaultSortDir(string $dir): self
     {
         $this->default_sort_dir = $dir;
 
         return $this;
     }
 
-    public function setSortKey($key)
+    public function setSortKey(string $key): self
     {
         $this->sort_key = $key;
 
         return $this;
     }
 
-    public function sort($key, $default_dir = null)
+    public function sort(string $key, ?string $default_dir = null): string
     {
-        if (!is_null($this->sort_key) && $this->sort_key != $key) {
+        if (!is_null($this->sort_key) && $this->sort_key !== $key) {
             // При смене поля сортировки используется
             // направление сортировки по умолчанию
             $dir = $default_dir === $this->default_sort_dir ? null : $default_dir;
