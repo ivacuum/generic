@@ -15,6 +15,10 @@ trait RecordsActivity
                 $model->recordActivity($event);
             });
         }
+
+        static::deleting(function ($model) {
+            $model->activities()->delete();
+        });
     }
 
     /**
@@ -30,9 +34,9 @@ trait RecordsActivity
      *
      * @return array
      */
-    protected static function getActivitiesToRecord()
+    protected static function getActivitiesToRecord(): array
     {
-        return ['created', 'deleted', 'updated'];
+        return ['created', 'updated'];
     }
 
     /**
@@ -40,7 +44,7 @@ trait RecordsActivity
      *
      * @param string $event
      */
-    protected function recordActivity($event)
+    protected function recordActivity($event): void
     {
         $this->activities()->create([
             'ip' => request()->ip(),
@@ -57,7 +61,7 @@ trait RecordsActivity
      * @param  string $event
      * @return string
      */
-    protected function getActivityType($event)
+    protected function getActivityType(string $event): string
     {
         return "{$this->getMorphClass()}.{$event}";
     }
