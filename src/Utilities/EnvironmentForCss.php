@@ -4,7 +4,7 @@ class EnvironmentForCss
 {
     protected $user_agent;
 
-    public function __construct(string $user_agent)
+    public function __construct(?string $user_agent)
     {
         $this->user_agent = mb_strtolower($user_agent);
     }
