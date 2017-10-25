@@ -30,21 +30,11 @@ trait RecordsActivity
     }
 
     /**
-     * События для отслеживания и сохранения
-     *
-     * @return array
-     */
-    protected static function getActivitiesToRecord(): array
-    {
-        return ['created', 'updated'];
-    }
-
-    /**
      * Сохранение лога действия
      *
      * @param string $event
      */
-    protected function recordActivity($event): void
+    public function recordActivity($event): void
     {
         $this->activities()->create([
             'ip' => request()->ip(),
@@ -53,6 +43,16 @@ trait RecordsActivity
             'user_id' => auth()->id(),
             'user_agent' => UserAgent::tidy(request()->userAgent()),
         ]);
+    }
+
+    /**
+     * События для отслеживания и сохранения
+     *
+     * @return array
+     */
+    protected static function getActivitiesToRecord(): array
+    {
+        return ['created'];
     }
 
     /**
