@@ -94,12 +94,7 @@ class ViewHelper
 
     public function numberShort(int $number): string
     {
-        $units = [
-            '',
-            'K',
-            'M',
-        ];
-
+        $units = ['', 'K', 'M'];
         $decimals = [0, 0, 0];
 
         $number = max($number, 0);
