@@ -92,6 +92,24 @@ class ViewHelper
         return $this->decimal->format($number);
     }
 
+    public function numberShort(int $number): string
+    {
+        $units = [
+            '',
+            'K',
+            'M',
+        ];
+
+        $decimals = [0, 0, 0];
+
+        $number = max($number, 0);
+        $pow = floor(($number ? log($number) : 0) / log(1024));
+        $pow = min($pow, sizeof($units) - 1);
+        $number /= pow(1024, $pow);
+
+        return round($number, $decimals[$pow]).$units[$pow];
+    }
+
     public function paginatorIteration($paginator, $loop): int
     {
         $page = $per_page = 0;
