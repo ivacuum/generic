@@ -92,7 +92,7 @@ class Controller extends BaseController
             'goto' => request('goto'),
             'self' => $this->class,
             'view' => $this->view,
-            'browser_env' => $browser_env,
+            'is_crawler' => $browser_env->isCrawler(),
             'css_classes' => (string) $browser_env,
             'first_time_visit' => $first_time_visit,
         ]);
