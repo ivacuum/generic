@@ -84,6 +84,7 @@ class Controller extends BaseController
 
     protected function appendViewSharedVars(): void
     {
+        $browser_env = new \Ivacuum\Generic\Utilities\EnvironmentForCss(request()->userAgent());
         $first_time_visit = is_null(\Session::previousUrl());
 
         view()->share([
@@ -91,6 +92,8 @@ class Controller extends BaseController
             'goto' => request('goto'),
             'self' => $this->class,
             'view' => $this->view,
+            'browser_env' => $browser_env,
+            'css_classes' => (string) $browser_env,
             'first_time_visit' => $first_time_visit,
         ]);
     }
