@@ -9,10 +9,10 @@ class NotificationsPurge extends Command
     {
         $notifications = \DB::table('notifications')
             ->whereNull('read_at')
-            ->where('created_at', '<', now()->subDays(7)->toDateTimeString())
+            ->where('created_at', '<', now()->subDays(21)->toDateTimeString())
             ->delete();
 
-        $this->info("Удалено непрочитанных более недели уведомлений: {$notifications}");
+        $this->info("Удалено непрочитанных более трех недель уведомлений: {$notifications}");
 
         $notifications = \DB::table('notifications')
             ->where('read_at', '<', now()->subDay()->toDateTimeString())
