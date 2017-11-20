@@ -39,7 +39,7 @@ class EnvironmentForCss
 
     public function isCrawler(): bool
     {
-        return preg_match('/(bot|spider)\//i', $this->user_agent);
+        return preg_match('/(bot|crawler|google|spider)/i', $this->user_agent);
     }
 
     public function isMobile(): bool
