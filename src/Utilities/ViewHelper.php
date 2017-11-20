@@ -53,10 +53,36 @@ class ViewHelper
         return new HtmlString('<input hidden type="text" name="mail" value="'.old("mail").'">');
     }
 
-    public function metaTitle(string $meta_title, string $view, array $replace = []): string
+    public function metaDescription(string $description, string $view, array $replace = []): string
     {
-        if ($meta_title) {
-            return $meta_title;
+        if ($description) {
+            return $description;
+        }
+
+        if (trans("meta_description.{$view}") !== "meta_description.{$view}") {
+            return trans("meta_description.{$view}", $replace);
+        }
+
+        return '';
+    }
+
+    public function metaKeywords(string $keywords, string $view, array $replace = []): string
+    {
+        if ($keywords) {
+            return $keywords;
+        }
+
+        if (trans("meta_keywords.{$view}") !== "meta_keywords.{$view}") {
+            return trans("meta_keywords.{$view}", $replace);
+        }
+
+        return '';
+    }
+
+    public function metaTitle(string $title, string $view, array $replace = []): string
+    {
+        if ($title) {
+            return $title;
         }
 
         if (trans("meta_title.{$view}") !== "meta_title.{$view}") {
