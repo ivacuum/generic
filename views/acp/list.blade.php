@@ -1,25 +1,25 @@
 @extends('acp.base')
 
 @section('content')
-<div class="heading-menu">
-  <h3 class="mt-0">
+<div class="d-flex align-items-center flex-wrap mb-2 mt--2">
+  <h3 class="mt-0 mb-1 mr-3">
     {{ trans("$tpl.index") }}
     @if ($models instanceof Illuminate\Support\Collection)
       <small>{{ ViewHelper::number(sizeof($models)) }}</small>
     @else
       <small>{{ ViewHelper::number($models->total()) }}</small>
     @endif
-    @yield('heading-after-title')
-    @can('create', $model)
-      @include('acp.tpl.create')
-    @endcan
-    @if (!empty($search_form))
-      <form class="heading-menu-search-form">
-        <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}">
-      </form>
-    @endif
-    @yield('heading-after-search')
   </h3>
+  @yield('heading-after-title')
+  @can('create', $model)
+    @include('acp.tpl.create')
+  @endcan
+  @if (!empty($search_form))
+    <form class="mr-2">
+      <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}">
+    </form>
+  @endif
+  @yield('heading-after-search')
 </div>
 
 @yield('toolbar')
