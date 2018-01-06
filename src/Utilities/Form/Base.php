@@ -5,6 +5,7 @@ use Illuminate\Contracts\Support\Arrayable;
 abstract class Base
 {
     public $help;
+    public $label;
     public $model;
     public $entity = '';
     public $classes = [];
@@ -51,6 +52,13 @@ abstract class Base
     }
 
     abstract public function html();
+
+    public function label($text): self
+    {
+        $this->label = $text;
+
+        return $this;
+    }
 
     public function model($model): self
     {

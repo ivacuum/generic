@@ -1,7 +1,7 @@
 <div class="form-group mt-3 {{ $errors->has($name) ? 'has-error' : '' }}">
   <div class="col-xs-12">
     <label class="control-label mb-2 {{ $required ? 'required' : '' }}">
-      {{ ViewHelper::modelFieldTrans($entity, $name) }}:
+      {{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}:
     </label>
     <textarea {{ $required ? 'required' : '' }} class="form-control textarea-autosized textarea-borderless-focus js-autosize-textarea {{ implode(' ', $classes) }}" name="{{ $name }}" rows="2" placeholder="{{ $placeholder }}">{{ old($name, $model->{$name}) }}</textarea>
     @if ($help)
