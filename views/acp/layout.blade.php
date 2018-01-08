@@ -2,15 +2,15 @@
 
 @section('content_header')
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-lg-3">
     <div class="list-group text-center">
       @can('show', $model)
-        <a class="list-group-item {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ path("$self@show", $model) }}">
+        <a class="list-group-item list-group-item-action {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ path("$self@show", $model) }}">
           {{ trans("$tpl.show") }}
         </a>
       @endcan
       @can('edit', $model)
-        <a class="list-group-item {{ $view === "$tpl.edit" ? 'active' : '' }}" href="{{ UrlHelper::edit($self, $model) }}">
+        <a class="list-group-item list-group-item-action {{ $view === "$tpl.edit" ? 'active' : '' }}" href="{{ UrlHelper::edit($self, $model) }}">
           {{ trans("$tpl.edit") }}
         </a>
       @endcan
@@ -23,7 +23,7 @@
             @php ($trans_field = \Ivacuum\Generic\Utilities\NamingHelper::transField($related))
             @php ($count_field = "{$field}_count")
             @if ($model->{$count_field})
-              <a class="list-group-item" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
+              <a class="list-group-item list-group-item-action" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
                 <span class="text-muted small">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
@@ -32,7 +32,7 @@
         @endforeach
       @endif
       @if (method_exists($model, 'www'))
-        <a class="list-group-item" href="{{ $model->www() }}">
+        <a class="list-group-item list-group-item-action" href="{{ $model->www() }}">
           {{ trans('acp.www') }}
           @svg (external-link)
         </a>
@@ -40,8 +40,8 @@
       @include('acp.tpl.delete')
     </div>
   </div>
-  <div class="col-sm-9">
-    <h2 class="mt-0 text-break-word">
+  <div class="col-lg-9">
+    <h2 class="mt-3 mt-lg-0 text-break-word">
       @include('acp.tpl.back')
       @section('model_title')
         {{ $model->breadcrumb() }}

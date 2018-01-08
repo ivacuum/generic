@@ -6,16 +6,18 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
   <span class="text-muted">
     @svg (filter)
   </span>
-  <a class="pseudo dropdown-toggle" data-toggle="dropdown">
+  <a class="dropdown-toggle" href="#" data-toggle="dropdown">
     {{ $title ?? ViewHelper::modelFieldTrans($model_tpl, $field) }}: {{ $current }}
   </a>
-  <ul class="dropdown-menu">
+  <div class="dropdown-menu">
     @foreach ($values as $name => $value)
-      <li>
-        <a class="js-pjax" href="{{ UrlHelper::filter([$field => $value]) }}">
+      @if ($name === '---')
+        <div class="dropdown-divider"></div>
+      @else
+        <a class="dropdown-item js-pjax" href="{{ UrlHelper::filter([$field => $value]) }}">
           {{ $name }}
         </a>
-      </li>
+      @endif
     @endforeach
-  </ul>
+  </div>
 </div>

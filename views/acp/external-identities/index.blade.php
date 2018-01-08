@@ -4,7 +4,7 @@
 <table class="table-stats table-adaptive">
   <thead>
   <tr>
-    <th class="text-right">ID</th>
+    <th class="text-md-right">ID</th>
     <th></th>
     <th>Пользователь</th>
     <th>Вход</th>
@@ -13,7 +13,7 @@
   <tbody>
   @foreach ($models as $model)
     <tr>
-      <td class="text-right">
+      <td class="text-md-right">
         <a href="{{ path("$self@show", $model) }}">
           {{ $model->id }}
         </a>

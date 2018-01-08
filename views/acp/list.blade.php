@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="d-flex align-items-center flex-wrap mb-2 mt--2">
-  <h3 class="mt-0 mb-1 mr-3">
+  <h3 class="mr-3">
     {{ trans("$tpl.index") }}
     @if ($models instanceof Illuminate\Support\Collection)
-      <small>{{ ViewHelper::number(sizeof($models)) }}</small>
+      <small class="text-muted">{{ ViewHelper::number(sizeof($models)) }}</small>
     @else
-      <small>{{ ViewHelper::number($models->total()) }}</small>
+      <small class="text-muted">{{ ViewHelper::number($models->total()) }}</small>
     @endif
   </h3>
   @yield('heading-after-title')
@@ -25,15 +25,12 @@
 @yield('toolbar')
 
 @if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk', '_pjax'])))
-  <div class="my-3">
-    <a class="btn btn-default" href="{{ path("$self@index") }}">
+  <div class="my-2">
+    <a class="btn btn-light border" href="{{ path("$self@index") }}">
       {{ trans('acp.reset_filters') }}
-      <span class="text-danger">
-        @svg (times)
-      </span>
     </a>
     @foreach ($filters as $key => $value)
-      <a class="btn btn-default" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
+      <a class="btn btn-light border" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
         {{ $key }}: {{ $value }}
         <span class="text-danger">
           @svg (times)
