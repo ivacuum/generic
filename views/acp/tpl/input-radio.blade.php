@@ -1,8 +1,6 @@
 @foreach ($values as $_value => $_title)
-  <div class="form-check">
-    <label>
-      <input class="form-check-input" type="radio" name="{{ $name }}" value="{{ $_value }}" {{ $_value == old($name, $model->{$name}) ? 'checked' : '' }}>
-      <span>{{ $_title }}</span>
-    </label>
-  </div>
+  <label class="form-check">
+    <input class="form-check-input {{ $errors->has($name) ? 'is-invalid' : '' }}" type="radio" name="{{ $name }}" value="{{ $_value }}" {{ $_value == old($name, $model->{$name}) ? 'checked' : '' }}>
+    <span class="form-check-label">{{ $_title }}</span>
+  </label>
 @endforeach

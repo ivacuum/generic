@@ -3,7 +3,7 @@
 @section('content')
 <h2 class="text-break-word">
   {{ $event }}
-  <small>{{ ViewHelper::number($metrics->sum()) }}</small>
+  <small class="text-muted">{{ ViewHelper::number($metrics->sum()) }}</small>
 </h2>
 <table class="table-stats table-adaptive">
   <thead>

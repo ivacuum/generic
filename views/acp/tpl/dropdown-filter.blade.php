@@ -2,11 +2,11 @@
 $current = array_keys($values, request($field))[0];
 $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
 ?>
-<div class="dropdown py-1 mr-3 {{ $class ?? '' }}">
-  <span class="text-muted">
-    @svg (filter)
-  </span>
-  <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+<div class="dropdown my-1 mr-2 {{ $class ?? '' }}">
+  <a class="btn btn-default dropdown-toggle" href="#" data-toggle="dropdown">
+    <span class="text-muted">
+      @svg (filter)
+    </span>
     {{ $title ?? ViewHelper::modelFieldTrans($model_tpl, $field) }}: {{ $current }}
   </a>
   <div class="dropdown-menu">

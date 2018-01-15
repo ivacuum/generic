@@ -1,12 +1,12 @@
-<div class="form-group form-row align-items-center">
-  <label class="col-sm-4 col-md-3 font-weight-bold lh13 text-sm-right {{ !in_array($type, ['checkbox', 'radio']) ? 'mb-sm-0' : '' }} {{ $required ? 'input-required' : '' }}">{{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}</label>
-  <div class="col-sm-8 col-md-6">
+<div class="form-group form-row">
+  <label class="col-md-4 text-md-right {{ !in_array($type, ['checkbox', 'radio']) ? 'col-form-label' : '' }} {{ $required ? 'input-required' : '' }}">{{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}</label>
+  <div class="col-md-6">
     @include("acp.tpl.input-{$type}")
-    @if ($help)
-      <div class="f14 form-text text-muted">{{ $help }}</div>
-    @endif
     @if ($errors->has($name))
-      <div class="invalid-feedback">{{ $errors->first($name) }}</div>
+      <div class="invalid-feedback d-block">{{ $errors->first($name) }}</div>
+    @endif
+    @if ($help)
+      <div class="form-help">{{ $help }}</div>
     @endif
   </div>
 </div>

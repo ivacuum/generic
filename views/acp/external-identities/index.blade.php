@@ -1,5 +1,22 @@
 @extends('acp.list')
 
+@section('heading-after-search')
+@include('acp.tpl.dropdown-filter', [
+  'field' => 'provider',
+  'values' => [
+    'Все' => null,
+    '---' => null,
+    'ВК' => 'vk',
+    'Гитхаб' => 'github',
+    'Гугл' => 'google',
+    'Одноклассники' => 'odnoklassniki',
+    'Твиттер' => 'twitter',
+    'Фэйсбук' => 'facebook',
+    'Яндекс' => 'yandex',
+  ]
+])
+@endsection
+
 @section('content-list')
 <table class="table-stats table-adaptive">
   <thead>
@@ -19,7 +36,7 @@
         </a>
       </td>
       <td class="bg-{{ $model->provider }}">
-        <a href="{{ $model->externalLink() }}" style="color: white;">
+        <a class="text-white" href="{{ $model->externalLink() }}">
           @svg ($model->provider)
         </a>
       </td>

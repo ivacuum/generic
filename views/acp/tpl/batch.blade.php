@@ -11,5 +11,5 @@
       </select>
     </div>
   </div>
-  <button class="btn btn-light border">Выполнить</button>
+  <button class="btn btn-default">Выполнить</button>
 </form>

@@ -3,17 +3,17 @@
 <?php Form::model($model); ?>
 
 @section('content')
-<form action="{{ path("$self@update", $model) }}" class="mt-3 {{ sizeof($errors) ? 'was-validated' : '' }}" method="post" enctype="multipart/form-data">
+<form action="{{ path("$self@update", $model) }}" class="mt-3" method="post" enctype="multipart/form-data">
   {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")
 
-  <div class="form-group form-row acp-sticky-buttons mb-0">
-    <div class="col-lg-9 offset-lg-3">
+  <div class="form-row sticky-bottom-buttons">
+    <div class="col-md-8 offset-md-4">
       <button class="btn btn-primary">
         {{ trans('acp.save') }}
       </button>
-      <button name="_save" class="btn btn-light border">
+      <button name="_save" class="btn btn-default">
         {{ trans('acp.apply') }}
       </button>
     </div>
