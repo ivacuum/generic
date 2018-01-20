@@ -92,7 +92,9 @@ class Controller extends BaseController
             'goto' => request('goto'),
             'self' => $this->class,
             'view' => $this->view,
+            'is_mobile' => $browser_env->isMobile(),
             'is_crawler' => $browser_env->isCrawler(),
+            'is_desktop' => !$browser_env->isMobile(),
             'css_classes' => (string) $browser_env,
             'first_time_visit' => $first_time_visit,
         ]);
