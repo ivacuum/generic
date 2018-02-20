@@ -30,6 +30,7 @@
         "Ivacuum\\Generic\\Providers\\MetricsServiceProvider",
         "Ivacuum\\Generic\\Providers\\OdnoklassnikiServiceProvider",
         "Ivacuum\\Generic\\Providers\\QueueServiceProvider",
+        "Ivacuum\\Generic\\Providers\\ScoutServiceProvider",
         "Ivacuum\\Generic\\Providers\\SftpServiceProvider",
         "Ivacuum\\Generic\\Providers\\SphinxServiceProvider",
         "Ivacuum\\Generic\\Providers\\ValidatorServiceProvider",
