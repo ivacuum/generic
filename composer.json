@@ -25,6 +25,7 @@
       "providers": [
         "Ivacuum\\Generic\\Providers\\BladeServiceProvider",
         "Ivacuum\\Generic\\Providers\\BroadcastServiceProvider",
+        "Ivacuum\\Generic\\Providers\\CommandsServiceProvider",
         "Ivacuum\\Generic\\Providers\\DebugbarServiceProvider",
         "Ivacuum\\Generic\\Providers\\FastcgiServiceProvider",
         "Ivacuum\\Generic\\Providers\\MetricsServiceProvider",
