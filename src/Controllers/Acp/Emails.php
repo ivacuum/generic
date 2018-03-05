@@ -22,7 +22,8 @@ class Emails extends Controller
             ->when($template, function (Builder $query) use ($template) {
                 return $query->where('template', $template);
             })
-            ->paginate();
+            ->paginate()
+            ->withPath(path("{$this->class}@index"));
 
         return view($this->view, compact('models', 'template'));
     }

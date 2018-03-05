@@ -20,7 +20,8 @@ class ExternalIdentities extends Controller
             ->when($provider, function (Builder $query) use ($provider) {
                 return $query->where('provider', $provider);
             })
-            ->paginate();
+            ->paginate()
+            ->withPath(path("{$this->class}@index"));
 
         return view($this->view, compact('models'));
     }
