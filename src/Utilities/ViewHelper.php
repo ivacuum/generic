@@ -6,13 +6,15 @@ use Ivacuum\Generic\Rules\ConcurrencyControl;
 
 class ViewHelper
 {
+    protected static $thousands_separator = '&thinsp;';
+
     protected $decimal;
 
     public function __construct()
     {
         $this->decimal = new \NumberFormatter('ru_RU', \NumberFormatter::DECIMAL);
         $this->decimal->setAttribute(\NumberFormatter::FRACTION_DIGITS, 0);
-        $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '&thinsp;');
+        $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, static::$thousands_separator);
     }
 
     public function avatarBg($id): string
@@ -165,6 +167,6 @@ class ViewHelper
         $pow = min($pow, sizeof($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $decimals[$pow]) . '&thinsp;' . $units[$pow];
+        return round($bytes, $decimals[$pow]) . static::$thousands_separator . $units[$pow];
     }
 }
