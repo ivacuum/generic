@@ -25,7 +25,7 @@
             @if ($model->{$count_field})
               <a class="list-group-item list-group-item-action" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
-                <span class="text-muted small">{{ ViewHelper::number($model->{$count_field}) }}</span>
+                <span class="text-muted small text-nowrap">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
             @endif
           @endcan

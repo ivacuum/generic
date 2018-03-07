@@ -5,9 +5,9 @@
   <h3 class="mb-1 mr-3">
     {{ trans("$tpl.index") }}
     @if ($models instanceof Illuminate\Support\Collection)
-      <small class="text-muted">{{ ViewHelper::number(sizeof($models)) }}</small>
+      <small class="text-muted text-nowrap">{{ ViewHelper::number(sizeof($models)) }}</small>
     @else
-      <small class="text-muted">{{ ViewHelper::number($models->total()) }}</small>
+      <small class="text-muted text-nowrap">{{ ViewHelper::number($models->total()) }}</small>
     @endif
   </h3>
   @yield('heading-after-title')

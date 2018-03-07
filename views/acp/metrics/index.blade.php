@@ -7,7 +7,7 @@
   <tr>
     <th>Событие</th>
     @foreach ($dates as $date => $true)
-      <th class="text-md-right">{{ substr($date, 5) }}</th>
+      <th class="text-md-right text-nowrap">{{ substr($date, 5) }}</th>
     @endforeach
   </tr>
   </thead>
@@ -16,7 +16,7 @@
     <tr>
       <td><a class="text-break-word" href="{{ path("$self@show", $event) }}">{{ $event }}</a></td>
       @foreach ($dates as $date => $true)
-        <td class="text-md-right">{{ isset($metrics[$event][$date]) ? ViewHelper::number($metrics[$event][$date]) : '' }}</td>
+        <td class="text-md-right text-nowrap">{{ isset($metrics[$event][$date]) ? ViewHelper::number($metrics[$event][$date]) : '' }}</td>
       @endforeach
     </tr>
   @endforeach

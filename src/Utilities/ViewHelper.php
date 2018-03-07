@@ -12,7 +12,7 @@ class ViewHelper
     {
         $this->decimal = new \NumberFormatter('ru_RU', \NumberFormatter::DECIMAL);
         $this->decimal->setAttribute(\NumberFormatter::FRACTION_DIGITS, 0);
-        $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '&nbsp;');
+        $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '&thinsp;');
     }
 
     public function avatarBg($id): string
@@ -165,6 +165,6 @@ class ViewHelper
         $pow = min($pow, sizeof($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $decimals[$pow]) . '&nbsp;' . $units[$pow];
+        return round($bytes, $decimals[$pow]) . '&thinsp;' . $units[$pow];
     }
 }
