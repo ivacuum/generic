@@ -1,6 +1,6 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Вспомогательный класс для упрощения работы с кэшированными данными моделей
@@ -56,6 +56,19 @@ abstract class ModelCacheHelper
         return isset(static::$cached_id[$id]) ? static::$cached_id[$id] : null;
     }
 
+    public function findByIdOrFail(int $id)
+    {
+        $result = $this->findById($id);
+
+        if ($result !== null) {
+            return $result;
+        }
+
+        throw (new ModelNotFoundException)->setModel(
+            get_class($this->model), $id
+        );
+    }
+
     public function findBySlug(?string $slug)
     {
         if (!$slug) {
@@ -67,6 +80,19 @@ abstract class ModelCacheHelper
         }
 
         return isset(static::$cached_slug[$slug]) ? static::$cached_slug[$slug] : null;
+    }
+
+    public function findBySlugOrFail(?string $slug)
+    {
+        $result = $this->findBySlug($slug);
+
+        if ($result !== null) {
+            return $result;
+        }
+
+        throw (new ModelNotFoundException)->setModel(
+            get_class($this->model), $slug
+        );
     }
 
     public function title($q): ?string
