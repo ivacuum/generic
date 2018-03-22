@@ -10,7 +10,7 @@ class GoogleGeocoder
 
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => self::ENDPOINT]);
+        $this->client = new Client(['base_uri' => static::ENDPOINT]);
     }
 
     public function geocode(string $address): array

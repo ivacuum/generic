@@ -34,6 +34,6 @@ class NamingHelper
      */
     public static function transField($class): string
     {
-        return self::kebab(self::controllerName($class));
+        return static::kebab(static::controllerName($class));
     }
 }
