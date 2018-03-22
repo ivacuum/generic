@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Breadcrumbs;
 
+use Illuminate\Support\HtmlString;
+
 class Breadcrumbs
 {
     protected $breadcrumbs = [];
@@ -17,6 +19,13 @@ class Breadcrumbs
     }
 
     public function push(string $title, ?string $url = null): self
+    {
+        $this->breadcrumbs[] = compact('title', 'url');
+
+        return $this;
+    }
+
+    public function pushHtml(HtmlString $title, ?string $url = null): self
     {
         $this->breadcrumbs[] = compact('title', 'url');
 
