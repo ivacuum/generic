@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer $id
  * @property integer $user_id
- * @property string  $from
  * @property string  $to
  * @property string  $template
- * @property string  $text
- * @property string  $token
  * @property integer $clicks
  * @property integer $views
  * @property \Illuminate\Support\Carbon $created_at
@@ -25,16 +22,22 @@ use Illuminate\Database\Eloquent\Model;
 class Email extends Model
 {
     const TIMESTAMP_FORMAT = 'YmdHis';
-    const TOKEN_LENGTH = 6;
 
     protected $guarded = ['created_at'];
     protected $perPage = 50;
+
+    // Relations
+    public function rel()
+    {
+        return $this->morphTo();
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Methods
     public function breadcrumb(): string
     {
         return "Письмо #{$this->id}";
@@ -42,15 +45,27 @@ class Email extends Model
 
     public function getTimestamp(): string
     {
-        return $this->created_at->format(self::TIMESTAMP_FORMAT);
+        return $this->created_at->format(static::TIMESTAMP_FORMAT);
     }
 
-    public function tokenLink($goto): string
+    public function hasValidTimestamp(string $timestamp): bool
     {
-        return action('Mail@click', [
+        return $timestamp === $this->getTimestamp();
+    }
+
+    public function reportLink(): string
+    {
+        return path('Mail@report', [
             $this->getTimestamp(),
             $this->id,
-            $this->token,
+        ]);
+    }
+
+    public function signedLink($goto): string
+    {
+        return \URL::signedRoute('mail.click', [
+            $this->getTimestamp(),
+            $this->id,
             'goto' => $goto,
         ]);
     }

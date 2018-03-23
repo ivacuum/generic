@@ -4,30 +4,27 @@ use App\Email;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Carbon;
+use Ivacuum\Generic\Events\MailReported;
 use Ivacuum\Generic\Events\UserAutologinWithEmailLink;
 
 class Mail extends Controller
 {
-    public function click(Guard $auth, string $timestamp, int $id, ?string $token = null)
+    public function click(Guard $auth, string $timestamp, int $id)
     {
         $goto = request('goto', '/');
         $email = Email::find($id);
-        $timestamp = Carbon::createFromFormat(Email::TIMESTAMP_FORMAT, $timestamp);
 
-        if (is_null($email)) {
+        if (null === $email || !\URL::hasValidSignature(request())) {
             return redirect($goto);
         }
 
-        if ($email->created_at->eq($timestamp)) {
+        if ($email->hasValidTimestamp($timestamp)) {
             $email->increment('clicks');
         }
 
-        if ($token && $token === $email->token && $email->user_id) {
+        if ($email->user_id) {
             /* @var User $user */
-            $user = User::find($email->user_id);
-
-            if (!is_null($user)) {
+            if (null !== $user = User::find($email->user_id)) {
                 $user->activate();
 
                 if ($user->status === User::STATUS_ACTIVE) {
@@ -45,12 +42,26 @@ class Mail extends Controller
         return redirect($goto);
     }
 
+    public function report(string $timestamp, int $id)
+    {
+        $user = request()->user();
+
+        /* @var Email $email */
+        $email = Email::findOrFail($id);
+
+        abort_if(!$email->hasValidTimestamp($timestamp) || $email->user_id !== $user->id, 404);
+
+        event(new MailReported($email));
+
+        return redirect(path('Home@index'))
+            ->with('message', trans('mail.report_thanks'));
+    }
+
     public function view(string $timestamp, int $id)
     {
         $email = Email::find($id);
-        $timestamp = Carbon::createFromFormat(Email::TIMESTAMP_FORMAT, $timestamp);
 
-        if (!is_null($email) && $email->created_at->eq($timestamp)) {
+        if (null !== $email && $email->hasValidTimestamp($timestamp)) {
             event(new \Ivacuum\Generic\Events\Stats\MailViewed($email->id));
         }
 
