@@ -7,7 +7,7 @@ class PasswordRemindersPurge extends Command
 
     public function handle()
     {
-        $deleted = \DB::table('password_reminders')
+        $deleted = \DB::table(config('auth.passwords.users.table'))
             ->where('created_at', '<', now()->subDay()->toDateTimeString())
             ->delete();
 
