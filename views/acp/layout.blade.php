@@ -21,7 +21,7 @@
           @can('list', $related)
             @php ($controller = \Ivacuum\Generic\Utilities\NamingHelper::controllerName($related))
             @php ($trans_field = \Ivacuum\Generic\Utilities\NamingHelper::transField($related))
-            @php ($count_field = "{$field}_count")
+            @php ($count_field = snake_case($field).'_count')
             @if ($model->{$count_field})
               <a class="list-group-item list-group-item-action" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
