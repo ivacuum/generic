@@ -115,9 +115,9 @@ class ViewHelper
         return $trans_key;
     }
 
-    public function number(int $number): HtmlString
+    public function number(int $number): string
     {
-        return new HtmlString($this->decimal->format($number));
+        return $this->decimal->format($number);
     }
 
     public function numberShort(int $number): string
@@ -150,7 +150,7 @@ class ViewHelper
         return trans_choice("plural.{$key}", $count, ['x' => $this->number($count)]);
     }
 
-    public function size(int $bytes): HtmlString
+    public function size(int $bytes): string
     {
         $units = [
             trans('size.b'),
@@ -167,6 +167,6 @@ class ViewHelper
         $pow = min($pow, sizeof($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return new HtmlString(round($bytes, $decimals[$pow]) . static::$thousands_separator . $units[$pow]);
+        return round($bytes, $decimals[$pow]) . static::$thousands_separator . $units[$pow];
     }
 }
