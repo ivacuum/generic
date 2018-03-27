@@ -70,3 +70,27 @@ if (!function_exists('path')) {
         return ($absolute ? app('request')->root() : '') . $prefix . ($action === '/' ? '' : $action);
     }
 }
+
+if (!function_exists('path_locale')) {
+    /**
+     * Адрес страницы, соответствующий контроллеру
+     *
+     * @param  string $name
+     * @param  array|string  $parameters
+     * @param  bool   $absolute
+     * @param  string $locale
+     * @return string
+     */
+    function path_locale(string $name, $parameters = [], bool $absolute = false, string $locale = ''): string
+    {
+        $prefix = $locale !== 'ru' ? "/{$locale}" : '';
+
+        if (!$prefix) {
+            return app('url')->action($name, $parameters, $absolute);
+        }
+
+        $action = app('url')->action($name, $parameters, false);
+
+        return ($absolute ? app('request')->root() : '') . $prefix . ($action === '/' ? '' : $action);
+    }
+}
