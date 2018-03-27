@@ -27,7 +27,7 @@ class Mail extends Controller
             if (null !== $user = User::find($email->user_id)) {
                 $user->activate();
 
-                if ($user->status === User::STATUS_ACTIVE) {
+                if ($user->status === User::STATUS_ACTIVE && $auth->id() !== $user->id) {
                     event(new UserAutologinWithEmailLink($email));
 
                     $auth->login($user);
