@@ -7,7 +7,7 @@ class UrlHelper
 
     public function edit(string $self, $model): string
     {
-        return path("$self@edit", [$model, 'goto' => static::go()]);
+        return path("$self@edit", [$model, 'goto' => static::go()."#{$model->getRouteKeyName()}-{$model->getRouteKey()}"]);
     }
 
     public function except(array $params = []): array
