@@ -32,7 +32,7 @@ class MetricsHelper
             }
         }
 
-        if (!is_null($this->fp)) {
+        if (null !== $this->fp) {
             fwrite($this->fp, json_encode($this->metrics));
 
             // При веб-сервере отправка всех событий происходит разом в конце,

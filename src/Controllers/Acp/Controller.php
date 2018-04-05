@@ -217,7 +217,7 @@ class Controller extends BaseController
             ->when(ModelHelper::hasSoftDeleteLaravel($model), function (Builder $query) {
                 return $query->withTrashed();
             })
-            ->when($this->method === 'show' && !is_null($this->show_with_count), function (Builder $query) {
+            ->when($this->method === 'show' && null !== $this->show_with_count, function (Builder $query) {
                 return $query->withCount($this->show_with_count);
             })
             ->firstOrFail();

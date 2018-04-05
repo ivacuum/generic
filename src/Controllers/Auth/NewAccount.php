@@ -17,7 +17,7 @@ class NewAccount extends Controller
 
         $user = User::where('email', $data['email'])->first();
 
-        if (!is_null($user)) {
+        if (null !== $user) {
             return $this->existingUserResponse($user);
         }
 

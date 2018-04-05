@@ -30,7 +30,7 @@ abstract class Base extends Controller
     {
         $identity = $this->findIdentityByUid($user->id);
 
-        if (is_null($identity)) {
+        if (null === $identity) {
             $identity = $this->saveExternalIdentity($user);
         } else {
             $identity->touch();

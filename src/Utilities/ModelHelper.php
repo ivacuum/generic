@@ -9,10 +9,10 @@ class ModelHelper
     public static function exists($model): bool
     {
         if (static::hasSoftDeleteLaravel($model)) {
-            return !is_null($model::withTrashed()->find($model->getKey()));
+            return null !== $model::withTrashed()->find($model->getKey());
         }
 
-        return !is_null($model::find($model->getKey()));
+        return null !== $model::find($model->getKey());
     }
 
     public static function hasSoftDelete($model): bool

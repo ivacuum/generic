@@ -11,10 +11,10 @@ class ExternalIdentities extends Controller
         $provider = request('provider');
 
         $models = Model::orderBy('id', 'desc')
-            ->unless(is_null($user_id), function (Builder $query) use ($user_id) {
+            ->unless(null === $user_id, function (Builder $query) use ($user_id) {
                 return $query->where('user_id', $user_id);
             })
-            ->when(is_null($user_id), function (Builder $query) {
+            ->when(null === $user_id, function (Builder $query) {
                 return $query->where('user_id', '<>', 0);
             })
             ->when($provider, function (Builder $query) use ($provider) {

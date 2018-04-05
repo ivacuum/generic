@@ -40,11 +40,11 @@ class Odnoklassniki extends Base
             return redirect()->intended('/');
         }
 
-        if (is_null($userdata->email)) {
+        if (null === $userdata->email) {
             return redirect(path('Auth\SignIn@index'))->with('message', $this->noEmailMessage());
         }
 
-        if (is_null($user = $this->findUserByEmail($userdata->email))) {
+        if (null === $user = $this->findUserByEmail($userdata->email)) {
             $user = $this->registerUser($userdata);
         }
 

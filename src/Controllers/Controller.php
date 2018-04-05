@@ -85,7 +85,7 @@ class Controller extends BaseController
     protected function appendViewSharedVars(): void
     {
         $browser_env = new \Ivacuum\Generic\Utilities\EnvironmentForCss(request()->userAgent());
-        $first_time_visit = is_null(\Session::previousUrl());
+        $first_time_visit = null === \Session::previousUrl();
 
         view()->share([
             'tpl' => $this->prefix,

@@ -43,11 +43,11 @@ class Google extends Base
             return redirect()->intended('/');
         }
 
-        if (is_null($userdata->email)) {
+        if (null === $userdata->email) {
             return redirect(path('Auth\SignIn@index'))->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
         }
 
-        if (is_null($user = $this->findUserByEmail($userdata->email))) {
+        if (null === $user = $this->findUserByEmail($userdata->email)) {
             $user = $this->registerUser($userdata);
         }
 

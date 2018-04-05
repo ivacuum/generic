@@ -1,4 +1,4 @@
-@if (!is_null($default))
+@if (null !== $default)
   <input type="hidden" name="{{ $name }}" value="{{ $default }}">
 @endif
 @foreach ($values as $_value => $_title)

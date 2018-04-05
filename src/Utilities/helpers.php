@@ -56,7 +56,7 @@ if (!function_exists('path')) {
     {
         static $prefix;
 
-        if (is_null($prefix)) {
+        if (null === $prefix) {
             $locale = app('request')->server->get('LARAVEL_LOCALE') ?? null;
             $prefix = $locale ? "/{$locale}" : '';
         }

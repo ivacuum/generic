@@ -30,7 +30,7 @@ class ViewHelper
     {
         static $year;
 
-        if (is_null($date)) {
+        if (null === $date) {
             return '—';
         }
 
