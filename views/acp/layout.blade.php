@@ -39,6 +39,7 @@
       @endif
       @include('acp.tpl.delete')
     </div>
+    @yield('model_menu_after')
   </div>
   <div class="col-lg-9">
     <h2 class="mt-3 mt-lg-0 text-break-word">
