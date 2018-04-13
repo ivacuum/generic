@@ -14,8 +14,7 @@ class Emails extends Controller
 
         [$sort_key, $sort_dir] = $this->getSortParams();
 
-        $models = Model::with('user')
-            ->orderBy($sort_key, $sort_dir)
+        $models = Model::orderBy($sort_key, $sort_dir)
             ->when($user_id, function (Builder $query) use ($user_id) {
                 return $query->where('user_id', $user_id);
             })
