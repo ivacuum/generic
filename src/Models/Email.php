@@ -61,12 +61,12 @@ class Email extends Model
         ]);
     }
 
-    public function signedLink($goto): string
+    public function signedLink(string $goto, $expiration = null): string
     {
         return \URL::signedRoute('mail.click', [
             $this->getTimestamp(),
             $this->id,
             'goto' => $goto,
-        ]);
+        ], $expiration);
     }
 }
