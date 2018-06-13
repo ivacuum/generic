@@ -47,6 +47,8 @@ class SitemapBuild extends Command
     {
         $touched = ['sitemap.xml'];
 
+        @mkdir(public_path('uploads/sitemaps'));
+
         /* Перенос сформированных файлов */
         rename(public_path('uploads/temp/sitemap.xml'), public_path('uploads/sitemaps/sitemap.xml'));
 
