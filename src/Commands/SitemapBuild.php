@@ -157,7 +157,7 @@ class SitemapBuild extends Command
 
     protected function writeSitemapIndex(): void
     {
-        $parts = round($this->count / $this->threshold);
+        $parts = ceil($this->count / $this->threshold);
         $stream = fopen('php://memory', 'r+');
 
         fwrite($stream, '<?xml version="1.0" encoding="UTF-8"?>'."\n");
