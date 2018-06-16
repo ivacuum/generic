@@ -8,21 +8,26 @@ class Command extends BaseCommand
 
     public function comment($string, $verbosity = null)
     {
-        $this->output->writeln(sprintf('<comment>[%s] %s</comment>', date($this->date_format), $string));
+        $this->line(sprintf('[%s] <comment>%s</comment>', date($this->date_format), $this->replaceSpaces($string)), null, $verbosity);
     }
 
     public function error($string, $verbosity = null)
     {
-        $this->output->writeln(sprintf('<error>[%s] %s</error>', date($this->date_format), $string));
+        $this->line(sprintf('[%s] <error>%s</error>', date($this->date_format), $this->replaceSpaces($string)), null, $verbosity);
     }
 
     public function info($string, $verbosity = null)
     {
-        $this->output->writeln(sprintf('<info>[%s] %s</info>', date($this->date_format), $string));
+        $this->line(sprintf('[%s] <info>%s</info>', date($this->date_format), $this->replaceSpaces($string)), null, $verbosity);
     }
 
-    public function line($string, $style = null, $verbosity = null)
+    public function question($string, $verbosity = null)
     {
-        $this->output->writeln(sprintf('[%s] %s', date($this->date_format), $string));
+        $this->line(sprintf('[%s] <question>%s</question>', date($this->date_format), $this->replaceSpaces($string)), null, $verbosity);
+    }
+
+    protected function replaceSpaces(string $string): string
+    {
+        return str_replace('&thinsp;', ' ', $string);
     }
 }
