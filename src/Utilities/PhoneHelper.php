@@ -222,13 +222,13 @@ class PhoneHelper
         return trim(preg_replace('/[^\d,]/', '', str_replace(';', ',', $phones)), ',');
     }
 
-    public function tidyAndNormalize(string $phone): string
+    public function tidyAndNormalize(string $phone, string $code = ''): string
     {
-        return $this->normalize($this->tidy($phone));
+        return $this->normalize($this->tidy($phone), $code);
     }
 
-    public function tidyAndNormalizeMany(string $phones): string
+    public function tidyAndNormalizeMany(string $phones, string $code = ''): string
     {
-        return $this->normalizeMany($this->tidy($phones));
+        return $this->normalizeMany($this->tidy($phones), $code);
     }
 }
