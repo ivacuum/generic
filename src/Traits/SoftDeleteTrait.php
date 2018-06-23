@@ -2,23 +2,11 @@
 
 trait SoftDeleteTrait
 {
-    public function softDelete()
+    public function softDelete(): bool
     {
-        $query = $this->newQueryWithoutScopes()->where($this->getKeyName(), $this->getKey());
-
         $this->{$this->getStatusDeletedColumn()} = $this->getStatusDeletedValue();
 
-        $columns = [$this->getStatusDeletedColumn() => $this->getStatusDeletedValue()];
-
-        if ($this->timestamps) {
-            $time = $this->freshTimestamp();
-
-            $this->{$this->getUpdatedAtColumn()} = $time;
-
-            $columns[$this->getUpdatedAtColumn()] = $this->fromDateTime($time);
-        }
-
-        $query->update($columns);
+        return $this->save();
     }
 
     public function trashed()
