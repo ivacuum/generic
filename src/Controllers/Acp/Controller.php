@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Builder;
 use Ivacuum\Generic\Rules\ConcurrencyControl;
 use Ivacuum\Generic\Utilities\ModelHelper;
+use Ivacuum\Generic\Utilities\NamingHelper;
 
 class Controller extends BaseController
 {
@@ -15,7 +16,15 @@ class Controller extends BaseController
     {
         $model = $this->createGeneric();
 
-        return view($this->getView(), compact('model'));
+        if (!$this->isApiRequest()) {
+            return view($this->getView(), compact('model'));
+        }
+
+        return array_merge(
+            ['model' => $model],
+            ['breadcrumbs' => \Breadcrumbs::get()],
+            $this->appendToCreateAndEditResponse($model)
+        );
     }
 
     public function createGeneric()
@@ -26,7 +35,7 @@ class Controller extends BaseController
 
         \Breadcrumbs::push(trans($this->view));
 
-        return $model;
+        return $this->newModelDefaults($model);
     }
 
     public function destroy($id)
@@ -51,7 +60,15 @@ class Controller extends BaseController
     {
         $model = $this->editGeneric($id);
 
-        return view($this->getView(), compact('model'));
+        if (!$this->isApiRequest()) {
+            return view($this->getView(), compact('model'));
+        }
+
+        return array_merge(
+            ['model' => $model],
+            ['breadcrumbs' => \Breadcrumbs::get()],
+            $this->appendToCreateAndEditResponse($model)
+        );
     }
 
     public function editGeneric($id)
@@ -88,7 +105,13 @@ class Controller extends BaseController
     {
         $model = $this->showGeneric($id);
 
-        return view($this->getView(), compact('model'));
+        $this->modelAccessibleRelations($model);
+
+        if (!$this->isApiRequest()) {
+            return view($this->getView(), compact('model'));
+        }
+
+        return $this->modelResource($model);
     }
 
     public function showGeneric($id)
@@ -139,6 +162,11 @@ class Controller extends BaseController
         $this->concurrencyControl($model);
 
         return $model;
+    }
+
+    protected function appendToCreateAndEditResponse($model): array
+    {
+        return [];
     }
 
     protected function appendViewSharedVars(): void
@@ -249,6 +277,65 @@ class Controller extends BaseController
         return view()->exists($this->view) ? $this->view : "acp.{$this->method}";
     }
 
+    protected function isApiRequest()
+    {
+        return request()->ajax() && !request()->pjax();
+    }
+
+    protected function modelAccessibleRelations($model): array
+    {
+        /* @var \Illuminate\Database\Eloquent\Model $model */
+        if (sizeof($this->show_with_count) < 1) {
+            return [];
+        }
+
+        $me = \Auth::user();
+        $result = [];
+
+        foreach ($this->show_with_count as $field) {
+            $related = $model->{$field}()->getRelated();
+
+            if (!$me->can('list', $related)) {
+                continue;
+            }
+
+            $controller = NamingHelper::controllerName($related);
+            $count_field = snake_case($field).'_count';
+            $count = $model->{$count_field};
+
+            if ($count < 1) {
+                continue;
+            }
+
+            $path = path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]);
+            $i18n_index = NamingHelper::transField($related);
+
+            $result[] = compact('path', 'count', 'i18n_index');
+        }
+
+        return $result;
+    }
+
+    protected function modelResource($model)
+    {
+        $resource = str_singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
+
+        return (new $resource($model))
+            ->additional([
+                'relations' => $this->modelAccessibleRelations($model),
+                'i18n_index' => NamingHelper::transField($model),
+                'breadcrumbs' => \Breadcrumbs::get(),
+            ]);
+    }
+
+    protected function modelResourceCollection($models)
+    {
+        $resource = str_singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)).'Collection';
+
+        return (new $resource($models))
+            ->additional(['breadcrumbs' => \Breadcrumbs::get()]);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -257,6 +344,14 @@ class Controller extends BaseController
         $model = $this->getModelName();
 
         return new $model;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function newModelDefaults($model)
+    {
+        return $model;
     }
 
     /**

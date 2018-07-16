@@ -102,11 +102,17 @@ class Controller extends BaseController
 
     protected function redirectAfterStore($model)
     {
-        return redirect(path("{$this->class}@index"));
+        return request()->ajax()
+            ? response('', 201, ['Location' => path("{$this->class}@index")])
+            : redirect(path("{$this->class}@index"));
     }
 
     protected function redirectAfterUpdate($model, $method = 'index')
     {
+        if (request()->ajax()) {
+            return response('', 204);
+        }
+
         $goto = request('goto', '');
 
         if (request()->exists('_save')) {
