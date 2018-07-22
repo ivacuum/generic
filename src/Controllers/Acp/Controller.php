@@ -7,6 +7,7 @@ use Ivacuum\Generic\Utilities\NamingHelper;
 
 class Controller extends BaseController
 {
+    protected $api_only = false;
     protected $sort_dir = 'desc';
     protected $sort_key = 'id';
     protected $sortable_keys = ['id'];
@@ -14,6 +15,10 @@ class Controller extends BaseController
 
     public function create()
     {
+        if ($this->api_only && !$this->isApiRequest()) {
+            return $this->apiOnlyResponse();
+        }
+
         $model = $this->createGeneric();
 
         if (!$this->isApiRequest()) {
@@ -58,6 +63,10 @@ class Controller extends BaseController
 
     public function edit($id)
     {
+        if ($this->api_only && !$this->isApiRequest()) {
+            return $this->apiOnlyResponse();
+        }
+
         $model = $this->editGeneric($id);
 
         if (!$this->isApiRequest()) {
@@ -103,6 +112,10 @@ class Controller extends BaseController
 
     public function show($id)
     {
+        if ($this->api_only && !$this->isApiRequest()) {
+            return $this->apiOnlyResponse();
+        }
+
         $model = $this->showGeneric($id);
 
         $this->modelAccessibleRelations($model);
@@ -162,6 +175,11 @@ class Controller extends BaseController
         $this->concurrencyControl($model);
 
         return $model;
+    }
+
+    protected function apiOnlyResponse()
+    {
+        return view('acp.index');
     }
 
     protected function appendToCreateAndEditResponse($model): array
