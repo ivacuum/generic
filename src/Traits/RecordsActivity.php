@@ -6,10 +6,6 @@ trait RecordsActivity
 {
     protected static function bootRecordsActivity()
     {
-        if (auth()->guest()) {
-            return;
-        }
-
         foreach (static::getActivitiesToRecord() as $event) {
             static::$event(function ($model) use ($event) {
                 $model->recordActivity($event);
@@ -40,7 +36,7 @@ trait RecordsActivity
             'ip' => request()->ip(),
             'type' => $this->getActivityType($event),
             'title' => method_exists($this, 'breadcrumb') ? $this->breadcrumb() : '',
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id() ?? 0,
             'user_agent' => UserAgent::tidy(request()->userAgent()),
         ]);
     }
