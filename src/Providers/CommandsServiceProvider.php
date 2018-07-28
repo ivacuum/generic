@@ -9,6 +9,7 @@ class CommandsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Ivacuum\Generic\Commands\MakeAcpSection::class,
+                \Ivacuum\Generic\Commands\MakeAcpVueSection::class,
                 \Ivacuum\Generic\Commands\MetricDelete::class,
                 \Ivacuum\Generic\Commands\MetricRename::class,
                 \Ivacuum\Generic\Commands\NotificationsPurge::class,
