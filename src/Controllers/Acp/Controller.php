@@ -92,6 +92,10 @@ class Controller extends BaseController
 
     public function indexBefore()
     {
+        if ($this->api_only && !$this->isApiRequest()) {
+            return $this->apiOnlyResponse();
+        }
+
         $model = $this->newModel();
 
         $this->authorize('list', $model);
