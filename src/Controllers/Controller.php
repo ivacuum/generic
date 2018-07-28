@@ -34,8 +34,10 @@ class Controller extends BaseController
 
     public function callAction($method, $parameters)
     {
+        $response = null;
+
         if (method_exists($this, 'alwaysCallBefore')) {
-            call_user_func_array([$this, 'alwaysCallBefore'], $parameters);
+            $response = call_user_func_array([$this, 'alwaysCallBefore'], $parameters);
         }
 
         $this->appendLocale();
@@ -44,7 +46,7 @@ class Controller extends BaseController
 
         $this->appendCustomVars();
 
-        return parent::callAction($method, $parameters);
+        return $response !== null ? $response : parent::callAction($method, $parameters);
     }
 
     public function validateArray(array $data, array $rules, array $messages = [], array $customAttributes = [])

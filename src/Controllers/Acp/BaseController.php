@@ -7,7 +7,8 @@ abstract class BaseController extends Controller
     protected function alwaysCallBefore(...$parameters)
     {
         $this->populateBreadcrumbsPrefix();
-        $this->beforeCallAction(...$parameters);
+
+        return $this->beforeCallAction(...$parameters);
     }
 
     protected function beforeCallAction(...$parameters)
@@ -15,7 +16,7 @@ abstract class BaseController extends Controller
         $method = "{$this->method}Before";
 
         if (method_exists($this, $method)) {
-            call_user_func_array([$this, $method], $parameters);
+            return call_user_func_array([$this, $method], $parameters);
         }
     }
 
