@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Services;
 
 use Foolz\SphinxQL\Drivers\SimpleConnection;
+use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\SphinxQL;
 
 class Sphinx
@@ -15,5 +16,10 @@ class Sphinx
     public function create()
     {
         return new SphinxQL($this->connection);
+    }
+
+    public function helper()
+    {
+        return Helper::create($this->connection);
     }
 }
