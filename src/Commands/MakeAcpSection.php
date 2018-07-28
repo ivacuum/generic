@@ -51,7 +51,12 @@ class MakeAcpSection extends Command
             $this->info("Созданы шаблоны [{$this->model_plural_lower}]");
         }
 
-        $this->info('Файл app/Providers/AuthServiceProvider.php нужно отредактировать вручную');
+        $this->printAuthReminder();
+    }
+
+    protected function authServiceProviderPath(): string
+    {
+        return app_path('Providers/AuthServiceProvider.php');
     }
 
     protected function controllerPath(string $file): string
@@ -69,7 +74,16 @@ class MakeAcpSection extends Command
         ];
     }
 
-    protected function putController()
+    protected function printAuthReminder(): void
+    {
+        if (false !== mb_strpos($this->fs->get($this->authServiceProviderPath()), "{$this->model}::class")) {
+            return;
+        }
+
+        $this->info('Файл app/Providers/AuthServiceProvider.php нужно отредактировать вручную');
+    }
+
+    protected function putController(): void
     {
         $content = str_replace(
             $this->controllerReplaceArray('base'),
@@ -80,7 +94,7 @@ class MakeAcpSection extends Command
         $this->fs->put($this->controllerPath($this->model_plural), $content);
     }
 
-    protected function putRoute()
+    protected function putRoute(): void
     {
         $path = $this->routesPath();
         $content = $this->fs->get($path);
@@ -108,7 +122,7 @@ class MakeAcpSection extends Command
         }
     }
 
-    protected function putViews()
+    protected function putViews(): bool
     {
         return $this->fs->copyDirectory(
             $this->viewsPath($this->base_plural_lower),
