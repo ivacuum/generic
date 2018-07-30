@@ -12,6 +12,7 @@ class Controller extends BaseController
     protected $sort_key = 'id';
     protected $sortable_keys = ['id'];
     protected $show_with_count;
+    protected $reactive_fields = [];
 
     public function create()
     {
@@ -370,10 +371,15 @@ class Controller extends BaseController
     }
 
     /**
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Database\Eloquent\Model
      */
     protected function newModelDefaults($model)
     {
+        foreach ($this->reactive_fields as $field) {
+            $model->{$field} = null;
+        }
+
         return $model;
     }
 
