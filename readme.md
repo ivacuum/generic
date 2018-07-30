@@ -71,3 +71,17 @@ Route::get('auth/vk/callback', 'Auth\Vk@callback');
     realpath(base_path('vendor/ivacuum/generic/views'))
 ],
 ```
+
+### Локализация
+
+`resources/lang/en/validation.php`
+
+```php
+'concurrency_control' => 'Another user has updated this resource since this page was loaded. Please refresh the page and try again.',
+```
+
+`resources/lang/ru/validation.php`
+
+```php
+'concurrency_control' => 'Кто-то обновил объект до сохранения ваших правок. Обновите страницу и повторите попытку.',
+```
