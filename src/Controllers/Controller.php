@@ -4,6 +4,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Ivacuum\Generic\Rules\ConcurrencyControl;
 
 class Controller extends BaseController
 {
@@ -112,7 +113,10 @@ class Controller extends BaseController
     protected function redirectAfterUpdate($model, $method = 'index')
     {
         if (request()->ajax()) {
-            return response('', 204);
+            return array_merge(
+                ['status' => 'OK'],
+                $model->updated_at ? [ConcurrencyControl::FIELD => md5($model->updated_at)] : []
+            );
         }
 
         $goto = request('goto', '');

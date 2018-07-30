@@ -76,6 +76,7 @@ class Controller extends BaseController
         return array_merge(
             ['model' => $model],
             ['breadcrumbs' => \Breadcrumbs::get()],
+            $model->exists && $model->updated_at ? [ConcurrencyControl::FIELD => md5($model->updated_at)] : [],
             $this->appendToCreateAndEditResponse($model)
         );
     }
