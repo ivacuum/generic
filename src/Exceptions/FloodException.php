@@ -8,6 +8,10 @@ class FloodException extends \Exception
      */
     public function render($request)
     {
+        if ($request->ajax()) {
+            return response(['message' => trans('limits.flood_control')], 429);
+        }
+
         return back()
             ->with('message', trans('limits.flood_control'))
             ->withInput();

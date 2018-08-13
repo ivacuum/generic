@@ -13,6 +13,10 @@ abstract class LimitExceededException extends \Exception
      */
     public function render($request)
     {
+        if ($request->ajax()) {
+            return response(['message' => $this->message()], 429);
+        }
+
         return back()
             ->with('message', $this->message())
             ->withInput();
