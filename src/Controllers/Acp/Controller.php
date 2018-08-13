@@ -10,8 +10,9 @@ class Controller extends BaseController
     protected $api_only = false;
     protected $sort_dir = 'desc';
     protected $sort_key = 'id';
+    protected $show_with = [];
     protected $sortable_keys = ['id'];
-    protected $show_with_count;
+    protected $show_with_count = [];
     protected $reactive_fields = [];
 
     public function create()
@@ -269,7 +270,10 @@ class Controller extends BaseController
             ->when(ModelHelper::hasSoftDeleteLaravel($model), function (Builder $query) {
                 return $query->withTrashed();
             })
-            ->when($this->method === 'show' && null !== $this->show_with_count, function (Builder $query) {
+            ->when($this->method === 'show' && sizeof($this->show_with), function (Builder $query) {
+                return $query->with($this->show_with);
+            })
+            ->when($this->method === 'show' && sizeof($this->show_with_count), function (Builder $query) {
                 return $query->withCount($this->show_with_count);
             })
             ->firstOrFail();
