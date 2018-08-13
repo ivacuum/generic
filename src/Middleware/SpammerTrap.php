@@ -7,8 +7,18 @@ class SpammerTrap
     public function handle($request, \Closure $next)
     {
         /* @var \Illuminate\Http\Request $request */
-        if (!in_array($request->method(), ['POST', 'PUT'])) {
+        $method = $request->method();
+
+        if (!in_array($method, ['POST', 'PUT'])) {
             return $next($request);
+        }
+
+        if ($method === 'POST' && $request->getProtocolVersion() === 'HTTP/1.0') {
+            event(new \Ivacuum\Generic\Events\Stats\SpammerTrappedHttp1);
+
+            throw ValidationException::withMessages([
+                'mail' => [trans('auth.spammer_trapped')],
+            ]);
         }
 
         if (!$request->filled('mail')) {
