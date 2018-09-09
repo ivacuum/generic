@@ -1,16 +1,18 @@
 <?php namespace Ivacuum\Generic\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
 use Ivacuum\Generic\Services\Telegram;
 
 class Internal extends Controller
 {
-    public function ciBuildNotifier(Telegram $telegram)
+    public function ciBuildNotifier(Request $request, Telegram $telegram)
     {
         $emoji = '';
-        $number = request()->input('build.number');
-        $status = strtolower(request()->input('build.status'));
-        $project = request()->input('name');
+        $number = $request->input('build.number');
+        $status = strtolower($request->input('build.status'));
+        $project = $request->input('name');
         $status_text = '';
 
         if ($status === 'success') {
@@ -26,13 +28,13 @@ class Internal extends Controller
         return 'ok';
     }
 
-    public function ip()
+    public function ip(Request $request)
     {
-        return request()->ip();
+        return $request->ip();
     }
 
-    public function telegramWebhook()
+    public function telegramWebhook(Logger $logger, Request $request)
     {
-        \Log::info(json_encode(request()->all()));
+        $logger->info(json_encode($request->all()));
     }
 }
