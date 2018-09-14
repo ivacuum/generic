@@ -34,6 +34,7 @@ class LocaleServiceProvider extends ServiceProvider
         }
 
         setlocale(LC_ALL, config("cfg.locales.{$locale}.posix"));
+        setlocale(LC_NUMERIC, 'C');
         Carbon::setLocale($locale);
 
         if ($locale !== $default_locale) {
