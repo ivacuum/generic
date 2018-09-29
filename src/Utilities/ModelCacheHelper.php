@@ -95,6 +95,12 @@ abstract class ModelCacheHelper
         );
     }
 
+    public function flush(): void
+    {
+        static::$cached_id = null;
+        static::$cached_slug = null;
+    }
+
     public function title($q): ?string
     {
         return is_numeric($q)
