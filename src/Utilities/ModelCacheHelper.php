@@ -16,7 +16,9 @@ abstract class ModelCacheHelper
     protected $model;
     protected $id_field = 'id';
     protected $order_by = 'title';
+    protected $cached_id;
     protected $slug_field = 'slug';
+    protected $cached_slug;
     protected $title_field = 'title';
     protected $cached_fields = ['*'];
     protected $remember_time = 1440;
@@ -49,11 +51,11 @@ abstract class ModelCacheHelper
 
     public function findById(int $id)
     {
-        if (static::$cached_id === null) {
-            static::$cached_id = $this->cachedById();
+        if ($this->cached_id === null) {
+            $this->cached_id = $this->cachedById();
         }
 
-        return isset(static::$cached_id[$id]) ? static::$cached_id[$id] : null;
+        return isset($this->cached_id[$id]) ? $this->cached_id[$id] : null;
     }
 
     public function findByIdOrFail(int $id)
@@ -75,11 +77,11 @@ abstract class ModelCacheHelper
             return null;
         }
 
-        if (static::$cached_slug === null) {
-            static::$cached_slug = $this->cachedBySlug();
+        if ($this->cached_slug === null) {
+            $this->cached_slug = $this->cachedBySlug();
         }
 
-        return isset(static::$cached_slug[$slug]) ? static::$cached_slug[$slug] : null;
+        return isset($this->cached_slug[$slug]) ? $this->cached_slug[$slug] : null;
     }
 
     public function findBySlugOrFail(?string $slug)
@@ -93,12 +95,6 @@ abstract class ModelCacheHelper
         throw (new ModelNotFoundException)->setModel(
             get_class($this->model), $slug
         );
-    }
-
-    public function flush(): void
-    {
-        static::$cached_id = null;
-        static::$cached_slug = null;
     }
 
     public function title($q): ?string
