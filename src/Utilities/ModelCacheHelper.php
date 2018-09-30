@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * До использования необходимо объявить в экземляре класса:
  * - const CACHED_BY_ID_KEY
  * - const CACHED_BY_SLUG_KEY
- * - protected static $cached_id
- * - protected static $cached_slug
  */
 abstract class ModelCacheHelper
 {
