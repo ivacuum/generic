@@ -10,8 +10,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $request;
-
     protected $class;
     protected $method;
     protected $prefix;
@@ -19,8 +17,6 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->request = request();
-
         $this->class = str_replace('App\Http\Controllers\\', '', get_class($this));
         $this->method = array_last(explode('@', \Route::currentRouteAction()));
 
