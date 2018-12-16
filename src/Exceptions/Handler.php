@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
@@ -22,6 +23,10 @@ class Handler extends ExceptionHandler
      */
     public function report(\Exception $e)
     {
+        if ($this->isDatabaseOffline($e)) {
+            return;
+        }
+
         $this->reportValidationException($e);
 
         if ($this->shouldReport($e) && false === config('app.debug', false)) {
@@ -55,6 +60,20 @@ class Handler extends ExceptionHandler
         }
 
         return response()->view('errors.500', ['exception' => $e], 500);
+    }
+
+    protected function isDatabaseOffline(\Exception $e): bool
+    {
+        if ($e instanceof QueryException && $e->getCode() === 2002) {
+            return true;
+        }
+
+        // QueryException может быть не на верхнем уровне, а, например, на третьем
+        if ($previous = $e->getPrevious()) {
+            return $this->isDatabaseOffline($previous);
+        }
+
+        return false;
     }
 
     protected function reportTelegram(\Exception $e): void
