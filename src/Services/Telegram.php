@@ -17,18 +17,20 @@ class Telegram
             $text = "\xF0\x9F\x9A\xA7 local\n{$text}";
         }
 
-        $chat_id = config('cfg.telegram.admin_id');
-        $disable_web_page_preview = true;
+        $params = [
+            'text' => $text,
+            'chat_id' => config('cfg.telegram.admin_id'),
+            'disable_web_page_preview' => true,
+        ];
 
         event(new \Ivacuum\Generic\Events\Stats\TelegramSent);
 
         if (\App::runningInConsole()) {
-            $this->telegram->sendMessage(compact('chat_id', 'text', 'disable_web_page_preview'));
+            $this->telegram->sendMessage($params);
         } else {
-            register_shutdown_function(
-                [$this->telegram, 'sendMessage'],
-                compact('chat_id', 'text', 'disable_web_page_preview')
-            );
+            register_shutdown_function(function () use ($params) {
+                $this->telegram->sendMessage($params);
+            });
         }
     }
 
