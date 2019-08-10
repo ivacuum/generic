@@ -18,7 +18,7 @@ class Auth extends Authenticate
      */
     public function handle($request, \Closure $next, ...$guards)
     {
-        $this->checkStatus($this->authenticate($guards));
+        $this->checkStatus($this->authenticate($request, $guards));
 
         return $next($request);
     }
@@ -31,19 +31,22 @@ class Auth extends Authenticate
      */
     protected function checkStatus($user): void
     {
-        if (!$this->isUserActive($user)) {
+        if ($user !== null && !$this->isUserActive($user)) {
             \Auth::logout();
 
             throw new AuthenticationException('Not active.');
         }
     }
 
-    /**
-     * @param  \App\User $user
-     * @return bool
-     */
-    protected function isUserActive($user): int
+    protected function isUserActive(User $user): bool
     {
         return (int) $user->status === User::STATUS_ACTIVE;
+    }
+
+    protected function redirectTo($request)
+    {
+        if (!$request->expectsJson()) {
+            return action('Auth\SignIn@login');
+        }
     }
 }

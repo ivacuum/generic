@@ -6,38 +6,38 @@ use Illuminate\Support\ServiceProvider;
 
 class LocaleServiceProvider extends ServiceProvider
 {
-    public function boot(Request $base_request)
+    public function boot(Request $baseRequest)
     {
-        $request = $base_request->duplicate();
+        $request = $baseRequest->duplicate();
 
         $locale = $request->segment(1);
         $locales = config('cfg.locales');
-        $default_locale = config('app.locale');
+        $defaultLocale = config('app.locale');
 
         if (is_array($locales) && in_array($locale, array_keys($locales))) {
-            if ($locale !== $default_locale) {
-                $base_request->server->set('LARAVEL_LOCALE', $locale);
+            if ($locale !== $defaultLocale) {
+                $baseRequest->server->set('LARAVEL_LOCALE', $locale);
 
                 // /en/news => //news
                 // /en?something => /?something
-                $request_uri = substr_replace($request->getRequestUri(), '', 1, strlen($locale));
+                $requestUri = substr_replace($request->getRequestUri(), '', 1, strlen($locale));
 
                 // //news => /news
-                $request_uri = strpos($request_uri, '//') === 0 ? substr_replace($request_uri, '', 0, 1) : $request_uri;
+                $requestUri = strpos($requestUri, '//') === 0 ? substr_replace($requestUri, '', 0, 1) : $requestUri;
 
                 // Так можно кэшировать маршруты без указания локализации
                 // Но приходится сложнее строить ссылки
-                $base_request->server->set('REQUEST_URI', $request_uri);
+                $baseRequest->server->set('REQUEST_URI', $requestUri);
             }
         } else {
-            $locale = $default_locale;
+            $locale = $defaultLocale;
         }
 
         setlocale(LC_ALL, config("cfg.locales.{$locale}.posix"));
         setlocale(LC_NUMERIC, 'C');
         Carbon::setLocale($locale);
 
-        if ($locale !== $default_locale) {
+        if ($locale !== $defaultLocale) {
             \App::setLocale($locale);
         }
     }

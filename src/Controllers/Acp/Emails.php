@@ -12,9 +12,9 @@ class Emails extends Controller
         $user_id = request('user_id');
         $template = request('template');
 
-        [$sort_key, $sort_dir] = $this->getSortParams();
+        [$sortKey, $sortDir] = $this->getSortParams();
 
-        $models = Model::orderBy($sort_key, $sort_dir)
+        $models = Model::orderBy($sortKey, $sortDir)
             ->when($user_id, function (Builder $query) use ($user_id) {
                 return $query->where('user_id', $user_id);
             })

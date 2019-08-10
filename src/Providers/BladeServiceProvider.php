@@ -4,7 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function boot()
     {
         $this->lang();
         $this->prop();

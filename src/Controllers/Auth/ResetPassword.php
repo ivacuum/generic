@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Support\Str;
 
 class ResetPassword extends Controller
 {
@@ -13,7 +14,7 @@ class ResetPassword extends Controller
      *
      * @var bool
      */
-    protected $banned_user = false;
+    protected $bannerUser = false;
 
     public function index($token = null)
     {
@@ -27,7 +28,7 @@ class ResetPassword extends Controller
         $credentials = request()->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
 
         $credentials['password_confirmation'] = $credentials['password'];
@@ -37,11 +38,11 @@ class ResetPassword extends Controller
             if (in_array($user->status, $this->userStatusesOkToReset())) {
                 $this->resetOkCallback($user, $password);
             } else {
-                $this->banned_user = true;
+                $this->bannerUser = true;
             }
         });
 
-        if ($this->banned_user) {
+        if ($this->bannerUser) {
             return $this->sendBannedResponse();
         }
 
@@ -61,7 +62,7 @@ class ResetPassword extends Controller
 
         $user->password = $password;
 
-        $user->setRememberToken(str_random(60));
+        $user->setRememberToken(Str::random(60));
         $user->save();
 
         event(new PasswordReset($user));

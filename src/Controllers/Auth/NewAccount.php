@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
 
 class NewAccount extends Controller
 {
@@ -15,6 +16,7 @@ class NewAccount extends Controller
     {
         $data = request()->validate($this->rules());
 
+        /** @var User $user */
         $user = User::where('email', $data['email'])->first();
 
         if (null !== $user) {
@@ -36,7 +38,7 @@ class NewAccount extends Controller
             'email' => $data['email'],
             'status' => User::STATUS_INACTIVE,
             'password' => $data['password'],
-            'activation_token' => str_random(16),
+            'activation_token' => Str::random(16),
         ]);
     }
 
@@ -62,7 +64,7 @@ class NewAccount extends Controller
     {
         return [
             'email' => 'required|string|email|max:125',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
         ];
     }
 }

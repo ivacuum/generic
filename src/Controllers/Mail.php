@@ -65,6 +65,6 @@ class Mail extends Controller
             event(new \Ivacuum\Generic\Events\Stats\MailViewed($email->id));
         }
 
-        return response('', 204);
+        return response()->noContent();
     }
 }
