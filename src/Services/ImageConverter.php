@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 /**
  * Конвертер изображений с помощью библиотеки GraphicsMagick
@@ -171,7 +172,7 @@ class ImageConverter
      */
     protected function tempFile(): string
     {
-        $filename = str_random(6);
+        $filename = Str::random(6);
         $destination = storage_path("app/resize-{$filename}");
 
         register_shutdown_function(function () use ($destination) {

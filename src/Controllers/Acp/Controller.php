@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Ivacuum\Generic\Rules\ConcurrencyControl;
 use Ivacuum\Generic\Utilities\ModelHelper;
 use Ivacuum\Generic\Utilities\NamingHelper;
@@ -104,7 +105,7 @@ class Controller extends BaseController
         $this->authorize('list', $model);
 
         $model_tpl = implode('.', array_map(function ($ary) {
-            return snake_case($ary, '-');
+            return Str::snake($ary, '-');
         }, explode('\\', str_replace('App\\', '', get_class($model)))));
 
         [$sort_key, $sort_dir] = $this->getSortParams();
@@ -281,7 +282,7 @@ class Controller extends BaseController
 
     protected function getModelName()
     {
-        return str_singular(str_replace('Acp\\', 'App\\', $this->class));
+        return Str::singular(str_replace('Acp\\', 'App\\', $this->class));
     }
 
     protected function getSortParams()
@@ -328,7 +329,7 @@ class Controller extends BaseController
             }
 
             $controller = NamingHelper::controllerName($related);
-            $count_field = snake_case($field).'_count';
+            $count_field = Str::snake($field).'_count';
             $count = $model->{$count_field};
 
             if ($count < 1) {
@@ -346,7 +347,7 @@ class Controller extends BaseController
 
     protected function modelResource($model)
     {
-        $resource = str_singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
+        $resource = Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
 
         return (new $resource($model))
             ->additional([
@@ -358,7 +359,7 @@ class Controller extends BaseController
 
     protected function modelResourceCollection($models)
     {
-        $resource = str_singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)).'Collection';
+        $resource = Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)).'Collection';
 
         return (new $resource($models))
             ->additional(['breadcrumbs' => \Breadcrumbs::get()]);

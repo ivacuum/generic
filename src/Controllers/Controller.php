@@ -4,6 +4,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Ivacuum\Generic\Rules\ConcurrencyControl;
 
 class Controller extends BaseController
@@ -18,13 +20,13 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->class = str_replace('App\Http\Controllers\\', '', get_class($this));
-        $this->method = array_last(explode('@', \Route::currentRouteAction()));
+        $this->method = Arr::last(explode('@', \Route::currentRouteAction()));
 
         $this->prefix = implode('.', array_map(function ($ary) {
-            return snake_case($ary, '-');
+            return Str::snake($ary, '-');
         }, explode('\\', $this->class)));
 
-        $this->view = $this->prefix.".".snake_case($this->method);
+        $this->view = $this->prefix.".".Str::snake($this->method);
 
         $this->appendBreadcrumbs();
     }

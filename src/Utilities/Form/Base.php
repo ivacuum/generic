@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Utilities\Form;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
 
 abstract class Base
 {
@@ -67,7 +68,7 @@ abstract class Base
         $class = str_replace('App\\', '', get_class($model));
 
         $this->entity = implode('.', array_map(function ($ary) {
-            return snake_case($ary, '-');
+            return Str::snake($ary, '-');
         }, explode('\\', $class)));
 
         return $this;

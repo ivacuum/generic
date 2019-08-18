@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
+use Illuminate\Support\Str;
+
 class NamingHelper
 {
     /**
@@ -10,7 +12,7 @@ class NamingHelper
      */
     public static function controllerName($class): string
     {
-        return str_plural(class_basename($class));
+        return Str::plural(class_basename($class));
     }
 
     /**
@@ -22,7 +24,7 @@ class NamingHelper
     public static function kebab(string $class_string): string
     {
         return implode('.', array_map(function ($item) {
-            return kebab_case($item);
+            return Str::kebab($item);
         }, explode('\\', $class_string)));
     }
 

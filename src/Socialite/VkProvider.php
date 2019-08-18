@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Socialite;
 
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -63,11 +64,11 @@ class VkProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id' => array_get($user, 'id'),
-            'name' => trim(array_get($user, 'first_name') . ' ' . array_get($user, 'last_name')),
-            'email' => array_get($this->access_token_response, 'email'),
-            'avatar' => array_get($user, 'photo'),
-            'nickname' => array_get($user, 'screen_name'),
+            'id' => Arr::get($user, 'id'),
+            'name' => trim(Arr::get($user, 'first_name') . ' ' . Arr::get($user, 'last_name')),
+            'email' => Arr::get($this->access_token_response, 'email'),
+            'avatar' => Arr::get($user, 'photo'),
+            'nickname' => Arr::get($user, 'screen_name'),
         ]);
     }
 }
