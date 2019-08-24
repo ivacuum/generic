@@ -61,7 +61,7 @@ abstract class Base
         return $this;
     }
 
-    public function model($model): self
+    public function model($model)
     {
         $this->model = $model;
 
