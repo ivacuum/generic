@@ -17,7 +17,7 @@
         <a href="{{ path("$self@show", $model->id) }}">
           {{ str_replace('App\Notifications\\', '', $model->type) }}
         </a>
-        <div class="text-muted small">
+        <div class="tw-text-xs text-muted">
           {{ $model->notifiable_type }} #{{ $model->notifiable_id }}
         </div>
       </td>
@@ -31,7 +31,7 @@
           @elseif (is_array($data))
             <div>
               <span class="text-muted">{{ $index }}:</span>
-              <span class="text-warning">[Array]</span>
+              <span class="tw-text-orange-400">[Array]</span>
             </div>
           @endif
         @endforeach

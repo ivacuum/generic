@@ -1,9 +1,9 @@
 @extends('acp.base')
 
 @section('content_header')
-<div class="row">
-  <div class="col-lg-3">
-    <div class="list-group text-center">
+<div class="lg:tw-flex lg:tw--mx-4">
+  <div class="lg:tw-w-1/4 lg:tw-px-4">
+    <div class="list-group tw-text-center">
       @can('show', $model)
         <a class="list-group-item list-group-item-action {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ path("$self@show", $model) }}">
           {{ trans("$tpl.show") }}
@@ -19,13 +19,13 @@
         @foreach ($show_with_count as $field)
           @php ($related = $model->{$field}()->getRelated())
           @can('list', $related)
-            @php ($controller = \Ivacuum\Generic\Utilities\NamingHelper::controllerName($related))
-            @php ($trans_field = \Ivacuum\Generic\Utilities\NamingHelper::transField($related))
+            @php ($controller = Ivacuum\Generic\Utilities\NamingHelper::controllerName($related))
+            @php ($trans_field = Ivacuum\Generic\Utilities\NamingHelper::transField($related))
             @php ($count_field = snake_case($field).'_count')
             @if ($model->{$count_field})
               <a class="list-group-item list-group-item-action" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
-                <span class="text-muted small text-nowrap">{{ ViewHelper::number($model->{$count_field}) }}</span>
+                <span class="text-muted tw-text-xs tw-whitespace-no-wrap">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
             @endif
           @endcan
@@ -41,8 +41,8 @@
     </div>
     @yield('model_menu_after')
   </div>
-  <div class="col-lg-9">
-    <h2 class="mt-3 mt-lg-0 text-break-word">
+  <div class="lg:tw-w-3/4 lg:tw-px-4">
+    <h2 class="tw-mt-4 lg:tw-mt-0 tw-break-words">
       @include('acp.tpl.back')
       @section('model_title')
         {{ $model->breadcrumb() }}

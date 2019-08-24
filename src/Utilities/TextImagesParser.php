@@ -33,11 +33,19 @@ class TextImagesParser
 
     protected function fotoramaMarkup(array &$result, array $images): void
     {
-        $result[] = '<div class="pic-container js-shortcuts-item">';
-        $result[] = '<div class="pic-centered-container">';
+        $result[] = '<div class="tw--mt-2 tw-mb-6 tw-mobile-wide js-shortcuts-item">';
+        $result[] = '<div class="tw-max-w-1000px tw-mx-auto tw-text-center">';
+
+        $i = 0;
+        $lastIteration = sizeof($images) - 1;
 
         foreach ($images as $image) {
-            $result[] = '<div class="pic-flexible"><img class="markdown-responsive-image pic-group-border-radius js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'"></div>';
+            $lastImageClass = $i === $lastIteration ? 'sm:tw-rounded-b' : '';
+            $firstImageClass = $i === 0 ? 'sm:tw-rounded-t' : '';
+
+            $result[] = '<div><img class="markdown-responsive-image '."{$firstImageClass} {$lastImageClass}".' js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'"></div>';
+
+            $i++;
         }
 
         $result[] = '</div>';
@@ -46,10 +54,10 @@ class TextImagesParser
 
     protected function singleImageMarkup(array &$result, string $image): void
     {
-        $result[] = '<div class="pic-container js-shortcuts-item">';
-        $result[] = '<div class="pic-centered-container">';
+        $result[] = '<div class="tw--mt-2 tw-mb-6 tw-mobile-wide js-shortcuts-item">';
+        $result[] = '<div class="tw-max-w-1000px tw-mx-auto tw-text-center">';
 
-        $result[] = '<img class="markdown-responsive-image rounded-md-pic js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'">';
+        $result[] = '<img class="markdown-responsive-image sm:tw-rounded js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'">';
 
         $result[] = '</div>';
         $result[] = '</div>';
