@@ -3,11 +3,11 @@
 <?php Form::model($model); ?>
 
 @section('content')
-<h3 class="tw-text-2xl">
+<h3 class="text-2xl">
   @include('acp.tpl.back')
   {{ trans("$tpl.create") }}
 </h3>
-<form action="{{ path("$self@store") }}" class="tw-mt-4" method="post" enctype="multipart/form-data">
+<form action="{{ path("$self@store") }}" class="mt-4" method="post" enctype="multipart/form-data">
   {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")

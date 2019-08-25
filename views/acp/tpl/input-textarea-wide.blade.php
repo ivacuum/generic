@@ -1,4 +1,4 @@
-<div class="tw-mb-4">
+<div class="mb-4">
   <label class="{{ $required ? 'input-required' : '' }}">{{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}</label>
   <textarea
     {{ $required ? 'required' : '' }}

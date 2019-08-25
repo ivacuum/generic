@@ -21,7 +21,7 @@
 <table class="table-stats table-adaptive">
   <thead>
   <tr>
-    <th class="md:tw-text-right">ID</th>
+    <th class="md:text-right">ID</th>
     <th></th>
     <th>Пользователь</th>
     <th>Вход</th>
@@ -30,13 +30,13 @@
   <tbody>
   @foreach ($models as $model)
     <tr>
-      <td class="md:tw-text-right">
+      <td class="md:text-right">
         <a href="{{ path("$self@show", $model) }}">
           {{ $model->id }}
         </a>
       </td>
       <td class="bg-{{ $model->provider }}">
-        <a class="tw-text-white hover:tw-text-gray-400" href="{{ $model->externalLink() }}">
+        <a class="text-white hover:text-gray-400" href="{{ $model->externalLink() }}">
           @svg ($model->provider)
         </a>
       </td>

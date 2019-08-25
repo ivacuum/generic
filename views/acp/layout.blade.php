@@ -1,9 +1,9 @@
 @extends('acp.base')
 
 @section('content_header')
-<div class="lg:tw-flex lg:tw--mx-4">
-  <div class="lg:tw-w-1/4 lg:tw-px-4">
-    <div class="list-group tw-text-center">
+<div class="lg:flex lg:-mx-4">
+  <div class="lg:w-1/4 lg:px-4">
+    <div class="list-group text-center">
       @can('show', $model)
         <a class="list-group-item list-group-item-action {{ $view === "$tpl.show" ? 'active' : '' }}" href="{{ path("$self@show", $model) }}">
           {{ trans("$tpl.show") }}
@@ -25,7 +25,7 @@
             @if ($model->{$count_field})
               <a class="list-group-item list-group-item-action" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
                 {{ trans("acp.{$trans_field}.index") }}
-                <span class="text-muted tw-text-xs tw-whitespace-no-wrap">{{ ViewHelper::number($model->{$count_field}) }}</span>
+                <span class="text-muted text-xs whitespace-no-wrap">{{ ViewHelper::number($model->{$count_field}) }}</span>
               </a>
             @endif
           @endcan
@@ -41,8 +41,8 @@
     </div>
     @yield('model_menu_after')
   </div>
-  <div class="lg:tw-w-3/4 lg:tw-px-4">
-    <h2 class="tw-mt-4 lg:tw-mt-0 tw-break-words">
+  <div class="lg:w-3/4 lg:px-4">
+    <h2 class="mt-4 lg:mt-0 break-words">
       @include('acp.tpl.back')
       @section('model_title')
         {{ $model->breadcrumb() }}

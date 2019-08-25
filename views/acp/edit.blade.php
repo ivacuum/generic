@@ -3,7 +3,7 @@
 <?php Form::model($model); ?>
 
 @section('content')
-<form action="{{ path("$self@update", $model) }}" class="tw-mt-4" method="post" enctype="multipart/form-data">
+<form action="{{ path("$self@update", $model) }}" class="mt-4" method="post" enctype="multipart/form-data">
   {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")

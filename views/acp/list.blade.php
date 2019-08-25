@@ -1,10 +1,10 @@
 @extends('acp.base')
 
 @section('content')
-<div class="tw-flex tw-items-center tw-flex-wrap tw-mb-2 tw--mt-2">
-  <h3 class="tw-mb-1 tw-mr-4">
+<div class="flex items-center flex-wrap mb-2 -mt-2">
+  <h3 class="mb-1 mr-4">
     {{ trans("$tpl.index") }}
-    <span class="tw-text-base text-muted tw-whitespace-no-wrap">
+    <span class="text-base text-muted whitespace-no-wrap">
       {{ $models instanceof Illuminate\Support\Collection
           ? ViewHelper::number(sizeof($models))
           : ViewHelper::number($models->total())
@@ -16,7 +16,7 @@
     @include('acp.tpl.create-button')
   @endcan
   @if (!empty($search_form))
-    <form class="tw-my-1 tw-mr-2">
+    <form class="my-1 mr-2">
       <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
     </form>
   @endif
@@ -26,14 +26,14 @@
 @yield('toolbar')
 
 @if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk', '_pjax'])))
-  <div class="tw-my-2">
-    <a class="btn btn-default tw-my-1" href="{{ path("$self@index") }}">
+  <div class="my-2">
+    <a class="btn btn-default my-1" href="{{ path("$self@index") }}">
       {{ trans('acp.reset_filters') }}
     </a>
     @foreach ($filters as $key => $value)
-      <a class="btn btn-default tw-my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
+      <a class="btn btn-default my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
         {{ $key }}: {{ $value }}
-        <span class="tw-text-red-600">
+        <span class="text-red-600">
           @svg (times)
         </span>
       </a>

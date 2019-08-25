@@ -2,7 +2,7 @@
 $current = array_keys($values, request($field))[0];
 $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
 ?>
-<div class="dropdown tw-my-1 tw-mr-2 {{ $class ?? '' }}">
+<div class="dropdown my-1 mr-2 {{ $class ?? '' }}">
   <a class="btn btn-default dropdown-toggle" href="#" data-toggle="dropdown">
     <span class="text-muted">
       @svg (filter)
