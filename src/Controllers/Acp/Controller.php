@@ -1,7 +1,6 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Ivacuum\Generic\Rules\ConcurrencyControl;
 use Ivacuum\Generic\Utilities\ModelHelper;
 use Ivacuum\Generic\Utilities\NamingHelper;
@@ -105,7 +104,7 @@ class Controller extends BaseController
         $this->authorize('list', $model);
 
         $model_tpl = implode('.', array_map(function ($ary) {
-            return Str::snake($ary, '-');
+            return \Str::snake($ary, '-');
         }, explode('\\', str_replace('App\\', '', get_class($model)))));
 
         [$sort_key, $sort_dir] = $this->getSortParams();
@@ -211,21 +210,21 @@ class Controller extends BaseController
         }
 
         request()->validate([
-            ConcurrencyControl::FIELD => [new ConcurrencyControl($model->updated_at)]
+            ConcurrencyControl::FIELD => [new ConcurrencyControl($model->updated_at)],
         ]);
     }
 
     protected function sanitizeData(array $data)
     {
-        return;
+        return [];
     }
 
     protected function sanitizeRequest()
     {
         $data = request()->all();
 
-        if (is_array($sanitized_data = $this->sanitizeData($data))) {
-            request()->replace($sanitized_data);
+        if (is_array($sanitizeData = $this->sanitizeData($data))) {
+            request()->replace($sanitizeData);
         }
     }
 
@@ -236,14 +235,14 @@ class Controller extends BaseController
     {
         \Breadcrumbs::push(
             $model->breadcrumb(),
-            str_replace('.', '/', $this->prefix)."/{$model->getRouteKey()}"
+            str_replace('.', '/', $this->prefix) . "/{$model->getRouteKey()}"
         );
 
         \Breadcrumbs::push(trans($this->view));
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool|null
      */
     protected function destroyModel($model)
@@ -260,7 +259,7 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  integer $id
+     * @param int $id
      * @return \Ivacuum\Generic\Models\Model
      */
     protected function getModel($id)
@@ -282,7 +281,7 @@ class Controller extends BaseController
 
     protected function getModelName()
     {
-        return Str::singular(str_replace('Acp\\', 'App\\', $this->class));
+        return \Str::singular(str_replace('Acp\\', 'App\\', $this->class));
     }
 
     protected function getSortParams()
@@ -329,7 +328,7 @@ class Controller extends BaseController
             }
 
             $controller = NamingHelper::controllerName($related);
-            $count_field = Str::snake($field).'_count';
+            $count_field = \Str::snake($field) . '_count';
             $count = $model->{$count_field};
 
             if ($count < 1) {
@@ -347,7 +346,7 @@ class Controller extends BaseController
 
     protected function modelResource($model)
     {
-        $resource = Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
+        $resource = \Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
 
         return (new $resource($model))
             ->additional([
@@ -359,7 +358,7 @@ class Controller extends BaseController
 
     protected function modelResourceCollection($models)
     {
-        $resource = Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)).'Collection';
+        $resource = \Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)) . 'Collection';
 
         return (new $resource($models))
             ->additional(['breadcrumbs' => \Breadcrumbs::get()]);
@@ -376,7 +375,7 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Database\Eloquent\Model
      */
     protected function newModelDefaults($model)
@@ -391,7 +390,7 @@ class Controller extends BaseController
     /**
      * Перенаправление после удаления записи
      *
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return array
      */
     protected function redirectAfterDestroy($model)

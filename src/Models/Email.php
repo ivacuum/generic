@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Электронное письмо
  *
- * @property integer $id
- * @property integer $user_id
- * @property string  $to
- * @property string  $template
- * @property integer $clicks
- * @property integer $views
+ * @property int $id
+ * @property int $user_id
+ * @property string $to
+ * @property string $template
+ * @property int $clicks
+ * @property int $views
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *

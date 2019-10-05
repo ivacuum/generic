@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
  * Метрика
  *
  * @property \Illuminate\Support\Carbon $date
- * @property string  $event
- * @property integer $count
+ * @property string $event
+ * @property int $count
  *
  * @mixin \Eloquent
  */

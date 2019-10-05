@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -26,7 +27,7 @@ abstract class ModelCacheHelper
      */
     public function cachedById()
     {
-        return \Cache::remember(static::CACHED_BY_ID_KEY, now()->addMinutes($this->remember_time), function () {
+        return \Cache::remember(static::CACHED_BY_ID_KEY, CarbonInterval::minutes($this->remember_time), function () {
             return $this->model->where($this->slug_field, '<>', '')
                 ->orderBy($this->order_by)
                 ->get($this->cached_fields)
@@ -39,7 +40,7 @@ abstract class ModelCacheHelper
      */
     public function cachedBySlug()
     {
-        return \Cache::remember(static::CACHED_BY_SLUG_KEY, now()->addMinutes($this->remember_time), function () {
+        return \Cache::remember(static::CACHED_BY_SLUG_KEY, CarbonInterval::minutes($this->remember_time), function () {
             return $this->model->where($this->slug_field, '<>', '')
                 ->orderBy($this->order_by)
                 ->get($this->cached_fields)

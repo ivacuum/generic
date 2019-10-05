@@ -1,7 +1,5 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
-use Illuminate\Support\Str;
-
 class RouteHelper
 {
     public static function crud(string $controller, ?string $prefix = null, string $param = 'id'): void
@@ -44,7 +42,7 @@ class RouteHelper
         }
 
         return implode('/', array_map(function ($ary) {
-            return Str::snake($ary, '-');
-        }, explode('\\', Str::after($controller, 'Acp\\'))));
+            return \Str::snake($ary, '-');
+        }, explode('\\', \Str::after($controller, 'Acp\\'))));
     }
 }

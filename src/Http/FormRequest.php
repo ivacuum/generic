@@ -4,7 +4,7 @@ use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 
 abstract class FormRequest extends BaseFormRequest
 {
-    protected function validationData(): array
+    public function validationData(): array
     {
         if (!method_exists($this, 'sanitize')) {
             return parent::validationData();

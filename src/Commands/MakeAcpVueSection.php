@@ -1,7 +1,5 @@
 <?php namespace Ivacuum\Generic\Commands;
 
-use Illuminate\Support\Str;
-
 class MakeAcpVueSection extends MakeAcpSection
 {
     protected $signature = 'make:acp-vue-section {model} {base}';
@@ -19,8 +17,8 @@ class MakeAcpVueSection extends MakeAcpSection
     {
         $this->base = $this->argument('base');
         $this->model = $this->argument('model');
-        $this->base_plural = Str::plural($this->base);
-        $this->model_plural = Str::plural($this->model);
+        $this->base_plural = \Str::plural($this->base);
+        $this->model_plural = \Str::plural($this->model);
         $this->base_plural_lower = mb_strtolower($this->base_plural);
         $this->model_plural_lower = mb_strtolower($this->model_plural);
 

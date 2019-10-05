@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\PasswordBroker;
-use Illuminate\Support\Str;
 
 class ResetPassword extends Controller
 {
@@ -62,7 +61,7 @@ class ResetPassword extends Controller
 
         $user->password = $password;
 
-        $user->setRememberToken(Str::random(60));
+        $user->setRememberToken(\Str::random(60));
         $user->save();
 
         event(new PasswordReset($user));

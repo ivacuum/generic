@@ -44,7 +44,7 @@ class BladeServiceProvider extends ServiceProvider
 
     protected function prop()
     {
-        \Blade::directive('prop', function ($expression) {
+        \Blade::directive('prop', function () {
             return '<?php echo \Ivacuum\Generic\Utilities\Vue::prop($expression); ?>';
         });
     }

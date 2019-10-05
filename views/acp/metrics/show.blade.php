@@ -13,8 +13,9 @@
     </tr>
   </thead>
   <tbody>
+    <?php /** @var Illuminate\Support\Carbon $date */ ?>
     @for ($date = $last_day; $first_day->lte($date); $date->subDay())
-      @php ($day = $date->toDateString())
+      <?php $day = $date->toDateString() ?>
       <tr>
         <td>{{ $day }}</td>
         <td class="md:text-right whitespace-no-wrap">{{ isset($metrics[$day]) ? ViewHelper::number($metrics[$day]) : '' }}</td>

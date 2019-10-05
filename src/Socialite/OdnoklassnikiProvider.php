@@ -1,6 +1,5 @@
 <?php namespace Ivacuum\Generic\Socialite;
 
-use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -51,11 +50,11 @@ class OdnoklassnikiProvider extends AbstractProvider implements ProviderInterfac
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id'       => Arr::get($user, 'uid'),
+            'id'       => \Arr::get($user, 'uid'),
             'nickname' => null,
-            'name'     => Arr::get($user, 'name'),
-            'email'    => Arr::get($user, 'email'),
-            'avatar'   => Arr::get($user, 'pic190x190'),
+            'name'     => \Arr::get($user, 'name'),
+            'email'    => \Arr::get($user, 'email'),
+            'avatar'   => \Arr::get($user, 'pic190x190'),
         ]);
     }
 

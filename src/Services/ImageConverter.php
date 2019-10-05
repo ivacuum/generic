@@ -1,7 +1,6 @@
 <?php namespace Ivacuum\Generic\Services;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 
 /**
  * Конвертер изображений с помощью библиотеки GraphicsMagick
@@ -120,14 +119,6 @@ class ImageConverter
         return $this;
     }
 
-    /**
-     * Размеры миниатюры
-     *
-     * @param  integer $width
-     * @param  integer $height
-     * @param  string  $mark
-     * @return $this
-     */
     public function resize(int $width, int $height, string $mark = '>'): self
     {
         $this->size = "-size {$width}x{$height}";
@@ -151,15 +142,9 @@ class ImageConverter
         return $source;
     }
 
-    /**
-     * Качество jpg на выходе
-     *
-     * @param  integer $quality 1–100
-     * @return $this
-     */
     public function quality(int $quality): self
     {
-        $this->quality = "-quality {$quality}";
+        $this->quality = "-quality {$quality}"; // 1-100
 
         return $this;
     }
@@ -172,7 +157,7 @@ class ImageConverter
      */
     protected function tempFile(): string
     {
-        $filename = Str::random(6);
+        $filename = \Str::random(6);
         $destination = storage_path("app/resize-{$filename}");
 
         register_shutdown_function(function () use ($destination) {

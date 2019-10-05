@@ -1,7 +1,5 @@
 <?php namespace Ivacuum\Generic\Commands;
 
-use Illuminate\Support\Arr;
-
 class SitemapBuild extends Command
 {
     protected $signature = 'app:sitemap-build {threshold=50000}';
@@ -71,10 +69,10 @@ class SitemapBuild extends Command
 
     protected function page($locs, $priorities = "1", string $changefreq = 'daily', string $lastmod = ''): void
     {
-        foreach (Arr::wrap($locs) as $loc) {
+        foreach (\Arr::wrap($locs) as $loc) {
             $loc = "{$this->prefix}/{$loc}";
             $lastmod = $lastmod ?: $this->now;
-            $priority = is_array($priorities) ? Arr::random($priorities) : $priorities;
+            $priority = is_array($priorities) ? \Arr::random($priorities) : $priorities;
 
             $this->pages[] = compact('loc', 'lastmod', 'changefreq', 'priority');
 

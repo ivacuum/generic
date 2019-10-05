@@ -3,7 +3,6 @@
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Str;
 
 class NewAccount extends Controller
 {
@@ -38,7 +37,7 @@ class NewAccount extends Controller
             'email' => $data['email'],
             'status' => User::STATUS_INACTIVE,
             'password' => $data['password'],
-            'activation_token' => Str::random(16),
+            'activation_token' => \Str::random(16),
         ]);
     }
 

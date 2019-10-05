@@ -5,11 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Уведомление
  *
- * @property integer $id
- * @property string  $type
- * @property integer $notifiable_id
- * @property string  $notifiable_type
- * @property string  $data
+ * @property int $id
+ * @property string $type
+ * @property int $notifiable_id
+ * @property string $notifiable_type
+ * @property string $data
  * @property \Illuminate\Support\Carbon $read_at
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
