@@ -1,32 +1,20 @@
 <?php namespace Ivacuum\Generic\Utilities;
 
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
 use Ivacuum\Generic\Rules\ConcurrencyControl;
 
 class ViewHelper
 {
-    protected static $thousands_separator = '&thinsp;';
+    protected static $thousandsSeparator = '&thinsp;';
 
-    protected $decimal;
-
-    public function __construct()
+    public function avatarBg(int $id): string
     {
-        $this->decimal = new \NumberFormatter('ru_RU', \NumberFormatter::DECIMAL);
-        $this->decimal->setAttribute(\NumberFormatter::FRACTION_DIGITS, 0);
-        $this->decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, static::$thousands_separator);
+        return config('cfg.avatar_bg')[$id % sizeof(config('cfg.avatar_bg'))];
     }
 
-    public function avatarBg($id): string
-    {
-        return config('cfg.avatar_bg')[$id % 15];
-    }
-
-    /**
-     * @param  \Illuminate\Support\Carbon|null $date
-     * @return string
-     */
-    public function dateShort($date): string
+    public function dateShort(?CarbonInterface $date): string
     {
         static $year;
 
@@ -55,12 +43,8 @@ class ViewHelper
         return new HtmlString('<input hidden type="text" name="mail" value="'.old("mail").'">');
     }
 
-    public function metaDescription(string $description, string $view, array $replace = []): string
+    public function metaDescription(string $view, array $replace = []): string
     {
-        if ($description) {
-            return $description;
-        }
-
         if (trans("meta_description.{$view}") !== "meta_description.{$view}") {
             return trans("meta_description.{$view}", $replace);
         }
@@ -68,12 +52,8 @@ class ViewHelper
         return '';
     }
 
-    public function metaKeywords(string $keywords, string $view, array $replace = []): string
+    public function metaKeywords(string $view, array $replace = []): string
     {
-        if ($keywords) {
-            return $keywords;
-        }
-
         if (trans("meta_keywords.{$view}") !== "meta_keywords.{$view}") {
             return trans("meta_keywords.{$view}", $replace);
         }
@@ -81,12 +61,8 @@ class ViewHelper
         return '';
     }
 
-    public function metaTitle(string $title, string $view, array $replace = []): string
+    public function metaTitle(string $view, array $replace = []): string
     {
-        if ($title) {
-            return $title;
-        }
-
         if (trans("meta_title.{$view}") !== "meta_title.{$view}") {
             return trans("meta_title.{$view}", $replace);
         }
@@ -100,24 +76,28 @@ class ViewHelper
 
     public function modelFieldTrans(string $model, string $field): string
     {
-        $trans_key = "model.$model.$field";
+        $transKey = "model.$model.$field";
 
-        if (($text = trans($trans_key)) !== $trans_key) {
+        if (($text = trans($transKey)) !== $transKey) {
             return $text;
         }
 
-        $trans_key_general = "model.$field";
+        $transKeyGeneral = "model.$field";
 
-        if (($text = trans($trans_key_general)) !== $trans_key_general) {
+        if (($text = trans($transKeyGeneral)) !== $transKeyGeneral) {
             return $text;
         }
 
-        return $trans_key;
+        return $transKey;
     }
 
     public function number(int $number): string
     {
-        return $this->decimal->format($number);
+        $decimal = new \NumberFormatter('ru_RU', \NumberFormatter::DECIMAL);
+        $decimal->setAttribute(\NumberFormatter::FRACTION_DIGITS, 0);
+        $decimal->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, static::$thousandsSeparator);
+
+        return $decimal->format($number);
     }
 
     public function numberShort(int $number): string
@@ -135,14 +115,14 @@ class ViewHelper
 
     public function paginatorIteration($paginator, $loop): int
     {
-        $page = $per_page = 0;
+        $page = $perPage = 0;
 
         if ($paginator instanceof LengthAwarePaginator) {
             $page = $paginator->currentPage() - 1;
-            $per_page = $paginator->perPage();
+            $perPage = $paginator->perPage();
         }
 
-        return $page * $per_page + $loop->iteration;
+        return $page * $perPage + $loop->iteration;
     }
 
     public function plural(string $key, int $count): string
@@ -167,6 +147,6 @@ class ViewHelper
         $pow = min($pow, sizeof($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $decimals[$pow]) . static::$thousands_separator . $units[$pow];
+        return round($bytes, $decimals[$pow]) . static::$thousandsSeparator . $units[$pow];
     }
 }

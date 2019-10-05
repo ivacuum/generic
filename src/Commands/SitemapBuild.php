@@ -70,11 +70,16 @@ class SitemapBuild extends Command
     protected function page($locs, $priorities = "1", string $changefreq = 'daily', string $lastmod = ''): void
     {
         foreach (\Arr::wrap($locs) as $loc) {
-            $loc = "{$this->prefix}/{$loc}";
             $lastmod = $lastmod ?: $this->now;
-            $priority = is_array($priorities) ? \Arr::random($priorities) : $priorities;
 
-            $this->pages[] = compact('loc', 'lastmod', 'changefreq', 'priority');
+            $this->pages[] = [
+                'loc' => "{$this->prefix}/{$loc}",
+                'lastmod' => $lastmod,
+                'changefreq' => $changefreq,
+                'priority' => is_array($priorities)
+                    ? \Arr::random($priorities)
+                    : $priorities,
+            ];
 
             $this->incrementCounter();
 

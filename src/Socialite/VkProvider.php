@@ -6,7 +6,7 @@ use Laravel\Socialite\Two\User;
 
 class VkProvider extends AbstractProvider implements ProviderInterface
 {
-    protected $access_token_response;
+    protected $accessTokenResponse;
     protected $fields = ['screen_name', 'photo'];
     protected $revoke = false;
     protected $scopes = ['email'];
@@ -14,7 +14,7 @@ class VkProvider extends AbstractProvider implements ProviderInterface
 
     public function getAccessTokenResponse($code)
     {
-        return $this->access_token_response = parent::getAccessTokenResponse($code);
+        return $this->accessTokenResponse = parent::getAccessTokenResponse($code);
     }
 
     public function revoke()
@@ -65,7 +65,7 @@ class VkProvider extends AbstractProvider implements ProviderInterface
         return (new User)->setRaw($user)->map([
             'id' => \Arr::get($user, 'id'),
             'name' => trim(\Arr::get($user, 'first_name') . ' ' . \Arr::get($user, 'last_name')),
-            'email' => \Arr::get($this->access_token_response, 'email'),
+            'email' => \Arr::get($this->accessTokenResponse, 'email'),
             'avatar' => \Arr::get($user, 'photo'),
             'nickname' => \Arr::get($user, 'screen_name'),
         ]);

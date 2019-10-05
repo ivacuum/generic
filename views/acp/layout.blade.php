@@ -19,9 +19,9 @@
         </a>
       @endcan
       @yield('model_menu')
-      @if (is_array($show_with_count))
+      @if (is_array($showWithCount))
         <?php /** @var string $field */ ?>
-        @foreach ($show_with_count as $field)
+        @foreach ($showWithCount as $field)
           <?php $related = $model->{$field}()->getRelated() ?>
           @can('list', $related)
             <?php $controller = Ivacuum\Generic\Utilities\NamingHelper::controllerName($related) ?>

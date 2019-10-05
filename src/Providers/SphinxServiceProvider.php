@@ -11,12 +11,12 @@ class SphinxServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Sphinx::class, function () {
-            $host = config('cfg.sphinx.host');
-            $port = config('cfg.sphinx.port');
-            $socket = config('cfg.sphinx.socket');
-
-            $connection = new SimpleConnection();
-            $connection->setParams(compact('host', 'port', 'socket'));
+            $connection = new SimpleConnection;
+            $connection->setParams([
+                'host' => config('cfg.sphinx.host'),
+                'port' => config('cfg.sphinx.port'),
+                'socket' => config('cfg.sphinx.socket'),
+            ]);
 
             return new Sphinx($connection);
         });

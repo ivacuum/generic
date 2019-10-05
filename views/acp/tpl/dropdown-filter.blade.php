@@ -9,7 +9,7 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
     <span class="text-muted">
       @svg (filter)
     </span>
-    {{ $title ?? ViewHelper::modelFieldTrans($model_tpl, $field) }}: {{ $current }}
+    {{ $title ?? ViewHelper::modelFieldTrans($modelTpl, $field) }}: {{ $current }}
   </a>
   <div class="dropdown-menu">
     @foreach ($values as $name => $value)

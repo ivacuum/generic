@@ -23,17 +23,17 @@ class PaginatorScope implements Scope
 
     protected function addPaginator(Builder $builder)
     {
-        $builder->macro('paginator', function (Builder $builder, $total, $per_page = null, $columns = ['*'], $page_name = 'page', $page = null) {
-            $page = $page ?: Paginator::resolveCurrentPage($page_name);
-            $per_page = $per_page ?: $builder->getModel()->getPerPage();
+        $builder->macro('paginator', function (Builder $builder, $total, $perPage = null, $columns = ['*'], $pageName = 'page', $page = null) {
+            $page = $page ?: Paginator::resolveCurrentPage($pageName);
+            $perPage = $perPage ?: $builder->getModel()->getPerPage();
 
             $results = $total
-                ? $builder->forPage($page, $per_page)->get($columns)
+                ? $builder->forPage($page, $perPage)->get($columns)
                 : $builder->getModel()->newCollection();
 
-            return new LengthAwarePaginator($results, $total, $per_page, $page, [
+            return new LengthAwarePaginator($results, $total, $perPage, $page, [
                 'path' => Paginator::resolveCurrentPath(),
-                'pageName' => $page_name,
+                'pageName' => $pageName,
             ]);
         });
     }

@@ -30,6 +30,6 @@ class ForgotPassword extends Controller
     {
         event(new \Ivacuum\Generic\Events\Stats\UserPasswordReminded);
 
-        return back()->with('message', trans($response, compact('email')));
+        return back()->with('message', trans($response, ['email' => $email]));
     }
 }

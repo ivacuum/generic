@@ -10,6 +10,6 @@ class Notifications extends Controller
             ->paginate()
             ->withPath(path("{$this->class}@index"));
 
-        return view($this->view, compact('models'));
+        return view($this->view, ['models' => $models]);
     }
 }

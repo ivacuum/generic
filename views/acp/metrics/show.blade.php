@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <?php /** @var Illuminate\Support\Carbon $date */ ?>
-    @for ($date = $last_day; $first_day->lte($date); $date->subDay())
+    @for ($date = $lastDay; $firstDay->lte($date); $date->subDay())
       <?php $day = $date->toDateString() ?>
       <tr>
         <td>{{ $day }}</td>

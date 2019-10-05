@@ -15,7 +15,11 @@ class Metrics extends BaseController
             $metrics[$item->event][$item->date] = $item->count;
         });
 
-        return view($this->view, compact('dates', 'events', 'metrics'));
+        return view($this->view, [
+            'dates' => $dates,
+            'events' => $events,
+            'metrics' => $metrics,
+        ]);
     }
 
     public function show($event)
@@ -23,10 +27,14 @@ class Metrics extends BaseController
         \Breadcrumbs::push($event);
 
         $metrics = Model::where('event', $event)->get();
-        $first_day = sizeof($metrics) ? Carbon::parse($metrics->first()->date) : now();
-        $last_day = sizeof($metrics) ? Carbon::parse($metrics->last()->date) : now();
-        $metrics = $metrics->pluck('count', 'date');
+        $lastDay = sizeof($metrics) ? Carbon::parse($metrics->last()->date) : now();
+        $firstDay = sizeof($metrics) ? Carbon::parse($metrics->first()->date) : now();
 
-        return view($this->view, compact('event', 'first_day', 'last_day', 'metrics'));
+        return view($this->view, [
+            'event' => $event,
+            'lastDay' => $lastDay,
+            'metrics' => $metrics->pluck('count', 'date'),
+            'firstDay' => $firstDay,
+        ]);
     }
 }

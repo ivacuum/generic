@@ -23,7 +23,7 @@ class Mail extends Controller
         }
 
         if ($email->user_id) {
-            /* @var User $user */
+            /** @var User $user */
             if (null !== $user = User::find($email->user_id)) {
                 $user->activate();
 
@@ -46,7 +46,7 @@ class Mail extends Controller
     {
         $user = request()->user();
 
-        /* @var Email $email */
+        /** @var Email $email */
         $email = Email::findOrFail($id);
 
         abort_if(!$email->hasValidTimestamp($timestamp) || $email->user_id !== $user->id, 404);

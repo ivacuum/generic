@@ -27,7 +27,7 @@ class Odnoklassniki extends Base
             return redirect(path('Auth\SignIn@index'));
         }
 
-        /* @var \Laravel\Socialite\Two\User $userdata */
+        /** @var \Laravel\Socialite\Two\User $userdata */
         $userdata = $odnoklassniki->user();
         $identity = $this->externalIdentity($userdata);
 

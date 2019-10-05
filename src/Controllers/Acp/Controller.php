@@ -7,24 +7,24 @@ use Ivacuum\Generic\Utilities\NamingHelper;
 
 class Controller extends BaseController
 {
-    protected $api_only = false;
-    protected $sort_dir = 'desc';
-    protected $sort_key = 'id';
-    protected $show_with = [];
-    protected $sortable_keys = ['id'];
-    protected $show_with_count = [];
-    protected $reactive_fields = [];
+    protected $apiOnly = false;
+    protected $sortDir = 'desc';
+    protected $sortKey = 'id';
+    protected $showWith = [];
+    protected $sortableKeys = ['id'];
+    protected $showWithCount = [];
+    protected $reactiveFields = [];
 
     public function create()
     {
-        if ($this->api_only && !$this->isApiRequest()) {
+        if ($this->shouldReturnApiOnlyResponse()) {
             return $this->apiOnlyResponse();
         }
 
         $model = $this->createGeneric();
 
         if (!$this->isApiRequest()) {
-            return view($this->getView(), compact('model'));
+            return view($this->getView(), ['model' => $model]);
         }
 
         return array_merge(
@@ -65,14 +65,14 @@ class Controller extends BaseController
 
     public function edit($id)
     {
-        if ($this->api_only && !$this->isApiRequest()) {
+        if ($this->shouldReturnApiOnlyResponse()) {
             return $this->apiOnlyResponse();
         }
 
         $model = $this->editGeneric($id);
 
         if (!$this->isApiRequest()) {
-            return view($this->getView(), compact('model'));
+            return view($this->getView(), ['model' => $model]);
         }
 
         return array_merge(
@@ -95,7 +95,7 @@ class Controller extends BaseController
 
     public function indexBefore()
     {
-        if ($this->api_only && !$this->isApiRequest()) {
+        if ($this->shouldReturnApiOnlyResponse()) {
             return $this->apiOnlyResponse();
         }
 
@@ -103,23 +103,31 @@ class Controller extends BaseController
 
         $this->authorize('list', $model);
 
-        $model_tpl = implode('.', array_map(function ($ary) {
+        $modelTpl = implode('.', array_map(function ($ary) {
             return \Str::snake($ary, '-');
         }, explode('\\', str_replace('App\\', '', get_class($model)))));
 
-        [$sort_key, $sort_dir] = $this->getSortParams();
+        [$sortKey, $sortDir] = $this->getSortParams();
 
-        \UrlHelper::setSortKey($sort_key)
-            ->setDefaultSortDir($this->sort_dir);
+        \UrlHelper::setSortKey($sortKey)
+            ->setDefaultSortDir($this->sortDir);
 
         $q = request('q');
 
-        view()->share(compact('model', 'model_tpl', 'q', 'sort_dir', 'sort_key'));
+        view()->share([
+            'q' => $q,
+            'model' => $model,
+            'sortDir' => $sortDir,
+            'sortKey' => $sortKey,
+            'modelTpl' => $modelTpl,
+        ]);
+
+        return null;
     }
 
     public function show($id)
     {
-        if ($this->api_only && !$this->isApiRequest()) {
+        if ($this->shouldReturnApiOnlyResponse()) {
             return $this->apiOnlyResponse();
         }
 
@@ -128,7 +136,7 @@ class Controller extends BaseController
         $this->modelAccessibleRelations($model);
 
         if (!$this->isApiRequest()) {
-            return view($this->getView(), compact('model'));
+            return view($this->getView(), ['model' => $model]);
         }
 
         return $this->modelResource($model);
@@ -142,7 +150,7 @@ class Controller extends BaseController
 
         \Breadcrumbs::push($model->breadcrumb());
 
-        view()->share(['meta_title' => $model->breadcrumb()]);
+        view()->share(['metaTitle' => $model->breadcrumb()]);
 
         return $model;
     }
@@ -199,7 +207,7 @@ class Controller extends BaseController
         parent::appendViewSharedVars();
 
         view()->share([
-            'show_with_count' => $this->show_with_count,
+            'showWithCount' => $this->showWithCount,
         ]);
     }
 
@@ -270,11 +278,11 @@ class Controller extends BaseController
             ->when(ModelHelper::hasSoftDeleteLaravel($model), function (Builder $query) {
                 return $query->withTrashed();
             })
-            ->when($this->method === 'show' && sizeof($this->show_with), function (Builder $query) {
-                return $query->with($this->show_with);
+            ->when($this->method === 'show' && sizeof($this->showWith), function (Builder $query) {
+                return $query->with($this->showWith);
             })
-            ->when($this->method === 'show' && sizeof($this->show_with_count), function (Builder $query) {
-                return $query->withCount($this->show_with_count);
+            ->when($this->method === 'show' && sizeof($this->showWithCount), function (Builder $query) {
+                return $query->withCount($this->showWithCount);
             })
             ->firstOrFail();
     }
@@ -286,18 +294,18 @@ class Controller extends BaseController
 
     protected function getSortParams()
     {
-        $sort_dir = request('sd', $this->sort_dir);
-        $sort_key = request('sk', $this->sort_key);
+        $sortDir = request('sd', $this->sortDir);
+        $sortKey = request('sk', $this->sortKey);
 
-        if (!in_array($sort_dir, ['asc', 'desc'])) {
-            $sort_dir = $this->sort_dir;
+        if (!in_array($sortDir, ['asc', 'desc'])) {
+            $sortDir = $this->sortDir;
         }
 
-        if (!in_array($sort_key, $this->sortable_keys)) {
-            $sort_key = $this->sort_key;
+        if (!in_array($sortKey, $this->sortableKeys)) {
+            $sortKey = $this->sortKey;
         }
 
-        return [$sort_key, $sort_dir];
+        return [$sortKey, $sortDir];
     }
 
     protected function getView()
@@ -312,15 +320,15 @@ class Controller extends BaseController
 
     protected function modelAccessibleRelations($model): array
     {
-        /* @var \Illuminate\Database\Eloquent\Model $model */
-        if (sizeof($this->show_with_count) < 1) {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        if (sizeof($this->showWithCount) < 1) {
             return [];
         }
 
         $me = \Auth::user();
         $result = [];
 
-        foreach ($this->show_with_count as $field) {
+        foreach ($this->showWithCount as $field) {
             $related = $model->{$field}()->getRelated();
 
             if (!$me->can('list', $related)) {
@@ -335,10 +343,11 @@ class Controller extends BaseController
                 continue;
             }
 
-            $path = path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]);
-            $i18n_index = NamingHelper::transField($related);
-
-            $result[] = compact('path', 'count', 'i18n_index');
+            $result[] = [
+                'path' => path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]),
+                'count' => $count,
+                'i18n_index' => NamingHelper::transField($related),
+            ];
         }
 
         return $result;
@@ -380,7 +389,7 @@ class Controller extends BaseController
      */
     protected function newModelDefaults($model)
     {
-        foreach ($this->reactive_fields as $field) {
+        foreach ($this->reactiveFields as $field) {
             $model->{$field} = null;
         }
 
@@ -416,6 +425,11 @@ class Controller extends BaseController
     protected function rules($model = null)
     {
         return [];
+    }
+
+    protected function shouldReturnApiOnlyResponse(): bool
+    {
+        return $this->apiOnly && !$this->isApiRequest();
     }
 
     protected function storeModel()

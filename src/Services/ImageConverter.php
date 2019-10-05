@@ -7,11 +7,11 @@ use Illuminate\Http\UploadedFile;
  */
 class ImageConverter
 {
-    protected $auth_orient;
+    protected $authOrient;
     protected $crop;
     protected $filter;
     protected $filters = ['point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'lanczos', 'bessel', 'sinc'];
-    protected $first_frame;
+    protected $firstFrame;
     protected $gravity;
     protected $gravities = ['northwest', 'north', 'northeast', 'west', 'center', 'east', 'southwest', 'south', 'southeast'];
     protected $quality;
@@ -25,7 +25,7 @@ class ImageConverter
      */
     public function autoOrient()
     {
-        $this->auth_orient = '-auto-orient';
+        $this->authOrient = '-auto-orient';
 
         return $this;
     }
@@ -48,7 +48,7 @@ class ImageConverter
             'convert',
             $this->size,
             escapeshellarg($this->source($source)),
-            $this->auth_orient,
+            $this->authOrient,
             $this->quality,
             $this->filter, // Фильтр должен быть перед resize
             $this->resize,
@@ -101,7 +101,7 @@ class ImageConverter
      */
     public function firstFrame(): self
     {
-        $this->first_frame = true;
+        $this->firstFrame = true;
 
         return $this;
     }
@@ -135,7 +135,7 @@ class ImageConverter
      */
     public function source(string $source): string
     {
-        if ($this->first_frame) {
+        if ($this->firstFrame) {
             return "{$source}[0]";
         }
 

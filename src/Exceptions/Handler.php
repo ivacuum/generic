@@ -15,7 +15,7 @@ class Handler extends ExceptionHandler
         InvalidStateException::class,
     ];
 
-    protected $report_validation_exception = true;
+    protected $reportValidationException = true;
 
     /**
      * @param  \Exception $e
@@ -76,6 +76,12 @@ class Handler extends ExceptionHandler
         return false;
     }
 
+    protected function shouldReportValidationException(): bool
+    {
+        return $this->reportValidationException
+            && false === config('app.debug', false);
+    }
+
     protected function reportTelegram(\Exception $e): void
     {
         ExceptionHelper::log($e);
@@ -87,10 +93,7 @@ class Handler extends ExceptionHandler
 
     protected function reportValidationException(\Exception $e): void
     {
-        if ($e instanceof ValidationException
-            && $this->report_validation_exception
-            && false === config('app.debug', false)
-        ) {
+        if ($e instanceof ValidationException && $this->shouldReportValidationException()) {
             ExceptionHelper::logValidation($e);
         }
     }

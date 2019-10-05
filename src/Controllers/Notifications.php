@@ -6,11 +6,12 @@ class Notifications extends Controller
 {
     public function index()
     {
+        /** @var \App\User $user */
         $user = request()->user();
         $notifications = $user->notifications;
 
         $user->markNotificationsAsRead();
 
-        return view($this->view, compact('notifications'));
+        return view($this->view, ['notifications' => $notifications]);
     }
 }

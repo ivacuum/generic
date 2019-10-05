@@ -34,28 +34,28 @@ class ExifHelper
             return ['lat' => null, 'lon' => null];
         }
 
-        $lat_ref = $exif['GPSLatitudeRef'];
-        $lon_ref = $exif['GPSLongitudeRef'];
+        $latRef = $exif['GPSLatitudeRef'];
+        $lonRef = $exif['GPSLongitudeRef'];
 
-        $lat_degrees_ary = explode('/', $exif['GPSLatitude'][0]);
-        $lat_minutes_ary = explode('/', $exif['GPSLatitude'][1]);
-        $lat_seconds_ary = explode('/', $exif['GPSLatitude'][2]);
-        $lon_degrees_ary = explode('/', $exif['GPSLongitude'][0]);
-        $lon_minutes_ary = explode('/', $exif['GPSLongitude'][1]);
-        $lon_seconds_ary = explode('/', $exif['GPSLongitude'][2]);
+        $latDegreesAry = explode('/', $exif['GPSLatitude'][0]);
+        $latMinutesAry = explode('/', $exif['GPSLatitude'][1]);
+        $latSecondsAry = explode('/', $exif['GPSLatitude'][2]);
+        $lonDegreesAry = explode('/', $exif['GPSLongitude'][0]);
+        $lonMinutesAry = explode('/', $exif['GPSLongitude'][1]);
+        $lonSecondsAry = explode('/', $exif['GPSLongitude'][2]);
 
-        $lat_degrees = $lat_degrees_ary[0] / $lat_degrees_ary[1];
-        $lat_minutes = $lat_minutes_ary[0] / $lat_minutes_ary[1];
-        $lat_seconds = $lat_seconds_ary[0] / $lat_seconds_ary[1];
-        $lon_degrees = $lon_degrees_ary[0] / $lon_degrees_ary[1];
-        $lon_minutes = $lon_minutes_ary[0] / $lon_minutes_ary[1];
-        $lon_seconds = $lon_seconds_ary[0] / $lon_seconds_ary[1];
+        $latDegrees = $latDegreesAry[0] / $latDegreesAry[1];
+        $latMinutes = $latMinutesAry[0] / $latMinutesAry[1];
+        $latSeconds = $latSecondsAry[0] / $latSecondsAry[1];
+        $lonDegrees = $lonDegreesAry[0] / $lonDegreesAry[1];
+        $lonMinutes = $lonMinutesAry[0] / $lonMinutesAry[1];
+        $lonSeconds = $lonSecondsAry[0] / $lonSecondsAry[1];
 
-        $lat = (float) $lat_degrees + ($lat_minutes * 60 + $lat_seconds) / 3600;
-        $lon = (float) $lon_degrees + ($lon_minutes * 60 + $lon_seconds) / 3600;
+        $lat = (float) $latDegrees + ($latMinutes * 60 + $latSeconds) / 3600;
+        $lon = (float) $lonDegrees + ($lonMinutes * 60 + $lonSeconds) / 3600;
 
-        $lat_ref == 'S' ? $lat *= -1 : false;
-        $lon_ref == 'W' ? $lon *= -1 : false;
+        $latRef == 'S' ? $lat *= -1 : false;
+        $lonRef == 'W' ? $lon *= -1 : false;
 
         $locale = localeconv();
 
@@ -63,6 +63,9 @@ class ExifHelper
         $lat = str_replace($locale['decimal_point'], '.', round($lat, 6));
         $lon = str_replace($locale['decimal_point'], '.', round($lon, 6));
 
-        return compact('lat', 'lon');
+        return [
+            'lat' => $lat,
+            'lon' => $lon,
+        ];
     }
 }

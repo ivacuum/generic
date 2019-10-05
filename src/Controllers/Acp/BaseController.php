@@ -13,11 +13,11 @@ abstract class BaseController extends Controller
 
     protected function beforeCallAction(...$parameters)
     {
-        $method = "{$this->method}Before";
-
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
+        if ($this->method === 'index' && method_exists($this, 'indexBefore')) {
+            return $this->indexBefore();
         }
+
+        return null;
     }
 
     /**

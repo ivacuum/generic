@@ -2,10 +2,10 @@
   @if (isset($svg))
     @svg ($svg)
   @else
-    {{ ViewHelper::modelFieldTrans($model_tpl, $key) }}
+    {{ ViewHelper::modelFieldTrans($modelTpl, $key) }}
   @endif
-  @if ($sort_key === $key)
-    @if ($sort_dir === 'desc')
+  @if ($sortKey === $key)
+    @if ($sortDir === 'desc')
       @svg (angle-down)
     @else
       @svg (angle-up)

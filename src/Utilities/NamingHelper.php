@@ -5,7 +5,7 @@ class NamingHelper
     /**
      * App\PostPhoto => PostPhotos
      *
-     * @param  object $class
+     * @param object $class
      * @return string
      */
     public static function controllerName($class): string
@@ -13,23 +13,18 @@ class NamingHelper
         return \Str::plural(class_basename($class));
     }
 
-    /**
-     * PostPhotos\FunnyEvents => post-photos.funny-events
-     *
-     * @param  string $class_string
-     * @return string
-     */
-    public static function kebab(string $class_string): string
+    // PostPhotos\FunnyEvents => post-photos.funny-events
+    public static function kebab(string $classString): string
     {
         return implode('.', array_map(function ($item) {
             return \Str::kebab($item);
-        }, explode('\\', $class_string)));
+        }, explode('\\', $classString)));
     }
 
     /**
      * App\PostPhoto => post-photos
      *
-     * @param  object $class
+     * @param object $class
      * @return string
      */
     public static function transField($class): string

@@ -25,7 +25,9 @@ class Telegram
 
         event(new \Ivacuum\Generic\Events\Stats\TelegramSent);
 
-        if (\App::runningInConsole()) {
+        if (\App::runningUnitTests()) {
+            return;
+        } elseif (\App::runningInConsole()) {
             $this->telegram->sendMessage($params);
         } else {
             register_shutdown_function(function () use ($params) {
@@ -36,7 +38,7 @@ class Telegram
 
     public function notifyAdminProduction(string $text): void
     {
-        if (\App::environment() !== 'production') {
+        if (!\App::isProduction()) {
             return;
         }
 

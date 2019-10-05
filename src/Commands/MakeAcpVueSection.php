@@ -8,27 +8,27 @@ class MakeAcpVueSection extends MakeAcpSection
     protected $fs;
     protected $base;
     protected $model;
-    protected $base_plural;
-    protected $model_plural;
-    protected $base_plural_lower;
-    protected $model_plural_lower;
+    protected $basePlural;
+    protected $modelPlural;
+    protected $basePluralLower;
+    protected $modelPluralLower;
 
     public function handle()
     {
         $this->base = $this->argument('base');
         $this->model = $this->argument('model');
-        $this->base_plural = \Str::plural($this->base);
-        $this->model_plural = \Str::plural($this->model);
-        $this->base_plural_lower = mb_strtolower($this->base_plural);
-        $this->model_plural_lower = mb_strtolower($this->model_plural);
+        $this->basePlural = \Str::plural($this->base);
+        $this->modelPlural = \Str::plural($this->model);
+        $this->basePluralLower = mb_strtolower($this->basePlural);
+        $this->modelPluralLower = mb_strtolower($this->modelPlural);
 
-        if ($this->fs->exists($this->controllerPath($this->model_plural))) {
-            $this->info("Контроллер [{$this->model_plural}] уже существует");
-        } elseif (!$this->fs->exists($this->controllerPath($this->base_plural))) {
-            $this->info("Контроллер [{$this->base_plural}] не найден");
+        if ($this->fs->exists($this->controllerPath($this->modelPlural))) {
+            $this->info("Контроллер [{$this->modelPlural}] уже существует");
+        } elseif (!$this->fs->exists($this->controllerPath($this->basePlural))) {
+            $this->info("Контроллер [{$this->basePlural}] не найден");
         } else {
             $this->putController();
-            $this->info("Создан контроллер [{$this->model_plural}]");
+            $this->info("Создан контроллер [{$this->modelPlural}]");
         }
 
         $this->putRoute();
@@ -41,13 +41,13 @@ class MakeAcpVueSection extends MakeAcpSection
             $this->putResourceCollection();
         }
 
-        if ($this->fs->exists($this->componentsPath($this->model_plural))) {
-            $this->info("Папка с компонентами [{$this->model_plural}] уже существует");
-        } elseif (!$this->fs->exists($this->componentsPath($this->base_plural))) {
-            $this->info("Папка с компонентами [{$this->base_plural}] не найдена");
+        if ($this->fs->exists($this->componentsPath($this->modelPlural))) {
+            $this->info("Папка с компонентами [{$this->modelPlural}] уже существует");
+        } elseif (!$this->fs->exists($this->componentsPath($this->basePlural))) {
+            $this->info("Папка с компонентами [{$this->basePlural}] не найдена");
         } else {
             $this->putComponents();
-            $this->info("Созданы компоненты [{$this->model_plural}]");
+            $this->info("Созданы компоненты [{$this->modelPlural}]");
         }
 
         $this->replaceModelJsTrans();
@@ -67,22 +67,22 @@ class MakeAcpVueSection extends MakeAcpSection
 
     protected function printVueRoutes(): void
     {
-        if (false !== mb_strpos($this->fs->get($this->routerPath()), "./components/acp/{$this->model_plural}/Index.vue")) {
+        if (false !== mb_strpos($this->fs->get($this->routerPath()), "./components/acp/{$this->modelPlural}/Index.vue")) {
             return;
         }
 
         $this->info('Маршруты для вставки в resources/assets/js/router.js');
 
         echo <<<VUE
-{ path: '{$this->model_plural_lower}', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->model_plural}/Index.vue') },
-{ path: '{$this->model_plural_lower}/create', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->model_plural}/Form.vue') },
+{ path: '{$this->modelPluralLower}', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Index.vue') },
+{ path: '{$this->modelPluralLower}/create', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Form.vue') },
 {
-  path: '{$this->model_plural_lower}/:id',
-  component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->model_plural}/Layout.vue'),
+  path: '{$this->modelPluralLower}/:id',
+  component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Layout.vue'),
   component: () => import(/* webpackChunkName: "acp" */'./components/acp/DefaultItemLayout.vue'),
   children: [
-    { path: '/', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->model_plural}/Show.vue') },
-    { path: 'edit', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->model_plural}/Form.vue') },
+    { path: '/', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Show.vue') },
+    { path: 'edit', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Form.vue') },
   ],
 },
 
@@ -92,8 +92,8 @@ VUE;
     protected function putComponents()
     {
         return $this->fs->copyDirectory(
-            $this->componentsPath($this->base_plural),
-            $this->componentsPath($this->model_plural)
+            $this->componentsPath($this->basePlural),
+            $this->componentsPath($this->modelPlural)
         );
     }
 
@@ -121,7 +121,7 @@ VUE;
 
     protected function replaceModelJsTrans()
     {
-        $path = $this->modelJsPath($this->model_plural);
+        $path = $this->modelJsPath($this->modelPlural);
 
         $this->fs->put($path, preg_replace('/\''.$this->base.'\'/', "'{$this->model}'", $this->fs->get($path)));
     }
@@ -138,10 +138,10 @@ VUE;
 
     protected function resourceReplaceArray(string $var): array
     {
-        $var_plural = "{$var}_plural";
+        $varPlural = "{$var}_plural";
 
         return [
-            "Acp\\{$this->{$var_plural}}",
+            "Acp\\{$this->{$varPlural}}",
             "App\\{$this->{$var}}",
             "class {$this->{$var}}",
             "{$this->{$var}}::class",

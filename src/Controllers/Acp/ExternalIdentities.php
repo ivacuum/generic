@@ -7,14 +7,14 @@ class ExternalIdentities extends Controller
 {
     public function index()
     {
-        $user_id = request('user_id');
+        $userId = request('user_id');
         $provider = request('provider');
 
         $models = Model::orderBy('id', 'desc')
-            ->unless(null === $user_id, function (Builder $query) use ($user_id) {
-                return $query->where('user_id', $user_id);
+            ->unless(null === $userId, function (Builder $query) use ($userId) {
+                return $query->where('user_id', $userId);
             })
-            ->when(null === $user_id, function (Builder $query) {
+            ->when(null === $userId, function (Builder $query) {
                 return $query->where('user_id', '<>', 0);
             })
             ->when($provider, function (Builder $query) use ($provider) {
@@ -23,6 +23,6 @@ class ExternalIdentities extends Controller
             ->paginate()
             ->withPath(path("{$this->class}@index"));
 
-        return view($this->view, compact('models'));
+        return view($this->view, ['models' => $models]);
     }
 }

@@ -15,9 +15,9 @@
   @can('create', $model)
     @include('acp.tpl.create-button')
   @endcan
-  @if (!empty($search_form))
+  @if (!empty($searchForm))
     <form class="my-1 mr-2">
-      <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($model_tpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
+      <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
     </form>
   @endif
   @yield('heading-after-search')

@@ -13,13 +13,13 @@ class ResetPassword extends Controller
      *
      * @var bool
      */
-    protected $bannerUser = false;
+    protected $bannedUser = false;
 
     public function index($token = null)
     {
         abort_unless($token, 404);
 
-        return view('auth.password_reset', compact('token'));
+        return view('auth.password_reset', ['token' => $token]);
     }
 
     public function reset(PasswordBroker $broker)
@@ -32,16 +32,15 @@ class ResetPassword extends Controller
 
         $credentials['password_confirmation'] = $credentials['password'];
 
-        $response = $broker->reset($credentials, function ($user, $password) {
-            /* @var user $user */
+        $response = $broker->reset($credentials, function (User $user, string $password) {
             if (in_array($user->status, $this->userStatusesOkToReset())) {
                 $this->resetOkCallback($user, $password);
             } else {
-                $this->bannerUser = true;
+                $this->bannedUser = true;
             }
         });
 
-        if ($this->bannerUser) {
+        if ($this->bannedUser) {
             return $this->sendBannedResponse();
         }
 
@@ -95,7 +94,7 @@ class ResetPassword extends Controller
     {
         return [
             User::STATUS_INACTIVE,
-            User::STATUS_ACTIVE
+            User::STATUS_ACTIVE,
         ];
     }
 }

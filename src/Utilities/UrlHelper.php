@@ -2,8 +2,8 @@
 
 class UrlHelper
 {
-    protected $sort_key;
-    protected $default_sort_dir;
+    protected $sortKey;
+    protected $defaultSortDir;
 
     public function edit(string $self, $model): string
     {
@@ -30,28 +30,28 @@ class UrlHelper
 
     public function setDefaultSortDir(string $dir): self
     {
-        $this->default_sort_dir = $dir;
+        $this->defaultSortDir = $dir;
 
         return $this;
     }
 
     public function setSortKey(string $key): self
     {
-        $this->sort_key = $key;
+        $this->sortKey = $key;
 
         return $this;
     }
 
-    public function sort(string $key, ?string $default_dir = null): string
+    public function sort(string $key, ?string $defaultDir = null): string
     {
-        if (null !== $this->sort_key && $this->sort_key !== $key) {
+        if (null !== $this->sortKey && $this->sortKey !== $key) {
             // При смене поля сортировки используется
             // направление сортировки по умолчанию
-            $dir = $default_dir === $this->default_sort_dir ? null : $default_dir;
+            $dir = $defaultDir === $this->defaultSortDir ? null : $defaultDir;
         } else {
-            $opposite_dir = $this->default_sort_dir === 'desc' ? 'asc' : 'desc';
+            $oppositeDir = $this->defaultSortDir === 'desc' ? 'asc' : 'desc';
 
-            $dir = \Request::input('sd') === $opposite_dir ? null : $opposite_dir;
+            $dir = \Request::input('sd') === $oppositeDir ? null : $oppositeDir;
         }
 
         return $this->filter([

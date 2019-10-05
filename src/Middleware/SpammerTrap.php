@@ -6,7 +6,7 @@ class SpammerTrap
 {
     public function handle($request, \Closure $next)
     {
-        /* @var \Illuminate\Http\Request $request */
+        /** @var \Illuminate\Http\Request $request */
         $method = $request->method();
 
         if (!in_array($method, ['POST', 'PUT'])) {

@@ -157,10 +157,10 @@ class PhoneHelper
         $prefix = $prefix ?: static::PRINT_PREFIX;
 
         if ($len === 10) {
-            $first_digit = (int) $phone[0];
+            $firstDigit = (int) $phone[0];
 
-            if (isset(static::CODE_REGEXES[$first_digit]) &&
-                preg_match(static::CODE_REGEXES[$first_digit], $phone, $matches)
+            if (isset(static::CODE_REGEXES[$firstDigit]) &&
+                preg_match(static::CODE_REGEXES[$firstDigit], $phone, $matches)
             ) {
                 $code = $matches[1];
                 $phone = substr($phone, strlen($code));

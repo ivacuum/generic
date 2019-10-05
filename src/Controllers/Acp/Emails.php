@@ -5,18 +5,18 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Emails extends Controller
 {
-    protected $sortable_keys = ['id', 'clicks', 'views'];
+    protected $sortableKeys = ['id', 'clicks', 'views'];
 
     public function index()
     {
-        $user_id = request('user_id');
+        $userId = request('user_id');
         $template = request('template');
 
         [$sortKey, $sortDir] = $this->getSortParams();
 
         $models = Model::orderBy($sortKey, $sortDir)
-            ->when($user_id, function (Builder $query) use ($user_id) {
-                return $query->where('user_id', $user_id);
+            ->when($userId, function (Builder $query) use ($userId) {
+                return $query->where('user_id', $userId);
             })
             ->when($template, function (Builder $query) use ($template) {
                 return $query->where('template', $template);
@@ -24,6 +24,9 @@ class Emails extends Controller
             ->paginate()
             ->withPath(path("{$this->class}@index"));
 
-        return view($this->view, compact('models', 'template'));
+        return view($this->view, [
+            'models' => $models,
+            'template' => $template,
+        ]);
     }
 }

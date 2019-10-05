@@ -13,48 +13,52 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 abstract class ModelCacheHelper
 {
     protected $model;
-    protected $id_field = 'id';
-    protected $order_by = 'title';
-    protected $cached_id;
-    protected $slug_field = 'slug';
-    protected $cached_slug;
-    protected $title_field = 'title';
-    protected $cached_fields = ['*'];
-    protected $remember_time = 1440;
+    protected $idField = 'id';
+    protected $orderBy = 'title';
+    protected $cachedId;
+    protected $slugField = 'slug';
+    protected $cachedSlug;
+    protected $titleField = 'title';
+    protected $cachedFields = ['*'];
+    protected $rememberTime = 1440;
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function cachedById()
     {
-        return \Cache::remember(static::CACHED_BY_ID_KEY, CarbonInterval::minutes($this->remember_time), function () {
-            return $this->model->where($this->slug_field, '<>', '')
-                ->orderBy($this->order_by)
-                ->get($this->cached_fields)
-                ->keyBy($this->id_field);
+        return \Cache::remember($this->cachedByIdKey(), CarbonInterval::minutes($this->rememberTime), function () {
+            return $this->model->where($this->slugField, '<>', '')
+                ->orderBy($this->orderBy)
+                ->get($this->cachedFields)
+                ->keyBy($this->idField);
         });
     }
+
+    abstract public function cachedByIdKey(): string;
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function cachedBySlug()
     {
-        return \Cache::remember(static::CACHED_BY_SLUG_KEY, CarbonInterval::minutes($this->remember_time), function () {
-            return $this->model->where($this->slug_field, '<>', '')
-                ->orderBy($this->order_by)
-                ->get($this->cached_fields)
-                ->keyBy($this->slug_field);
+        return \Cache::remember($this->cachedBySlugKey(), CarbonInterval::minutes($this->rememberTime), function () {
+            return $this->model->where($this->slugField, '<>', '')
+                ->orderBy($this->orderBy)
+                ->get($this->cachedFields)
+                ->keyBy($this->slugField);
         });
     }
 
+    abstract public function cachedBySlugKey(): string;
+
     public function findById(int $id)
     {
-        if ($this->cached_id === null) {
-            $this->cached_id = $this->cachedById();
+        if ($this->cachedId === null) {
+            $this->cachedId = $this->cachedById();
         }
 
-        return isset($this->cached_id[$id]) ? $this->cached_id[$id] : null;
+        return isset($this->cachedId[$id]) ? $this->cachedId[$id] : null;
     }
 
     public function findByIdOrFail(int $id)
@@ -76,11 +80,11 @@ abstract class ModelCacheHelper
             return null;
         }
 
-        if ($this->cached_slug === null) {
-            $this->cached_slug = $this->cachedBySlug();
+        if ($this->cachedSlug === null) {
+            $this->cachedSlug = $this->cachedBySlug();
         }
 
-        return isset($this->cached_slug[$slug]) ? $this->cached_slug[$slug] : null;
+        return isset($this->cachedSlug[$slug]) ? $this->cachedSlug[$slug] : null;
     }
 
     public function findBySlugOrFail(?string $slug)
@@ -99,7 +103,7 @@ abstract class ModelCacheHelper
     public function title($q): ?string
     {
         return is_numeric($q)
-            ? optional($this->findById($q))->{$this->title_field}
-            : optional($this->findBySlug($q))->{$this->title_field};
+            ? optional($this->findById($q))->{$this->titleField}
+            : optional($this->findBySlug($q))->{$this->titleField};
     }
 }

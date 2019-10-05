@@ -1,11 +1,7 @@
 <?php
 
 if (!function_exists('canonical')) {
-    /**
-     * Канонический адрес текущей страницы
-     *
-     * @return string
-     */
+    // Канонический адрес текущей страницы
     function canonical(): string
     {
         $request = app('request');
@@ -13,20 +9,15 @@ if (!function_exists('canonical')) {
         $locale = $request->server->get('LARAVEL_LOCALE') ?? null;
         $prefix = $locale ? "/{$locale}" : '';
 
-        $path = $prefix.$request->getPathInfo();
+        $path = $prefix . $request->getPathInfo();
         $suffix = $path === '/' ? '/' : '';
 
-        return rtrim($request->root().$prefix.$request->getPathInfo(), '/').$suffix;
+        return rtrim($request->root() . $prefix . $request->getPathInfo(), '/') . $suffix;
     }
 }
 
 if (!function_exists('fullUrl')) {
-    /**
-     * Адрес текущей страницы с произвольными параметрами
-     *
-     * @param  array  $params
-     * @return string
-     */
+    // Адрес текущей страницы с произвольными параметрами
     function fullUrl(array $params = []): string
     {
         $request = app('request');
@@ -44,14 +35,7 @@ if (!function_exists('fullUrl')) {
 }
 
 if (!function_exists('path')) {
-    /**
-     * Адрес страницы, соответствующий контроллеру
-     *
-     * @param  string $name
-     * @param  array|string  $parameters
-     * @param  bool   $absolute
-     * @return string
-     */
+    // Адрес страницы, соответствующий контроллеру
     function path(string $name, $parameters = [], bool $absolute = false): string
     {
         static $prefix;
@@ -72,15 +56,7 @@ if (!function_exists('path')) {
 }
 
 if (!function_exists('path_locale')) {
-    /**
-     * Адрес страницы, соответствующий контроллеру
-     *
-     * @param  string $name
-     * @param  array|string  $parameters
-     * @param  bool   $absolute
-     * @param  string $locale
-     * @return string
-     */
+    // Адрес страницы, соответствующий контроллеру
     function path_locale(string $name, $parameters = [], bool $absolute = false, string $locale = ''): string
     {
         $prefix = $locale !== 'ru' ? "/{$locale}" : '';

@@ -33,7 +33,7 @@ class Vk extends Base
             return redirect(path('Auth\SignIn@index'));
         }
 
-        /* @var \Laravel\Socialite\Two\User $userdata */
+        /** @var \Laravel\Socialite\Two\User $userdata */
         $userdata = $vk->user();
         $identity = $this->externalIdentity($userdata);
 

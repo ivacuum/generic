@@ -10,10 +10,10 @@ class MakeAcpSection extends Command
     protected $fs;
     protected $base;
     protected $model;
-    protected $base_plural;
-    protected $model_plural;
-    protected $base_plural_lower;
-    protected $model_plural_lower;
+    protected $basePlural;
+    protected $modelPlural;
+    protected $basePluralLower;
+    protected $modelPluralLower;
 
     public function __construct(Filesystem $fs)
     {
@@ -26,29 +26,29 @@ class MakeAcpSection extends Command
     {
         $this->base = $this->argument('base');
         $this->model = $this->argument('model');
-        $this->base_plural = \Str::plural($this->base);
-        $this->model_plural = \Str::plural($this->model);
-        $this->base_plural_lower = mb_strtolower($this->base_plural);
-        $this->model_plural_lower = mb_strtolower($this->model_plural);
+        $this->basePlural = \Str::plural($this->base);
+        $this->modelPlural = \Str::plural($this->model);
+        $this->basePluralLower = mb_strtolower($this->basePlural);
+        $this->modelPluralLower = mb_strtolower($this->modelPlural);
 
-        if ($this->fs->exists($this->controllerPath($this->model_plural))) {
-            $this->info("Контроллер [{$this->model_plural}] уже существует");
-        } elseif (!$this->fs->exists($this->controllerPath($this->base_plural))) {
-            $this->info("Контроллер [{$this->base_plural}] не найден");
+        if ($this->fs->exists($this->controllerPath($this->modelPlural))) {
+            $this->info("Контроллер [{$this->modelPlural}] уже существует");
+        } elseif (!$this->fs->exists($this->controllerPath($this->basePlural))) {
+            $this->info("Контроллер [{$this->basePlural}] не найден");
         } else {
             $this->putController();
-            $this->info("Создан контроллер [{$this->model_plural}]");
+            $this->info("Создан контроллер [{$this->modelPlural}]");
         }
 
         $this->putRoute();
 
-        if ($this->fs->exists($this->viewsPath($this->model_plural_lower))) {
-            $this->info("Папка с шаблонами [{$this->model_plural_lower}] уже существует");
-        } elseif (!$this->fs->exists($this->viewsPath($this->base_plural_lower))) {
-            $this->info("Папка с шаблонами [{$this->base_plural_lower}] не найдена");
+        if ($this->fs->exists($this->viewsPath($this->modelPluralLower))) {
+            $this->info("Папка с шаблонами [{$this->modelPluralLower}] уже существует");
+        } elseif (!$this->fs->exists($this->viewsPath($this->basePluralLower))) {
+            $this->info("Папка с шаблонами [{$this->basePluralLower}] не найдена");
         } else {
             $this->putViews();
-            $this->info("Созданы шаблоны [{$this->model_plural_lower}]");
+            $this->info("Созданы шаблоны [{$this->modelPluralLower}]");
         }
 
         $this->printAuthReminder();
@@ -66,11 +66,11 @@ class MakeAcpSection extends Command
 
     protected function controllerReplaceArray(string $var): array
     {
-        $var_plural = "{$var}_plural";
+        $varPlural = "{$var}_plural";
 
         return [
             "use App\\{$this->{$var}} as Model;",
-            "class {$this->{$var_plural}} ",
+            "class {$this->{$varPlural}} ",
         ];
     }
 
@@ -88,10 +88,10 @@ class MakeAcpSection extends Command
         $content = str_replace(
             $this->controllerReplaceArray('base'),
             $this->controllerReplaceArray('model'),
-            $this->fs->get($this->controllerPath($this->base_plural))
+            $this->fs->get($this->controllerPath($this->basePlural))
         );
 
-        $this->fs->put($this->controllerPath($this->model_plural), $content);
+        $this->fs->put($this->controllerPath($this->modelPlural), $content);
     }
 
     protected function putRoute(): void
@@ -99,18 +99,18 @@ class MakeAcpSection extends Command
         $path = $this->routesPath();
         $content = $this->fs->get($path);
 
-        if (preg_match('/.*Acp\\\\'.$this->model_plural.'.*/', $content)) {
-            $this->info("Маршрут для контроллера [{$this->model_plural}] уже существует");
-        } elseif (preg_match_all('/.*Acp\\\\'.$this->base_plural.'.*/', $content, $matches)) {
+        if (preg_match('/.*Acp\\\\'.$this->modelPlural.'.*/', $content)) {
+            $this->info("Маршрут для контроллера [{$this->modelPlural}] уже существует");
+        } elseif (preg_match_all('/.*Acp\\\\'.$this->basePlural.'.*/', $content, $matches)) {
             $routes = "\n";
 
             foreach ($matches[0] as $match) {
                 $route = str_replace([
-                    "\\{$this->base_plural}",
-                    mb_strtolower($this->base_plural).'/',
+                    "\\{$this->basePlural}",
+                    mb_strtolower($this->basePlural).'/',
                 ], [
-                    "\\{$this->model_plural}",
-                    mb_strtolower($this->model_plural).'/',
+                    "\\{$this->modelPlural}",
+                    mb_strtolower($this->modelPlural).'/',
                 ], $match);
 
                 $routes .= $route . "\n";
@@ -125,8 +125,8 @@ class MakeAcpSection extends Command
     protected function putViews(): bool
     {
         return $this->fs->copyDirectory(
-            $this->viewsPath($this->base_plural_lower),
-            $this->viewsPath($this->model_plural_lower)
+            $this->viewsPath($this->basePluralLower),
+            $this->viewsPath($this->modelPluralLower)
         );
     }
 
