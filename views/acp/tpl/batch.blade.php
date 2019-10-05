@@ -1,6 +1,6 @@
 <form
   class="flex flex-wrap js-batch-form"
-  data-url="{{ path("$self@batch") }}"
+  data-url="{{ path([$controller, 'batch']) }}"
   data-selector=".models-checkbox"
 >
   <div class="mr-1">

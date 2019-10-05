@@ -21,7 +21,7 @@ class ExternalIdentities extends Controller
                 return $query->where('provider', $provider);
             })
             ->paginate()
-            ->withPath(path("{$this->class}@index"));
+            ->withPath(path([$this->controller, 'index']));
 
         return view($this->view, ['models' => $models]);
     }

@@ -5,9 +5,12 @@ class UrlHelper
     protected $sortKey;
     protected $defaultSortDir;
 
-    public function edit(string $self, $model): string
+    public function edit(string $controller, $model): string
     {
-        return path("$self@edit", [$model, 'goto' => static::go()."#{$model->getRouteKeyName()}-{$model->getRouteKey()}"]);
+        return path(
+            [$controller, 'edit'],
+            [$model, 'goto' => static::go() . "#{$model->getRouteKeyName()}-{$model->getRouteKey()}"]
+        );
     }
 
     public function except(array $params = []): array

@@ -24,7 +24,7 @@ class Controller extends BaseController
         $model = $this->createGeneric();
 
         if (!$this->isApiRequest()) {
-            return view($this->getView(), ['model' => $model]);
+            return view($this->getAcpView(), ['model' => $model]);
         }
 
         return array_merge(
@@ -72,7 +72,7 @@ class Controller extends BaseController
         $model = $this->editGeneric($id);
 
         if (!$this->isApiRequest()) {
-            return view($this->getView(), ['model' => $model]);
+            return view($this->getAcpView(), ['model' => $model]);
         }
 
         return array_merge(
@@ -133,10 +133,11 @@ class Controller extends BaseController
 
         $model = $this->showGeneric($id);
 
-        $this->modelAccessibleRelations($model);
-
         if (!$this->isApiRequest()) {
-            return view($this->getView(), ['model' => $model]);
+            return view($this->getAcpView(), [
+                'model' => $model,
+                'modelRelations' => $this->modelAccessibleRelations($model),
+            ]);
         }
 
         return $this->modelResource($model);
@@ -224,7 +225,7 @@ class Controller extends BaseController
 
     protected function sanitizeData(array $data)
     {
-        return [];
+        return null;
     }
 
     protected function sanitizeRequest()
@@ -266,6 +267,11 @@ class Controller extends BaseController
         return $model->delete();
     }
 
+    protected function getAcpView(): string
+    {
+        return view()->exists($this->view) ? $this->view : "acp.{$this->method}";
+    }
+
     /**
      * @param int $id
      * @return \Ivacuum\Generic\Models\Model
@@ -287,9 +293,9 @@ class Controller extends BaseController
             ->firstOrFail();
     }
 
-    protected function getModelName()
+    protected function getModelName(): string
     {
-        return \Str::singular(str_replace('Acp\\', 'App\\', $this->class));
+        return 'App\\' . \Str::singular(class_basename($this));
     }
 
     protected function getSortParams()
@@ -306,11 +312,6 @@ class Controller extends BaseController
         }
 
         return [$sortKey, $sortDir];
-    }
-
-    protected function getView()
-    {
-        return view()->exists($this->view) ? $this->view : "acp.{$this->method}";
     }
 
     protected function isApiRequest()
@@ -355,7 +356,7 @@ class Controller extends BaseController
 
     protected function modelResource($model)
     {
-        $resource = \Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class));
+        $resource = 'App\\Http\\Resources\\Acp\\' . \Str::singular(class_basename($this));
 
         return (new $resource($model))
             ->additional([
@@ -367,7 +368,7 @@ class Controller extends BaseController
 
     protected function modelResourceCollection($models)
     {
-        $resource = \Str::singular(str_replace('Acp\\', 'App\\Http\\Resources\\Acp\\', $this->class)) . 'Collection';
+        $resource = 'App\\Http\\Resources\\Acp\\' . \Str::singular(class_basename($this)) . 'Collection';
 
         return (new $resource($models))
             ->additional(['breadcrumbs' => \Breadcrumbs::get()]);
@@ -407,13 +408,13 @@ class Controller extends BaseController
         if (ModelHelper::exists($model)) {
             return [
                 'status' => 'OK',
-                'redirect' => path("{$this->class}@show", $model),
+                'redirect' => path([$this->controller, 'show'], $model),
             ];
         }
 
         return [
             'status' => 'OK',
-            'redirect' => path("{$this->class}@index"),
+            'redirect' => path([$this->controller, 'index']),
         ];
     }
 

@@ -8,7 +8,7 @@ class Notifications extends Controller
     {
         $models = Model::orderBy('created_at', 'desc')
             ->paginate()
-            ->withPath(path("{$this->class}@index"));
+            ->withPath(path([$this->controller, 'index']));
 
         return view($this->view, ['models' => $models]);
     }

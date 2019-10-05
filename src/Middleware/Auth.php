@@ -1,5 +1,7 @@
 <?php namespace Ivacuum\Generic\Middleware;
 
+use App\Http\Controllers\Auth\SignIn;
+use App\Http\Controllers\Home;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate;
@@ -18,35 +20,30 @@ class Auth extends Authenticate
      */
     public function handle($request, \Closure $next, ...$guards)
     {
-        $this->checkStatus($this->authenticate($request, $guards));
+        $this->authenticate($request, $guards);
+        $this->checkStatus($request->user(), $guards);
 
         return $next($request);
     }
 
-    /**
-     * Проверка активирован ли пользователь
-     *
-     * @param  \App\User $user
-     * @throws \Illuminate\Auth\AuthenticationException
-     */
-    protected function checkStatus($user): void
+    protected function checkStatus(?User $user, ...$guards): void
     {
         if ($user !== null && !$this->isUserActive($user)) {
             \Auth::logout();
 
-            throw new AuthenticationException('Not active.');
+            throw new AuthenticationException(
+                'Not active.', $guards, action([Home::class, 'index'])
+            );
         }
     }
 
     protected function isUserActive(User $user): bool
     {
-        return (int) $user->status === User::STATUS_ACTIVE;
+        return $user->status === User::STATUS_ACTIVE;
     }
 
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
-            return action('Auth\SignIn@login');
-        }
+        return action([SignIn::class, 'login']);
     }
 }

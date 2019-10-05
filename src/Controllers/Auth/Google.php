@@ -3,6 +3,7 @@
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
+use Laravel\Socialite\Two\GoogleProvider;
 
 /**
  * Вход через Гугл
@@ -64,10 +65,7 @@ class Google extends Base
         return redirect()->intended('/');
     }
 
-    /**
-     * @return \Laravel\Socialite\Two\GoogleProvider
-     */
-    protected function driver()
+    protected function driver(): GoogleProvider
     {
         return \Socialite::driver('google');
     }

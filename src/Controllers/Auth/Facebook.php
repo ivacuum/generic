@@ -4,6 +4,7 @@ use Illuminate\Support\HtmlString;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
+use Laravel\Socialite\Two\FacebookProvider;
 
 class Facebook extends Base
 {
@@ -68,10 +69,7 @@ class Facebook extends Base
         return redirect()->intended('/');
     }
 
-    /**
-     * @return \Laravel\Socialite\Two\FacebookProvider
-     */
-    protected function driver()
+    protected function driver(): FacebookProvider
     {
         return \Socialite::driver('facebook');
     }

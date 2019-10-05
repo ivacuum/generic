@@ -9,31 +9,29 @@
   <div class="lg:w-1/4 lg:px-4">
     <div class="flex flex-col w-full">
       @can('show', $model)
-        <a class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orange-600 text-black hover:text-black' : '' }}" href="{{ path("$self@show", $model) }}">
+        <a
+          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orange-600 text-black hover:text-black' : '' }}"
+          href="{{ path([$controller, 'show'], $model) }}"
+        >
           {{ trans("$tpl.show") }}
         </a>
       @endcan
       @can('edit', $model)
-        <a class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orange-600 text-black hover:text-black' : '' }}" href="{{ UrlHelper::edit($self, $model) }}">
+        <a
+          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orange-600 text-black hover:text-black' : '' }}"
+          href="{{ UrlHelper::edit($controller, $model) }}"
+        >
           {{ trans("$tpl.edit") }}
         </a>
       @endcan
       @yield('model_menu')
-      @if (is_array($showWithCount))
-        <?php /** @var string $field */ ?>
-        @foreach ($showWithCount as $field)
-          <?php $related = $model->{$field}()->getRelated() ?>
-          @can('list', $related)
-            <?php $controller = Ivacuum\Generic\Utilities\NamingHelper::controllerName($related) ?>
-            <?php $transField = Ivacuum\Generic\Utilities\NamingHelper::transField($related) ?>
-            <?php $countField = Str::snake($field).'_count' ?>
-            @if ($model->{$countField})
-              <a class="border-l-2 border-transparent px-3 py-2" href="{{ path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]) }}">
-                {{ trans("acp.{$transField}.index") }}
-                <span class="text-muted text-xs whitespace-no-wrap">{{ ViewHelper::number($model->{$countField}) }}</span>
-              </a>
-            @endif
-          @endcan
+      @if (isset($modelRelations) && sizeof($modelRelations))
+        <?php /** @var array $relation */ ?>
+        @foreach ($modelRelations as $relation)
+          <a class="border-l-2 border-transparent px-3 py-2" href="{{ $relation['path'] }}">
+            {{ trans("acp.{$relation['i18n_index']}.index") }}
+            <span class="text-muted text-xs whitespace-no-wrap">{{ ViewHelper::number($relation['count']) }}</span>
+          </a>
         @endforeach
       @endif
       @if (method_exists($model, 'www'))

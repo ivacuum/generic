@@ -27,7 +27,7 @@
 
 @if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk', '_pjax'])))
   <div class="my-2">
-    <a class="btn btn-default my-1" href="{{ path("$self@index") }}">
+    <a class="btn btn-default my-1" href="{{ path([$controller, 'index']) }}">
       {{ trans('acp.reset_filters') }}
     </a>
     @foreach ($filters as $key => $value)

@@ -14,7 +14,7 @@
   <tbody>
   @foreach ($events as $event)
     <tr>
-      <td><a class="break-words" href="{{ path("$self@show", $event) }}">{{ $event }}</a></td>
+      <td><a class="break-words" href="{{ path([$controller, 'show'], $event) }}">{{ $event }}</a></td>
       @foreach ($dates as $date => $true)
         <td class="md:text-right whitespace-no-wrap">{{ isset($metrics[$event][$date]) ? ViewHelper::number($metrics[$event][$date]) : '' }}</td>
       @endforeach

@@ -36,7 +36,7 @@ if (!function_exists('fullUrl')) {
 
 if (!function_exists('path')) {
     // Адрес страницы, соответствующий контроллеру
-    function path(string $name, $parameters = [], bool $absolute = false): string
+    function path($name, $parameters = [], bool $absolute = false): string
     {
         static $prefix;
 
@@ -57,7 +57,7 @@ if (!function_exists('path')) {
 
 if (!function_exists('path_locale')) {
     // Адрес страницы, соответствующий контроллеру
-    function path_locale(string $name, $parameters = [], bool $absolute = false, string $locale = ''): string
+    function path_locale($name, $parameters = [], bool $absolute = false, string $locale = ''): string
     {
         $prefix = $locale !== 'ru' ? "/{$locale}" : '';
 

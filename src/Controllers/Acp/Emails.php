@@ -22,7 +22,7 @@ class Emails extends Controller
                 return $query->where('template', $template);
             })
             ->paginate()
-            ->withPath(path("{$this->class}@index"));
+            ->withPath(path([$this->controller, 'index']));
 
         return view($this->view, [
             'models' => $models,

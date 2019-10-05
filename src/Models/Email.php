@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Models;
 
+use App\Http\Controllers\Mail;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,9 +57,14 @@ class Email extends Model
         return $timestamp === $this->getTimestamp();
     }
 
+    public function incrementClicks()
+    {
+        $this->increment('clicks');
+    }
+
     public function reportLink(): string
     {
-        return path('Mail@report', [
+        return path([Mail::class, 'report'], [
             $this->getTimestamp(),
             $this->id,
         ]);

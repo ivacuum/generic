@@ -19,7 +19,7 @@ class Mail extends Controller
         }
 
         if ($email->hasValidTimestamp($timestamp)) {
-            $email->increment('clicks');
+            $email->incrementClicks();
         }
 
         if ($email->user_id) {

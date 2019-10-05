@@ -14,27 +14,17 @@ class Controller extends BaseController
     protected $class;
     protected $method;
     protected $prefix;
-
-    public function __construct()
-    {
-        $this->class = str_replace('App\Http\Controllers\\', '', get_class($this));
-        $this->method = \Arr::last(explode('@', \Route::currentRouteAction()));
-
-        $this->prefix = implode('.', array_map(function ($ary) {
-            return \Str::snake($ary, '-');
-        }, explode('\\', $this->class)));
-
-        $this->view = $this->prefix . "." . \Str::snake($this->method);
-
-        $this->appendBreadcrumbs();
-    }
+    protected $controller;
 
     public function callAction($method, $parameters)
     {
+        $this->fillControllerFields();
+        $this->appendBreadcrumbs();
+
         $response = null;
 
         if (method_exists($this, 'alwaysCallBefore')) {
-            $response = call_user_func_array([$this, 'alwaysCallBefore'], $parameters);
+            $response = $this->alwaysCallBefore(...array_values($parameters));
         }
 
         $this->appendLocale();
@@ -91,21 +81,51 @@ class Controller extends BaseController
         view()->share([
             'tpl' => $this->prefix,
             'goto' => request('goto'),
-            'self' => $this->class,
+            'self' => $this->controllerBasename(),
             'view' => $this->view,
             'isMobile' => $browserEnv->isMobile(),
             'isCrawler' => $browserEnv->isCrawler(),
             'isDesktop' => !$browserEnv->isMobile(),
+            'controller' => $this->controller,
             'cssClasses' => (string) $browserEnv,
             'firstTimeVisit' => $firstTimeVisit,
         ]);
     }
 
-    protected function redirectAfterStore($model)
+    protected function controllerBasename(): string
+    {
+        $class = get_class($this);
+
+        $class = \Str::endsWith($class, 'Controller')
+            ? \Str::replaceLast('Controller', '', $class)
+            : $class;
+
+        return str_replace('App\Http\Controllers\\', '', $class);
+    }
+
+    protected function fillControllerFields(): void
+    {
+        $this->controller = get_class($this);
+
+        $action = \Route::currentRouteAction();
+        $this->method = mb_strpos($action, '@')
+            ? \Arr::last(explode('@', $action))
+            : null;
+
+        $this->prefix = implode('.', array_map(function ($ary) {
+            return \Str::snake($ary, '-');
+        }, explode('\\', $this->controllerBasename())));
+
+        $this->view = $this->method
+            ? $this->prefix . "." . \Str::snake($this->method)
+            : $this->prefix;
+    }
+
+    protected function redirectAfterStore(/** @noinspection PhpUnusedParameterInspection */ $model)
     {
         return request()->ajax()
-            ? response('', 201, ['Location' => path("{$this->class}@index")])
-            : redirect(path("{$this->class}@index"));
+            ? response('', 201, ['Location' => path([$this->controller, 'index'])])
+            : redirect(path([$this->controller, 'index']));
     }
 
     protected function redirectAfterUpdate($model, $method = 'index')
@@ -121,10 +141,10 @@ class Controller extends BaseController
 
         if (request()->exists('_save')) {
             return $goto
-                ? redirect(path("{$this->class}@edit", [$model, 'goto' => $goto]))
-                : redirect(path("{$this->class}@edit", $model));
+                ? redirect(path([$this->controller, 'edit'], [$model, 'goto' => $goto]))
+                : redirect(path([$this->controller, 'edit'], $model));
         }
 
-        return $goto ? redirect($goto) : redirect(path("{$this->class}@{$method}"));
+        return $goto ? redirect($goto) : redirect(path([$this->controller, $method]));
     }
 }

@@ -14,7 +14,7 @@ class SignIn extends Controller
     public function index()
     {
         if ($goto = request('goto')) {
-            session(['url.intended' => $goto]);
+            \Redirect::setIntendedUrl($goto);
         }
 
         return view('auth.login');

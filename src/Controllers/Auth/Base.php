@@ -7,13 +7,11 @@ use Ivacuum\Generic\Events\ExternalIdentitySaved;
 
 abstract class Base extends Controller
 {
-    protected $provider;
     protected $user;
+    protected $provider;
 
     public function __construct(User $user)
     {
-        parent::__construct();
-
         $this->user = $user;
 
         $this->middleware('guest');
@@ -48,9 +46,12 @@ abstract class Base extends Controller
      */
     protected function findIdentityByUid($uid)
     {
-        return ExternalIdentity::where('uid', $uid)
+        /** @var \App\ExternalIdentity $model */
+        $model = ExternalIdentity::where('uid', $uid)
             ->where('provider', $this->provider)
             ->first();
+
+        return $model;
     }
 
     /**
@@ -62,7 +63,10 @@ abstract class Base extends Controller
      */
     protected function findUserByEmail($email)
     {
-        return $this->user->where('email', $email)->first();
+        /** @var \App\User $user */
+        $user = $this->user->where('email', $email)->first();
+
+        return $user;
     }
 
     /**
@@ -95,9 +99,9 @@ abstract class Base extends Controller
         event(new \Ivacuum\Generic\Events\Stats\ExternalIdentityAdded);
 
         return ExternalIdentity::create([
+            'uid' => $user->id,
+            'email' => (string) $user->email,
             'provider' => $this->provider,
-            'uid'      => $user->id,
-            'email'    => (string) $user->email,
         ]);
     }
 
@@ -111,7 +115,7 @@ abstract class Base extends Controller
         $goto = request('goto');
 
         if ($goto) {
-            session(['url.intended' => $goto]);
+            \Redirect::setIntendedUrl($goto);
         }
 
         return true;

@@ -31,7 +31,7 @@
   @foreach ($models as $model)
     <tr>
       <td class="md:text-right">
-        <a href="{{ path("$self@show", $model) }}">
+        <a href="{{ path([$controller, 'show'], $model) }}">
           {{ $model->id }}
         </a>
       </td>
@@ -42,7 +42,7 @@
       </td>
       <td>
         @if ($model->user_id)
-          <a href="{{ path('Acp\Users@show', $model->user_id) }}">{{ $model->user->email }}</a>
+          <a href="{{ path([App\Http\Controllers\Acp\Users::class, 'show'], $model->user_id) }}">{{ $model->user->email }}</a>
         @else
           {{ $model->email }}
         @endif

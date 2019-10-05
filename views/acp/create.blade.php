@@ -1,9 +1,6 @@
-<?php
-/** @var $model */
-?>
-
 @extends('acp.base')
 
+<?php /** @var $model */ ?>
 <?php Form::model($model); ?>
 
 @section('content')
@@ -11,7 +8,7 @@
   @include('acp.tpl.back')
   {{ trans("$tpl.create") }}
 </h3>
-<form action="{{ path("$self@store") }}" class="mt-4" method="post" enctype="multipart/form-data">
+<form action="{{ path([$controller, 'store']) }}" class="mt-4" method="post" enctype="multipart/form-data">
   {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")

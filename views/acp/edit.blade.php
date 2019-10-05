@@ -1,13 +1,15 @@
-<?php
-/** @var $model */
-?>
-
 @extends("$tpl.base")
 
+<?php /** @var $model */ ?>
 <?php Form::model($model); ?>
 
 @section('content')
-<form action="{{ path("$self@update", $model) }}" class="mt-4" method="post" enctype="multipart/form-data">
+<form
+  action="{{ path([$controller, 'update'], $model) }}"
+  class="mt-4"
+  method="post"
+  enctype="multipart/form-data"
+>
   {{ ViewHelper::inputHiddenMail() }}
 
   @include("$tpl.form")
