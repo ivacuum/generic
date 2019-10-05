@@ -1,5 +1,5 @@
 <div class="mb-4">
-  <label class="{{ $required ? 'input-required' : '' }}">{{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}</label>
+  <label class="font-bold {{ $required ? 'input-required' : '' }}">{{ $label ?? ViewHelper::modelFieldTrans($entity, $name) }}</label>
   <textarea
     {{ $required ? 'required' : '' }}
     class="form-control {{ !$is_mobile ? 'textarea-autosized textarea-borderless-focus js-autosize-textarea' : '' }} {{ $errors->has($name) ? 'is-invalid' : '' }} {{ implode(' ', $classes) }}"

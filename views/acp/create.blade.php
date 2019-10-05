@@ -1,3 +1,7 @@
+<?php
+/** @var $model */
+?>
+
 @extends('acp.base')
 
 <?php Form::model($model); ?>

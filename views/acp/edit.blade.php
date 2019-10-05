@@ -1,3 +1,7 @@
+<?php
+/** @var $model */
+?>
+
 @extends("$tpl.base")
 
 <?php Form::model($model); ?>

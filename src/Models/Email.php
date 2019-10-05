@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $user_id
+ * @property string $rel_type
+ * @property int $rel_id
  * @property string $to
  * @property string $template
+ * @property string $locale
  * @property int $clicks
  * @property int $views
  * @property \Illuminate\Support\Carbon $created_at

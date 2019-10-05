@@ -328,8 +328,8 @@ class Controller extends BaseController
             }
 
             $controller = NamingHelper::controllerName($related);
-            $count_field = \Str::snake($field) . '_count';
-            $count = $model->{$count_field};
+            $countField = \Str::snake($field) . '_count';
+            $count = $model->{$countField};
 
             if ($count < 1) {
                 continue;

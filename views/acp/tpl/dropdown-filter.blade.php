@@ -1,4 +1,6 @@
 <?php
+/** @var array $values */
+/** @var string $field */
 $current = array_keys($values, request($field))[0];
 $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
 ?>
@@ -14,7 +16,10 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
       @if ($name === '---')
         <div class="dropdown-divider"></div>
       @else
-        <a class="dropdown-item js-pjax" href="{{ UrlHelper::filter([$field => $value]) }}">
+        <a
+          class="dropdown-item-tw js-pjax"
+          href="{{ UrlHelper::filter([$field => $value]) }}"
+        >
           {{ $name }}
         </a>
       @endif
