@@ -14,7 +14,6 @@ class Controller extends BaseController
     protected $class;
     protected $method;
     protected $prefix;
-    protected $controller;
 
     public function callAction($method, $parameters)
     {
@@ -86,7 +85,7 @@ class Controller extends BaseController
             'isMobile' => $browserEnv->isMobile(),
             'isCrawler' => $browserEnv->isCrawler(),
             'isDesktop' => !$browserEnv->isMobile(),
-            'controller' => $this->controller,
+            'controller' => static::class,
             'cssClasses' => (string) $browserEnv,
             'firstTimeVisit' => $firstTimeVisit,
         ]);
@@ -105,8 +104,6 @@ class Controller extends BaseController
 
     protected function fillControllerFields(): void
     {
-        $this->controller = get_class($this);
-
         $action = \Route::currentRouteAction();
         $this->method = mb_strpos($action, '@')
             ? \Arr::last(explode('@', $action))
@@ -124,8 +121,8 @@ class Controller extends BaseController
     protected function redirectAfterStore(/** @noinspection PhpUnusedParameterInspection */ $model)
     {
         return request()->ajax()
-            ? response('', 201, ['Location' => path([$this->controller, 'index'])])
-            : redirect(path([$this->controller, 'index']));
+            ? response('', 201, ['Location' => path([static::class, 'index'])])
+            : redirect(path([static::class, 'index']));
     }
 
     protected function redirectAfterUpdate($model, $method = 'index')
@@ -141,10 +138,10 @@ class Controller extends BaseController
 
         if (request()->exists('_save')) {
             return $goto
-                ? redirect(path([$this->controller, 'edit'], [$model, 'goto' => $goto]))
-                : redirect(path([$this->controller, 'edit'], $model));
+                ? redirect(path([static::class, 'edit'], [$model, 'goto' => $goto]))
+                : redirect(path([static::class, 'edit'], $model));
         }
 
-        return $goto ? redirect($goto) : redirect(path([$this->controller, $method]));
+        return $goto ? redirect($goto) : redirect(path([static::class, $method]));
     }
 }

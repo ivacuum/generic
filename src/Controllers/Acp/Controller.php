@@ -408,13 +408,13 @@ class Controller extends BaseController
         if (ModelHelper::exists($model)) {
             return [
                 'status' => 'OK',
-                'redirect' => path([$this->controller, 'show'], $model),
+                'redirect' => path([static::class, 'show'], $model),
             ];
         }
 
         return [
             'status' => 'OK',
-            'redirect' => path([$this->controller, 'index']),
+            'redirect' => path([static::class, 'index']),
         ];
     }
 
