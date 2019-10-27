@@ -1,6 +1,6 @@
 <?php namespace Ivacuum\Generic\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\DatabaseNotification;
 
 /**
  * Уведомление
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class Notification extends Model
+class Notification extends DatabaseNotification
 {
     protected $keyType = 'string';
     protected $guarded = ['created_at', 'updated_at'];
@@ -31,5 +31,10 @@ class Notification extends Model
     public function breadcrumb(): string
     {
         return $this->id;
+    }
+
+    public function basename(): string
+    {
+        return \Str::snake(\Str::replaceLast('Notification', '', class_basename($this->type)));
     }
 }
