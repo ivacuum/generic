@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Exceptions;
 
+use App\Http\Controllers\Auth\SignIn;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -107,7 +108,7 @@ class Handler extends ExceptionHandler
     {
         return $request->expectsJson()
             ? response()->json(['message' => 'Unauthenticated.'], 401)
-            : redirect()->guest(path('Auth\SignIn@index'))
+            : redirect()->guest(path([SignIn::class, 'index']))
                 ->with('message', trans('auth.signin_to_view_page'));
     }
 }

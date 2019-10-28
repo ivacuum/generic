@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
+use App\Http\Controllers\Auth\SignIn;
 use Illuminate\Support\HtmlString;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
@@ -24,7 +25,7 @@ class Odnoklassniki extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, request()));
 
-            return redirect(path('Auth\SignIn@index'));
+            return redirect(path([SignIn::class, 'index']));
         }
 
         /** @var \Laravel\Socialite\Two\User $userdata */
@@ -41,7 +42,7 @@ class Odnoklassniki extends Base
         }
 
         if (null === $userdata->email) {
-            return redirect(path('Auth\SignIn@index'))->with('message', $this->noEmailMessage());
+            return redirect(path([SignIn::class, 'index']))->with('message', $this->noEmailMessage());
         }
 
         if (null === $user = $this->findUserByEmail($userdata->email)) {

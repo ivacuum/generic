@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 
@@ -56,7 +57,7 @@ class NewAccount extends Controller
     {
         \Auth::login($user, true);
 
-        return redirect(path('Home@index'));
+        return redirect(path(HomeController::class));
     }
 
     protected function rules(): array

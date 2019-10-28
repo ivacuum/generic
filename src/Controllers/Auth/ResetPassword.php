@@ -1,7 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Home;
+use App\Http\Controllers\HomeController;
 use App\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\PasswordBroker;
@@ -52,7 +52,7 @@ class ResetPassword extends Controller
 
     protected function redirectPath(): string
     {
-        return path([Home::class, 'index']);
+        return path(HomeController::class);
     }
 
     protected function resetOkCallback(User $user, string $password): void

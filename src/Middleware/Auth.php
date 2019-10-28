@@ -1,7 +1,7 @@
 <?php namespace Ivacuum\Generic\Middleware;
 
 use App\Http\Controllers\Auth\SignIn;
-use App\Http\Controllers\Home;
+use App\Http\Controllers\HomeController;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate;
@@ -32,7 +32,7 @@ class Auth extends Authenticate
             \Auth::logout();
 
             throw new AuthenticationException(
-                'Not active.', $guards, action([Home::class, 'index'])
+                'Not active.', $guards, action(HomeController::class)
             );
         }
     }

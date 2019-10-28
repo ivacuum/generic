@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
+use App\Http\Controllers\Auth\SignIn;
 use Illuminate\Support\HtmlString;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
@@ -30,7 +31,7 @@ class Vk extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, request()));
 
-            return redirect(path('Auth\SignIn@index'));
+            return redirect(path([SignIn::class, 'index']));
         }
 
         /** @var \Laravel\Socialite\Two\User $userdata */
@@ -47,7 +48,7 @@ class Vk extends Base
         }
 
         if (null === $userdata->email) {
-            return redirect(path('Auth\SignIn@index'))->with('message', $this->noEmailMessage());
+            return redirect(path([SignIn::class, 'index']))->with('message', $this->noEmailMessage());
         }
 
         if (null === $user = $this->findUserByEmail($userdata->email)) {
@@ -72,6 +73,6 @@ class Vk extends Base
      */
     protected function noEmailMessage()
     {
-        return new HtmlString('<div>Мы не можем вас зарегистрировать, так как не получили от ВК вашу электронную почту. Доступ к ее адресу можно разрешить при <a class="link" href="'.path('Auth\Vk@index', ['revoke' => 1]).'">повторной попытке</a></div>');
+        return new HtmlString('<div>Мы не можем вас зарегистрировать, так как не получили от ВК вашу электронную почту. Доступ к ее адресу можно разрешить при <a class="link" href="' . path([static::class, 'index'], ['revoke' => 1]) . '">повторной попытке</a></div>');
     }
 }

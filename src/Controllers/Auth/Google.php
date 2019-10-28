@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
+use App\Http\Controllers\Auth\SignIn;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
@@ -28,7 +29,7 @@ class Google extends Base
         if ($error) {
             event(new ExternalIdentityLoginError($this->provider, request()));
 
-            return redirect(path('Auth\SignIn@index'));
+            return redirect(path([SignIn::class, 'index']));
         }
 
         /** @var \Laravel\Socialite\Two\User $userdata */
@@ -45,7 +46,8 @@ class Google extends Base
         }
 
         if (null === $userdata->email) {
-            return redirect(path('Auth\SignIn@index'))->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
+            return redirect(path([SignIn::class, 'index']))
+                ->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
         }
 
         if (null === $user = $this->findUserByEmail($userdata->email)) {

@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -95,7 +96,7 @@ class SignIn extends Controller
 
     protected function sendAuthenticatedResponse()
     {
-        return redirect()->intended(path('Home@index'));
+        return redirect()->intended(path(HomeController::class));
     }
 
     protected function sendFailedResponse(Request $request)
@@ -107,7 +108,7 @@ class SignIn extends Controller
 
     protected function sendLoggedOutResponse()
     {
-        return redirect(path('Home@index'));
+        return redirect(path(HomeController::class));
     }
 
     protected function sendOkResponse(Request $request)

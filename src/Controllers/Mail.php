@@ -2,6 +2,7 @@
 
 use App\Email;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Ivacuum\Generic\Events\MailReported;
@@ -53,7 +54,7 @@ class Mail extends Controller
 
         event(new MailReported($email));
 
-        return redirect(path('Home@index'))
+        return redirect(path(HomeController::class))
             ->with('message', trans('mail.report_thanks'));
     }
 
