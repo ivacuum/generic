@@ -13,7 +13,7 @@ abstract class LimitExceededException extends \Exception
      */
     public function render($request)
     {
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response(['message' => $this->message()], 429);
         }
 

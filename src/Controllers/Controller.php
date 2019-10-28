@@ -120,14 +120,14 @@ class Controller extends BaseController
 
     protected function redirectAfterStore(/** @noinspection PhpUnusedParameterInspection */ $model)
     {
-        return request()->ajax()
+        return request()->expectsJson()
             ? response('', 201, ['Location' => path([static::class, 'index'])])
             : redirect(path([static::class, 'index']));
     }
 
     protected function redirectAfterUpdate($model, $method = 'index')
     {
-        if (request()->ajax()) {
+        if (request()->expectsJson()) {
             return array_merge(
                 ['status' => 'OK'],
                 $model->updated_at ? [ConcurrencyControl::FIELD => md5($model->updated_at)] : []

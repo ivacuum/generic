@@ -316,7 +316,7 @@ class Controller extends BaseController
 
     protected function isApiRequest()
     {
-        return request()->ajax() && !request()->pjax();
+        return request()->expectsJson();
     }
 
     protected function modelAccessibleRelations($model): array
