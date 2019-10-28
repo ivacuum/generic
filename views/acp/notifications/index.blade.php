@@ -22,7 +22,7 @@
         </div>
       </td>
       <td>
-        @foreach (json_decode($model->data, true) as $index => $data)
+        @foreach ($model->data as $index => $data)
           @if (is_string($data) || is_integer($data))
             <div>
               <span class="text-muted">{{ $index }}:</span>
