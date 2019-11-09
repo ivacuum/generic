@@ -295,7 +295,7 @@ class Controller extends BaseController
 
     protected function getModelName(): string
     {
-        return 'App\\' . \Str::singular(class_basename($this));
+        return NamingHelper::modelClassFromController(static::class);
     }
 
     protected function getSortParams()
@@ -345,7 +345,10 @@ class Controller extends BaseController
             }
 
             $result[] = [
-                'path' => path("Acp\\{$controller}@index", [$model->getForeignKey() => $model->getKey()]),
+                'path' => path(
+                    ["App\Http\Controllers\Acp\\{$controller}", 'index'],
+                    [$model->getForeignKey() => $model->getKey()]
+                ),
                 'count' => $count,
                 'i18n_index' => NamingHelper::transField($related),
             ];
@@ -356,7 +359,7 @@ class Controller extends BaseController
 
     protected function modelResource($model)
     {
-        $resource = 'App\\Http\\Resources\\Acp\\' . \Str::singular(class_basename($this));
+        $resource = NamingHelper::modelResourceClassFromController(static::class);
 
         return (new $resource($model))
             ->additional([
@@ -368,9 +371,9 @@ class Controller extends BaseController
 
     protected function modelResourceCollection($models)
     {
-        $resource = 'App\\Http\\Resources\\Acp\\' . \Str::singular(class_basename($this)) . 'Collection';
+        $resourceCollection = NamingHelper::modelResourceCollectionClassFromController(static::class);
 
-        return (new $resource($models))
+        return (new $resourceCollection($models))
             ->additional(['breadcrumbs' => \Breadcrumbs::get()]);
     }
 
