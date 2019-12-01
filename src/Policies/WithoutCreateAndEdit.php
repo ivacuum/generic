@@ -13,4 +13,9 @@ class WithoutCreateAndEdit extends Base
     {
         return false;
     }
+
+    public function update(User $me)
+    {
+        return false;
+    }
 }

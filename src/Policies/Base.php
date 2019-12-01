@@ -12,6 +12,11 @@ class Base
         return $me->isRoot();
     }
 
+    public function delete(User $me)
+    {
+        return $me->isRoot();
+    }
+
     public function destroy(User $me)
     {
         return $me->isRoot();
@@ -28,6 +33,21 @@ class Base
     }
 
     public function show(User $me)
+    {
+        return $me->isRoot();
+    }
+
+    public function update(User $me)
+    {
+        return $me->isRoot();
+    }
+
+    public function view(User $me)
+    {
+        return $me->isRoot();
+    }
+
+    public function viewAny(User $me)
     {
         return $me->isRoot();
     }
