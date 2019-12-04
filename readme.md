@@ -33,17 +33,6 @@ Route::get('auth/vk/callback', 'Auth\Vk@callback');
 
 ### Настройки
 
-`config/app.php`
-
-```php
-'providers' => [
-    ...
-    // До сервис провайдеров проекта
-    // Для поддержки локализаций
-    Ivacuum\Generic\Providers\LocaleServiceProvider::class,
-],
-```
-
 `config/cfg.php`
 
 ```php
