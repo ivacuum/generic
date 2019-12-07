@@ -18,7 +18,6 @@ class Controller extends BaseController
     public function callAction($method, $parameters)
     {
         $this->fillControllerFields();
-        $this->appendBreadcrumbs();
 
         $response = null;
 
@@ -44,10 +43,6 @@ class Controller extends BaseController
             ->validate();
 
         return request(array_keys($rules));
-    }
-
-    protected function appendBreadcrumbs(): void
-    {
     }
 
     protected function appendCustomVars(): void
