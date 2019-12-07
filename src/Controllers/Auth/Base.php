@@ -98,11 +98,13 @@ abstract class Base extends Controller
         event(new ExternalIdentitySaved($user));
         event(new \Ivacuum\Generic\Events\Stats\ExternalIdentityAdded);
 
-        return ExternalIdentity::create([
-            'uid' => $user->id,
-            'email' => (string) $user->email,
-            'provider' => $this->provider,
-        ]);
+        $externalIdentity = new ExternalIdentity;
+        $externalIdentity->uid = $user->id;
+        $externalIdentity->email = (string) $user->email;
+        $externalIdentity->provider = $this->provider;
+        $externalIdentity->save();
+
+        return $externalIdentity;
     }
 
     /**

@@ -34,12 +34,14 @@ class NewAccount extends Controller
     {
         event(new \Ivacuum\Generic\Events\Stats\UserRegisteredWithEmail);
 
-        return User::create([
-            'email' => $data['email'],
-            'status' => User::STATUS_INACTIVE,
-            'password' => $data['password'],
-            'activation_token' => \Str::random(16),
-        ]);
+        $user = new User;
+        $user->email = $data['email'];
+        $user->status = User::STATUS_INACTIVE;
+        $user->password = $data['password'];
+        $user->activation_token = \Str::random(16);
+        $user->save();
+
+        return $user;
     }
 
     protected function existingUserResponse(User $user)
