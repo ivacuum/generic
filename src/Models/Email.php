@@ -30,6 +30,10 @@ class Email extends Model
     protected $guarded = ['created_at'];
     protected $perPage = 50;
 
+    protected $casts = [
+        'user_id' => 'int',
+    ];
+
     // Relations
     public function rel()
     {

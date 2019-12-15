@@ -45,6 +45,7 @@ class Mail extends Controller
 
     public function report(string $timestamp, int $id)
     {
+        /** @var User $user */
         $user = request()->user();
 
         /** @var Email $email */
