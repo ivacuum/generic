@@ -1,5 +1,6 @@
 <?php namespace Ivacuum\Generic\Services;
 
+use Ivacuum\Generic\Jobs\SendTelegramMessageJob;
 use Telegram\Bot\Api;
 
 class Telegram
@@ -17,23 +18,11 @@ class Telegram
             $text = "\xF0\x9F\x9A\xA7 local\n{$text}";
         }
 
-        $params = [
+        SendTelegramMessageJob::dispatch([
             'text' => $text,
             'chat_id' => config('cfg.telegram.admin_id'),
             'disable_web_page_preview' => true,
-        ];
-
-        event(new \Ivacuum\Generic\Events\Stats\TelegramSent);
-
-        if (\App::runningUnitTests()) {
-            return;
-        } elseif (\App::runningInConsole()) {
-            $this->telegram->sendMessage($params);
-        } else {
-            register_shutdown_function(function () use ($params) {
-                $this->telegram->sendMessage($params);
-            });
-        }
+        ]);
     }
 
     public function notifyAdminProduction(string $text): void
