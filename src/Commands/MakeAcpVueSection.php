@@ -57,12 +57,12 @@ class MakeAcpVueSection extends MakeAcpSection
 
     protected function componentsPath(string $folder): string
     {
-        return resource_path("assets/js/components/acp/{$folder}");
+        return resource_path("js/components/acp/{$folder}");
     }
 
     protected function modelJsPath(string $folder): string
     {
-        return resource_path("assets/js/components/acp/{$folder}/Model.js");
+        return resource_path("js/components/acp/{$folder}/Model.js");
     }
 
     protected function printVueRoutes(): void
@@ -71,7 +71,7 @@ class MakeAcpVueSection extends MakeAcpSection
             return;
         }
 
-        $this->info('Маршруты для вставки в resources/assets/js/router.js');
+        $this->info('Маршруты для вставки в resources/js/router.js');
 
         echo <<<VUE
 { path: '{$this->modelPluralLower}', component: () => import(/* webpackChunkName: "acp" */'./components/acp/{$this->modelPlural}/Index.vue') },
@@ -150,6 +150,6 @@ VUE;
 
     protected function routerPath(): string
     {
-        return resource_path('assets/js/router.js');
+        return resource_path('js/router.js');
     }
 }

@@ -6,7 +6,7 @@ class Notifications extends Controller
 {
     public function index()
     {
-        $models = Model::orderBy('created_at', 'desc')
+        $models = Model::orderByDesc('created_at')
             ->paginate()
             ->withPath(path([static::class, 'index']));
 

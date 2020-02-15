@@ -66,9 +66,7 @@ abstract class Base
 
         $class = str_replace('App\\', '', get_class($model));
 
-        $this->entity = implode('.', array_map(function ($ary) {
-            return \Str::snake($ary, '-');
-        }, explode('\\', $class)));
+        $this->entity = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $class)));
 
         return $this;
     }

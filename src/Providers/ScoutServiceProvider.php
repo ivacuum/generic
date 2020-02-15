@@ -8,8 +8,6 @@ class ScoutServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        resolve(EngineManager::class)->extend('sphinx', function () {
-            return new SphinxEngine;
-        });
+        resolve(EngineManager::class)->extend('sphinx', fn () => new SphinxEngine);
     }
 }

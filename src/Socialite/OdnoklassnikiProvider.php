@@ -60,9 +60,7 @@ class OdnoklassnikiProvider extends AbstractProvider implements ProviderInterfac
 
     protected function newSignature($token, array $params)
     {
-        $_params = array_map(function ($key, $value) {
-            return $key . '=' . $value;
-        }, array_keys($params), array_values($params));
+        $_params = array_map(fn ($key, $value) => $key . '=' . $value, array_keys($params), array_values($params));
 
         return md5(join('', $_params) . md5($token . $this->clientSecret));
     }

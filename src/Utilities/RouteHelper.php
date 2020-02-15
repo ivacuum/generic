@@ -4,7 +4,7 @@ class RouteHelper
 {
     public static function crud(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
-        $prefix = $prefix ?? NamingHelper::acpControllerPrefix($controller);
+        $prefix ??= NamingHelper::acpControllerPrefix($controller);
 
         \Route::get("{$prefix}/", [$controller, 'index']);
         \Route::post("{$prefix}/", [$controller, 'store']);
@@ -17,7 +17,7 @@ class RouteHelper
 
     public static function withoutCreate(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
-        $prefix = $prefix ?? NamingHelper::acpControllerPrefix($controller);
+        $prefix ??= NamingHelper::acpControllerPrefix($controller);
 
         \Route::get("{$prefix}/", [$controller, 'index']);
         \Route::get("{$prefix}/{{$param}}", [$controller, 'show']);
@@ -28,7 +28,7 @@ class RouteHelper
 
     public static function withoutCreateAndEdit(string $controller, ?string $prefix = null, string $param = 'id'): void
     {
-        $prefix = $prefix ?? NamingHelper::acpControllerPrefix($controller);
+        $prefix ??= NamingHelper::acpControllerPrefix($controller);
 
         \Route::get("{$prefix}/", [$controller, 'index']);
         \Route::get("{$prefix}/{{$param}}", [$controller, 'show']);

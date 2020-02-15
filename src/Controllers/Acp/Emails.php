@@ -15,12 +15,8 @@ class Emails extends Controller
         [$sortKey, $sortDir] = $this->getSortParams();
 
         $models = Model::orderBy($sortKey, $sortDir)
-            ->when($userId, function (Builder $query) use ($userId) {
-                return $query->where('user_id', $userId);
-            })
-            ->when($template, function (Builder $query) use ($template) {
-                return $query->where('template', $template);
-            })
+            ->when($userId, fn (Builder $query) => $query->where('user_id', $userId))
+            ->when($template, fn (Builder $query) => $query->where('template', $template))
             ->paginate()
             ->withPath(path([static::class, 'index']));
 

@@ -281,15 +281,9 @@ class Controller extends BaseController
         $model = $this->newModel();
 
         return $model->where($model->getRouteKeyName(), '=', $id)
-            ->when(ModelHelper::hasSoftDeleteLaravel($model), function (Builder $query) {
-                return $query->withTrashed();
-            })
-            ->when($this->method === 'show' && sizeof($this->showWith), function (Builder $query) {
-                return $query->with($this->showWith);
-            })
-            ->when($this->method === 'show' && sizeof($this->showWithCount), function (Builder $query) {
-                return $query->withCount($this->showWithCount);
-            })
+            ->when(ModelHelper::hasSoftDeleteLaravel($model), fn (Builder $query) => $query->withTrashed())
+            ->when($this->method === 'show' && sizeof($this->showWith), fn (Builder $query) => $query->with($this->showWith))
+            ->when($this->method === 'show' && sizeof($this->showWithCount), fn (Builder $query) => $query->withCount($this->showWithCount))
             ->firstOrFail();
     }
 

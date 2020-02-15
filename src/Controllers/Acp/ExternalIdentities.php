@@ -10,16 +10,10 @@ class ExternalIdentities extends Controller
         $userId = request('user_id');
         $provider = request('provider');
 
-        $models = Model::orderBy('id', 'desc')
-            ->unless(null === $userId, function (Builder $query) use ($userId) {
-                return $query->where('user_id', $userId);
-            })
-            ->when(null === $userId, function (Builder $query) {
-                return $query->where('user_id', '<>', 0);
-            })
-            ->when($provider, function (Builder $query) use ($provider) {
-                return $query->where('provider', $provider);
-            })
+        $models = Model::orderByDesc('id')
+            ->unless(null === $userId, fn (Builder $query) => $query->where('user_id', $userId))
+            ->when(null === $userId, fn (Builder $query) => $query->where('user_id', '<>', 0))
+            ->when($provider, fn (Builder $query) => $query->where('provider', $provider))
             ->paginate()
             ->withPath(path([static::class, 'index']));
 
