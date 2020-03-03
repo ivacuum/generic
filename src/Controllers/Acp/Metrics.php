@@ -1,7 +1,7 @@
 <?php namespace Ivacuum\Generic\Controllers\Acp;
 
 use App\Metric as Model;
-use Carbon\CarbonImmutable;
+use Carbon\Carbon;
 
 class Metrics extends BaseController
 {
@@ -27,8 +27,8 @@ class Metrics extends BaseController
         \Breadcrumbs::push($event);
 
         $metrics = Model::where('event', $event)->get();
-        $lastDay = sizeof($metrics) ? CarbonImmutable::parse($metrics->last()->date) : now();
-        $firstDay = sizeof($metrics) ? CarbonImmutable::parse($metrics->first()->date) : now();
+        $lastDay = sizeof($metrics) ? Carbon::parse($metrics->last()->date) : now();
+        $firstDay = sizeof($metrics) ? Carbon::parse($metrics->first()->date) : now();
 
         return view($this->view, [
             'event' => $event,
