@@ -10,9 +10,9 @@ use Illuminate\Notifications\DatabaseNotification;
  * @property int $notifiable_id
  * @property string $notifiable_type
  * @property string $data
- * @property \Illuminate\Support\Carbon $read_at
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Carbon\CarbonImmutable $read_at
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
  *
  * @mixin \Eloquent
  */

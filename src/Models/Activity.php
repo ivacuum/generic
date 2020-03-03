@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $ip
  * @property string $user_agent
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
  *
  * @mixin \Eloquent
  */

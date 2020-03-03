@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Метрика
  *
- * @property \Illuminate\Support\Carbon $date
+ * @property \Carbon\CarbonImmutable $date
  * @property string $event
  * @property int $count
  *
