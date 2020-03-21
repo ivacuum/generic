@@ -18,11 +18,7 @@ class Handler extends ExceptionHandler
 
     protected $reportValidationException = true;
 
-    /**
-     * @param  \Exception $e
-     * @return void
-     */
-    public function report(\Exception $e)
+    public function report(\Throwable $e)
     {
         if ($this->isDatabaseOffline($e)) {
             return;
@@ -37,12 +33,7 @@ class Handler extends ExceptionHandler
         parent::report($e);
     }
 
-    /**
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception $e
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function render($request, \Exception $e)
+    public function render($request, \Throwable $e)
     {
         abort_if($e instanceof ModelNotFoundException, 404);
 
@@ -54,7 +45,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $e);
     }
 
-    protected function convertExceptionToResponse(\Exception $e)
+    protected function convertExceptionToResponse(\Throwable $e)
     {
         if (config('app.debug', false)) {
             return parent::convertExceptionToResponse($e);
@@ -63,7 +54,7 @@ class Handler extends ExceptionHandler
         return response()->view('errors.500', ['exception' => $e], 500);
     }
 
-    protected function isDatabaseOffline(\Exception $e): bool
+    protected function isDatabaseOffline(\Throwable $e): bool
     {
         if ($e instanceof QueryException && $e->getCode() === 2002) {
             return true;
@@ -83,7 +74,7 @@ class Handler extends ExceptionHandler
             && false === config('app.debug', false);
     }
 
-    protected function reportTelegram(\Exception $e): void
+    protected function reportTelegram(\Throwable $e): void
     {
         ExceptionHelper::log($e);
 
@@ -92,18 +83,13 @@ class Handler extends ExceptionHandler
         }
     }
 
-    protected function reportValidationException(\Exception $e): void
+    protected function reportValidationException(\Throwable $e): void
     {
         if ($e instanceof ValidationException && $this->shouldReportValidationException()) {
             ExceptionHelper::logValidation($e);
         }
     }
 
-    /**
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Illuminate\Auth\AuthenticationException $e
-     * @return \Illuminate\Http\Response
-     */
     protected function unauthenticated($request, AuthenticationException $e)
     {
         return $request->expectsJson()

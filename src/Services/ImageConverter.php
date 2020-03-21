@@ -35,28 +35,30 @@ class ImageConverter
      *
      * Но: звездочку +profile "*" экранировать не нужно, иначе в изображении останутся профили
      *
-     * @param  string  $source Путь к исходному файлу
+     * @param string $source Путь к исходному файлу
      * @return \Illuminate\Http\UploadedFile
-     * @throws \Exception
      */
     public function convert(string $source): UploadedFile
     {
         $destination = $this->tempFile();
 
-        $command = implode(' ', [
-            config('cfg.gm_bin'),
-            'convert',
-            $this->size,
-            escapeshellarg($this->source($source)),
-            $this->authOrient,
-            $this->quality,
-            $this->filter, // Фильтр должен быть перед resize
-            $this->resize,
-            $this->gravity,
-            $this->crop,
-            '+profile "*"',
-            escapeshellarg($destination),
-        ]);
+        $command = implode(
+            ' ',
+            [
+                config('cfg.gm_bin'),
+                'convert',
+                $this->size,
+                escapeshellarg($this->source($source)),
+                $this->authOrient,
+                $this->quality,
+                $this->filter, // Фильтр должен быть перед resize
+                $this->resize,
+                $this->gravity,
+                $this->crop,
+                '+profile "*"',
+                escapeshellarg($destination),
+            ]
+        );
 
         passthru($command);
 
@@ -79,9 +81,8 @@ class ImageConverter
     /**
      * Фильтр для размыливания
      *
-     * @param  string  $filter
+     * @param string $filter
      * @return $this
-     * @throws \Exception
      */
     public function filter(string $filter): self
     {
@@ -130,7 +131,7 @@ class ImageConverter
     /**
      * Путь к файлу-исходнику. Для gif берется первый кадр
      *
-     * @param  string $source
+     * @param string $source
      * @return string
      */
     public function source(string $source): string
@@ -160,9 +161,11 @@ class ImageConverter
         $filename = \Str::random(6);
         $destination = storage_path("app/resize-{$filename}");
 
-        register_shutdown_function(function () use ($destination) {
-            unlink($destination);
-        });
+        register_shutdown_function(
+            function () use ($destination) {
+                unlink($destination);
+            }
+        );
 
         return $destination;
     }

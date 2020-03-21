@@ -8,16 +8,6 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 class Auth extends Authenticate
 {
-    /**
-     * Обработка входящего запроса
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string[]  ...$guards
-     * @return mixed
-     *
-     * @throws \Illuminate\Auth\AuthenticationException
-     */
     public function handle($request, \Closure $next, ...$guards)
     {
         $this->authenticate($request, $guards);
