@@ -51,11 +51,11 @@ class ImageConverter
                 escapeshellarg($this->source($source)),
                 $this->authOrient,
                 $this->quality,
-                $this->filter, // Фильтр должен быть перед resize
+                $this->filter, // Фильтр должен быть перед параметром resize
                 $this->resize,
                 $this->gravity,
                 $this->crop,
-                '+profile "*"',
+                '+profile "!icm,*"',
                 escapeshellarg($destination),
             ]
         );
