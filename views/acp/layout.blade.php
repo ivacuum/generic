@@ -5,8 +5,8 @@
 @extends('acp.base')
 
 @section('content_header')
-<div class="lg:flex lg:-mx-4">
-  <div class="lg:w-1/4 lg:px-4">
+<div class="grid lg:grid-cols-4 gap-8">
+  <div>
     <div class="flex flex-col w-full">
       @can('show', $model)
         <a
@@ -44,8 +44,8 @@
     </div>
     @yield('model_menu_after')
   </div>
-  <div class="lg:w-3/4 lg:px-4">
-    <h2 class="mt-4 lg:mt-0 break-words">
+  <div class="lg:col-span-3">
+    <h2 class="break-words">
       @include('acp.tpl.back')
       @section('model_title')
         {{ $model->breadcrumb() }}
