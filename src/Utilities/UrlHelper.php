@@ -15,20 +15,19 @@ class UrlHelper
 
     public function except(array $params = []): array
     {
-        return \Request::except(array_merge(['_pjax'], $params));
+        return \Request::except($params);
     }
 
     public function filter(array $query = []): string
     {
         return fullUrl(array_merge([
             'page' => null,
-            '_pjax' => null,
         ], $query));
     }
 
     public function go(array $query = []): string
     {
-        return fullUrl(array_merge(['_pjax' => null], $query));
+        return fullUrl($query);
     }
 
     public function setDefaultSortDir(string $dir): self

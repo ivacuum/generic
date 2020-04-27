@@ -10,7 +10,7 @@
     <div class="flex flex-col w-full">
       @can('show', $model)
         <a
-          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orange-600 text-black hover:text-black' : '' }}"
+          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orangeish-600 text-black hover:text-black' : '' }}"
           href="{{ path([$controller, 'show'], $model) }}"
         >
           {{ trans("$tpl.show") }}
@@ -18,7 +18,7 @@
       @endcan
       @can('edit', $model)
         <a
-          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orange-600 text-black hover:text-black' : '' }}"
+          class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orangeish-600 text-black hover:text-black' : '' }}"
           href="{{ UrlHelper::edit($controller, $model) }}"
         >
           {{ trans("$tpl.edit") }}

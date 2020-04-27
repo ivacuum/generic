@@ -1,4 +1,4 @@
-@extends("$tpl.base")
+@extends(view()->exists("$tpl.base") ? "$tpl.base" : 'acp.layout')
 
 @section('content')
 @if (Auth::user()->isRoot())

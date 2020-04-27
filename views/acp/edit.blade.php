@@ -1,4 +1,4 @@
-@extends("$tpl.base")
+@extends(view()->exists("$tpl.base") ? "$tpl.base" : 'acp.layout')
 
 <?php /** @var $model */ ?>
 <?php Form::model($model); ?>

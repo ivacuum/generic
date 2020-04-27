@@ -17,7 +17,7 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
         <div class="dropdown-divider"></div>
       @else
         <a
-          class="dropdown-item-tw js-pjax"
+          class="dropdown-item-tw"
           href="{{ UrlHelper::filter([$field => $value]) }}"
         >
           {{ $name }}

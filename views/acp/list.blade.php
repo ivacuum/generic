@@ -17,7 +17,7 @@
   @endcan
   @if (!empty($searchForm))
     <form class="my-1 mr-2">
-      <input name="q" class="form-control" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
+      <input name="q" class="form-control" enterkeyhint="search" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
     </form>
   @endif
   @yield('heading-after-search')
@@ -25,15 +25,15 @@
 
 @yield('toolbar')
 
-@if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk', '_pjax'])))
+@if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk'])))
   <div class="my-2">
     <a class="btn btn-default my-1" href="{{ path([$controller, 'index']) }}">
       {{ trans('acp.reset_filters') }}
     </a>
     @foreach ($filters as $key => $value)
-      <a class="btn btn-default my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null, '_pjax' => null])) }}">
+      <a class="btn btn-default my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null])) }}">
         {{ $key }}: {{ $value }}
-        <span class="text-red-600">
+        <span class="text-redish-600">
           @svg (times)
         </span>
       </a>
