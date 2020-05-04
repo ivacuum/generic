@@ -35,7 +35,7 @@
           {{ $model->id }}
         </a>
       </td>
-      <td class="bg-{{ $model->provider }}">
+      <td class="bg-{{ $model->provider }}-600 hover:bg-{{ $model->provider }}-700">
         <a class="text-white hover:text-grey-200" href="{{ $model->externalLink() }}">
           @svg ($model->provider)
         </a>

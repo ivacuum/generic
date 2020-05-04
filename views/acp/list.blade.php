@@ -17,7 +17,7 @@
   @endcan
   @if (!empty($searchForm))
     <form class="my-1 mr-2">
-      <input name="q" class="form-control" enterkeyhint="search" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
+      <input name="q" class="form-input" enterkeyhint="search" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
     </form>
   @endif
   @yield('heading-after-search')
@@ -33,7 +33,7 @@
     @foreach ($filters as $key => $value)
       <a class="btn btn-default my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null])) }}">
         {{ $key }}: {{ $value }}
-        <span class="text-redish-600">
+        <span class="text-red-600">
           @svg (times)
         </span>
       </a>

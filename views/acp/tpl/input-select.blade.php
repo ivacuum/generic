@@ -1,6 +1,6 @@
 <select
   {{ $required ? 'required' : '' }}
-  class="custom-select {{ $errors->has($name) ? 'is-invalid' : '' }} {{ implode(' ', $classes) }}"
+  class="form-select {{ implode(' ', $classes) }}"
   name="{{ $name }}"
   id="{{ $entity }}_{{ $name }}"
 >

@@ -1,7 +1,7 @@
 @foreach ($values as $_value => $_title)
   <label class="flex items-center">
     <input
-      class="mr-2 {{ $errors->has($name) ? 'is-invalid' : '' }}"
+      class="form-radio mr-2"
       type="radio"
       name="{{ $name }}"
       value="{{ $_value }}"

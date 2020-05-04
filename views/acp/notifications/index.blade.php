@@ -31,7 +31,7 @@
           @elseif (is_array($data))
             <div>
               <span class="text-muted">{{ $index }}:</span>
-              <span class="text-orangeish-400">[Array]</span>
+              <span class="text-orange-300">[Array]</span>
             </div>
           @endif
         @endforeach

@@ -1,6 +1,6 @@
 <textarea
   {{ $required ? 'required' : '' }}
-  class="form-control {{ !$isMobile ? 'textarea-autosized js-autosize-textarea' : '' }} {{ $errors->has($name) ? 'is-invalid' : '' }} {{ implode(' ', $classes) }}"
+  class="form-textarea {{ !$isMobile ? 'resize-none js-autosize-textarea' : '' }} {{ implode(' ', $classes) }}"
   name="{{ $name }}"
   rows="{{ !$isMobile ? 2 : 6 }}"
   placeholder="{{ $placeholder }}"
