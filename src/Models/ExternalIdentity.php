@@ -20,6 +20,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ExternalIdentity extends Model
 {
+    public const VK = 'vk';
+    public const GITHUB = 'github';
+    public const GOOGLE = 'google';
+    public const YANDEX = 'yandex';
+    public const TWITTER = 'twitter';
+    public const FACEBOOK = 'facebook';
+
     protected $guarded = ['created_at', 'updated_at'];
     protected $perPage = 50;
 
