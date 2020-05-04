@@ -1,6 +1,4 @@
-<?php
-/** @var $model */
-?>
+<?php /** @var $model */ ?>
 
 @extends('acp.base')
 
