@@ -6,11 +6,13 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
 ?>
 <details class="relative details-reset details-overlay my-1 mr-2 {{ $class ?? '' }}">
   <summary class="btn btn-default">
-    <span class="text-muted">
-      @svg (filter)
-    </span>
-    {{ $title ?? ViewHelper::modelFieldTrans($modelTpl, $field) }}: {{ $current }}
-    @svg (angle-down)
+    <div class="flex items-center">
+      <span class="text-muted mr-1">
+        @svg (filter)
+      </span>
+      {{ $title ?? ViewHelper::modelFieldTrans($modelTpl, $field) }}: {{ $current }}
+      @svg (angle-down)
+    </div>
   </summary>
   <details-menu
     role="menu"
