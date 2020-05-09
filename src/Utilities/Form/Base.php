@@ -23,7 +23,7 @@ abstract class Base
     }
 
     /**
-     * @param  \Illuminate\Contracts\Support\Arrayable|array $values
+     * @param \Illuminate\Contracts\Support\Arrayable|array $values
      * @return $this
      */
     public function classes($values): self

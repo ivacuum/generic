@@ -103,9 +103,7 @@ class Controller extends BaseController
 
         $this->authorize('list', $model);
 
-        $modelTpl = implode('.', array_map(function ($ary) {
-            return \Str::snake($ary, '-');
-        }, explode('\\', str_replace('App\\', '', get_class($model)))));
+        $modelTpl = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', str_replace('App\\', '', get_class($model)))));
 
         [$sortKey, $sortDir] = $this->getSortParams();
 

@@ -20,7 +20,7 @@ abstract class Base extends Controller
     /**
      * Поиск или создание новой учетки социального сервиса
      *
-     * @param  \Laravel\Socialite\AbstractUser $user
+     * @param \Laravel\Socialite\AbstractUser $user
      *
      * @return \App\ExternalIdentity
      */
@@ -40,7 +40,7 @@ abstract class Base extends Controller
     /**
      * Поиск учетки по ID в социальном сервисе
      *
-     * @param  string $uid
+     * @param string $uid
      *
      * @return \App\ExternalIdentity
      */
@@ -57,7 +57,7 @@ abstract class Base extends Controller
     /**
      * Поиск пользователя сайта по электронной почте
      *
-     * @param  string $email
+     * @param string $email
      *
      * @return \App\User
      */
@@ -72,7 +72,7 @@ abstract class Base extends Controller
     /**
      * Мгновенная регистрация пользователя
      *
-     * @param  \Laravel\Socialite\AbstractUser $user
+     * @param \Laravel\Socialite\AbstractUser $user
      *
      * @return \App\User
      */
@@ -81,7 +81,7 @@ abstract class Base extends Controller
         event(new \Ivacuum\Generic\Events\Stats\UserRegisteredWithExternalIdentity);
 
         return $this->user->create([
-            'email'  => $user->email,
+            'email' => $user->email,
             'status' => User::STATUS_ACTIVE,
         ]);
     }
@@ -89,7 +89,7 @@ abstract class Base extends Controller
     /**
      * Сохранение поступивших от социального сервиса данных
      *
-     * @param  \Laravel\Socialite\AbstractUser $user
+     * @param \Laravel\Socialite\AbstractUser $user
      *
      * @return \App\ExternalIdentity
      */

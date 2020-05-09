@@ -27,7 +27,7 @@ class Radio extends Base
     }
 
     /**
-     * @param  \Illuminate\Contracts\Support\Arrayable|array $values
+     * @param \Illuminate\Contracts\Support\Arrayable|array $values
      * @return $this
      */
     public function values($values): self

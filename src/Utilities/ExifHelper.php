@@ -19,7 +19,7 @@ class ExifHelper
      *         [2] => 1244/100
      *     )
      *
-     * @param  array  $exif
+     * @param array $exif
      * @return array|boolean
      */
     public static function latLon($exif): array

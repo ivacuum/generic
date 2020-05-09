@@ -24,7 +24,7 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
         <div class="h-0 my-2 overflow-hidden border-t border-gray-100"></div>
       @else
         <a
-          class="dropdown-item-tw"
+          class="dropdown-item"
           href="{{ UrlHelper::filter([$field => $value]) }}"
           role="menuitem"
         >

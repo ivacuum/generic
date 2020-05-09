@@ -14,8 +14,7 @@ class ExternalIdentities extends Controller
             ->unless(null === $userId, fn (Builder $query) => $query->where('user_id', $userId))
             ->when(null === $userId, fn (Builder $query) => $query->where('user_id', '<>', 0))
             ->when($provider, fn (Builder $query) => $query->where('provider', $provider))
-            ->paginate()
-            ->withPath(path([static::class, 'index']));
+            ->paginate();
 
         return view($this->view, ['models' => $models]);
     }

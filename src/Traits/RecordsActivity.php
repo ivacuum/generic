@@ -7,14 +7,10 @@ trait RecordsActivity
     protected static function bootRecordsActivity()
     {
         foreach (static::getActivitiesToRecord() as $event) {
-            static::$event(function ($model) use ($event) {
-                $model->recordActivity($event);
-            });
+            static::$event(fn ($model) => $model->recordActivity($event));
         }
 
-        static::deleting(function ($model) {
-            $model->activities()->delete();
-        });
+        static::deleting(fn ($model) => $model->activities()->delete());
     }
 
     /**
@@ -54,7 +50,7 @@ trait RecordsActivity
     /**
      * Тип события
      *
-     * @param  string $event
+     * @param string $event
      * @return string
      */
     protected function getActivityType(string $event): string

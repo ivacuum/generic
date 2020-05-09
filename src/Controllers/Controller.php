@@ -106,9 +106,7 @@ class Controller extends BaseController
             ? \Arr::last(explode('@', $action))
             : null;
 
-        $this->prefix = implode('.', array_map(function ($ary) {
-            return \Str::snake($ary, '-');
-        }, explode('\\', $this->controllerBasename())));
+        $this->prefix = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $this->controllerBasename())));
 
         $this->view = $this->method
             ? $this->prefix . "." . \Str::snake($this->method)

@@ -3,7 +3,7 @@
 class FloodException extends \Exception
 {
     /**
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function render($request)

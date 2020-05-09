@@ -3,7 +3,7 @@
 class ModelHelper
 {
     /**
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
     public static function exists($model): bool
