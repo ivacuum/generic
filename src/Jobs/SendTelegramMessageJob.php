@@ -7,6 +7,7 @@ class SendTelegramMessageJob extends BaseJob
     public $tries = 10;
     public $timeout = 5;
     public $retryAfter = 30;
+    public $maxExceptions = 1;
 
     private $params;
 

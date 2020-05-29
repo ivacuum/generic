@@ -16,4 +16,5 @@ class BaseJob implements ShouldQueue
     public $tries;
     public $timeout;
     public $retryAfter;
+    public $maxExceptions;
 }
