@@ -17,7 +17,7 @@ class SpammerTrap
             event(new \Ivacuum\Generic\Events\Stats\SpammerTrappedHttp1);
 
             throw ValidationException::withMessages([
-                'mail' => [trans('auth.spammer_trapped')],
+                'mail' => [__('auth.spammer_trapped')],
             ]);
         }
 
@@ -28,7 +28,7 @@ class SpammerTrap
         event(new \Ivacuum\Generic\Events\Stats\SpammerTrapped);
 
         throw ValidationException::withMessages([
-            'mail' => [trans('auth.spammer_trapped')],
+            'mail' => [__('auth.spammer_trapped')],
         ]);
     }
 }

@@ -40,7 +40,7 @@ class Controller extends BaseController
 
         $this->authorize('create', $model);
 
-        \Breadcrumbs::push(trans($this->view));
+        \Breadcrumbs::push(__($this->view));
 
         return $this->newModelDefaults($model);
     }
@@ -245,7 +245,7 @@ class Controller extends BaseController
             str_replace('.', '/', $this->prefix) . "/{$model->getRouteKey()}"
         );
 
-        \Breadcrumbs::push(trans($this->view));
+        \Breadcrumbs::push(__($this->view));
     }
 
     /**

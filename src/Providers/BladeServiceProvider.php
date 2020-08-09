@@ -13,11 +13,11 @@ class BladeServiceProvider extends ServiceProvider
 
     protected function lang()
     {
-        \Blade::directive('ru', fn () => '<?php if ($locale === \'ru\'): ?>');
+        \Blade::directive('ru', fn () => '<?php if ($locale === "ru"): ?>');
         \Blade::directive('endru', fn () => '<?php endif; ?>');
-        \Blade::directive('en', fn () => '<?php elseif ($locale === \'en\'): ?>');
+        \Blade::directive('en', fn () => '<?php elseif ($locale === "en"): ?>');
         \Blade::directive('enden', fn () => '<?php endif; ?>');
-        \Blade::directive('de', fn () => '<?php elseif ($locale === \'de\'): ?>');
+        \Blade::directive('de', fn () => '<?php elseif ($locale === "de"): ?>');
         \Blade::directive('endde', fn () => '<?php endif; ?>');
         \Blade::directive('endlang', fn () => '<?php endif; ?>');
     }

@@ -11,7 +11,7 @@
           class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orangeish-600 text-black hover:text-black' : '' }}"
           href="{{ path([$controller, 'show'], $model) }}"
         >
-          {{ trans("$tpl.show") }}
+          @lang("$tpl.show")
         </a>
       @endcan
       @can('edit', $model)
@@ -19,7 +19,7 @@
           class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orangeish-600 text-black hover:text-black' : '' }}"
           href="{{ UrlHelper::edit($controller, $model) }}"
         >
-          {{ trans("$tpl.edit") }}
+          @lang("$tpl.edit")
         </a>
       @endcan
       @yield('model_menu')
@@ -27,14 +27,14 @@
         <?php /** @var array $relation */ ?>
         @foreach ($modelRelations as $relation)
           <a class="border-l-2 border-transparent px-3 py-2" href="{{ $relation['path'] }}">
-            {{ trans("acp.{$relation['i18n_index']}.index") }}
+            @lang("acp.{$relation['i18n_index']}.index")
             <span class="text-muted text-xs whitespace-no-wrap">{{ ViewHelper::number($relation['count']) }}</span>
           </a>
         @endforeach
       @endif
       @if (method_exists($model, 'www'))
         <a class="border-l-2 border-transparent px-3 py-2" href="{{ $model->www() }}">
-          {{ trans('acp.www') }}
+          @lang('acp.www')
           @svg (external-link)
         </a>
       @endif

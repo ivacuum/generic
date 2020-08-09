@@ -20,6 +20,6 @@ class ConcurrencyControl implements Rule
 
     public function message(): string
     {
-        return trans('validation.concurrency_control');
+        return __('validation.concurrency_control');
     }
 }

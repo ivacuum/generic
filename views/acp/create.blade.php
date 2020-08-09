@@ -6,7 +6,7 @@
 @section('content')
 <h3 class="text-2xl">
   @include('acp.tpl.back')
-  {{ trans("$tpl.create") }}
+  @lang("$tpl.create")
 </h3>
 <form action="{{ path([$controller, 'store']) }}" class="mt-4" method="post" enctype="multipart/form-data">
   {{ ViewHelper::inputHiddenMail() }}
@@ -16,7 +16,7 @@
 
   <div class="sticky-bottom-buttons">
     <button class="btn btn-primary">
-      {{ trans("$tpl.add") }}
+      @lang("$tpl.add")
     </button>
   </div>
 </form>

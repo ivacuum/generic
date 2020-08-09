@@ -51,7 +51,7 @@ class NewAccount extends Controller
         event(new \Ivacuum\Generic\Events\Stats\UserPasswordRemindedDuringRegistration);
 
         return back()->with(
-            'message', trans('auth.email_taken', ['email' => $user->email])
+            'message', __('auth.email_taken', ['email' => $user->email])
         );
     }
 

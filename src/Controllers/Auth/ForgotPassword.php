@@ -23,13 +23,13 @@ class ForgotPassword extends Controller
 
     protected function sendFailedResponse(string $response)
     {
-        return back()->withErrors(['email' => trans($response)]);
+        return back()->withErrors(['email' => __($response)]);
     }
 
     protected function sendOkResponse(string $response, string $email)
     {
         event(new \Ivacuum\Generic\Events\Stats\UserPasswordReminded);
 
-        return back()->with('message', trans($response, ['email' => $email]));
+        return back()->with('message', __($response, ['email' => $email]));
     }
 }

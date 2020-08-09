@@ -31,7 +31,7 @@ abstract class BaseController extends Controller
             $prefix = implode('.', $url);
             $index = "{$prefix}.index";
 
-            if ($index !== $trans = trans($index)) {
+            if ($index !== $trans = __($index)) {
                 \Breadcrumbs::push($trans, implode('/', $url));
             }
 

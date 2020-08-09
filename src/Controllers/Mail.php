@@ -56,7 +56,7 @@ class Mail extends Controller
         event(new MailReported($email));
 
         return redirect(path(HomeController::class))
-            ->with('message', trans('mail.report_thanks'));
+            ->with('message', __('mail.report_thanks'));
     }
 
     public function view(string $timestamp, int $id)

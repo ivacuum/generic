@@ -16,10 +16,10 @@
 
   <div class="sticky-bottom-buttons">
     <button class="btn btn-primary">
-      {{ trans('acp.save') }}
+      @lang('acp.save')
     </button>
     <button name="_save" class="btn btn-default">
-      {{ trans('acp.apply') }}
+      @lang('acp.apply')
     </button>
   </div>
 

@@ -73,14 +73,14 @@ class ResetPassword extends Controller
     {
         return back()
             ->withInput(request(['email']))
-            ->with('message', trans('passwords.banned'));
+            ->with('message', __('passwords.banned'));
     }
 
     protected function sendFailedResponse(string $response)
     {
         return back()
             ->withInput(request(['email']))
-            ->withErrors(['email' => trans($response)]);
+            ->withErrors(['email' => __($response)]);
     }
 
     protected function sendOkResponse(string $response)
@@ -88,7 +88,7 @@ class ResetPassword extends Controller
         event(new \Ivacuum\Generic\Events\Stats\UserPasswordResetted);
 
         return redirect($this->redirectPath())
-            ->with('message', trans($response));
+            ->with('message', __($response));
     }
 
     protected function userStatusesOkToReset()

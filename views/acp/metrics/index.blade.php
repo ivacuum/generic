@@ -1,7 +1,7 @@
 @extends('acp.base')
 
 @section('content')
-<h3>{{ trans("$tpl.index") }}</h3>
+<h3>@lang("$tpl.index")</h3>
 <table class="table-stats table-adaptive">
   <thead>
   <tr>

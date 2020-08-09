@@ -9,11 +9,11 @@ class FloodException extends \Exception
     public function render($request)
     {
         if ($request->expectsJson()) {
-            return response(['message' => trans('limits.flood_control')], 429);
+            return response(['message' => __('limits.flood_control')], 429);
         }
 
         return back()
-            ->with('message', trans('limits.flood_control'))
+            ->with('message', __('limits.flood_control'))
             ->withInput();
     }
 }

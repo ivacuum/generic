@@ -45,8 +45,8 @@ class ViewHelper
 
     public function metaDescription(string $view, array $replace = []): string
     {
-        if (trans("meta_description.{$view}") !== "meta_description.{$view}") {
-            return trans("meta_description.{$view}", $replace);
+        if (__("meta_description.{$view}") !== "meta_description.{$view}") {
+            return __("meta_description.{$view}", $replace);
         }
 
         return '';
@@ -54,8 +54,8 @@ class ViewHelper
 
     public function metaKeywords(string $view, array $replace = []): string
     {
-        if (trans("meta_keywords.{$view}") !== "meta_keywords.{$view}") {
-            return trans("meta_keywords.{$view}", $replace);
+        if (__("meta_keywords.{$view}") !== "meta_keywords.{$view}") {
+            return __("meta_keywords.{$view}", $replace);
         }
 
         return '';
@@ -63,12 +63,12 @@ class ViewHelper
 
     public function metaTitle(string $view, array $replace = []): string
     {
-        if (trans("meta_title.{$view}") !== "meta_title.{$view}") {
-            return trans("meta_title.{$view}", $replace);
+        if (__("meta_title.{$view}") !== "meta_title.{$view}") {
+            return __("meta_title.{$view}", $replace);
         }
 
-        if (trans($view) !== $view) {
-            return trans($view);
+        if (__($view) !== $view) {
+            return __($view);
         }
 
         return config('cfg.sitename');
@@ -78,13 +78,13 @@ class ViewHelper
     {
         $transKey = "model.$model.$field";
 
-        if (($text = trans($transKey)) !== $transKey) {
+        if (($text = __($transKey)) !== $transKey) {
             return $text;
         }
 
         $transKeyGeneral = "model.$field";
 
-        if (($text = trans($transKeyGeneral)) !== $transKeyGeneral) {
+        if (($text = __($transKeyGeneral)) !== $transKeyGeneral) {
             return $text;
         }
 
@@ -133,11 +133,11 @@ class ViewHelper
     public function size(int $bytes): string
     {
         $units = [
-            trans('size.b'),
-            trans('size.kb'),
-            trans('size.mb'),
-            trans('size.gb'),
-            trans('size.tb'),
+            __('size.b'),
+            __('size.kb'),
+            __('size.mb'),
+            __('size.gb'),
+            __('size.tb'),
         ];
 
         $decimals = [0, 0, 1, 1, 1];

@@ -102,7 +102,7 @@ class SignIn extends Controller
     protected function sendFailedResponse(Request $request)
     {
         return back()
-            ->with('message', trans('auth.failed'))
+            ->with('message', __('auth.failed'))
             ->withInput($request->except('password'));
     }
 

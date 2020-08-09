@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex items-center flex-wrap mb-2 -mt-2">
   <h3 class="mb-1 mr-4">
-    {{ trans("$tpl.index") }}
+    @lang("$tpl.index")
     <span class="text-base text-muted whitespace-no-wrap">
       {{ $models instanceof Illuminate\Support\Collection
           ? ViewHelper::number(sizeof($models))
@@ -28,7 +28,7 @@
 @if (!empty($filters = Request::except(['filter', 'page', 'sd', 'sk'])))
   <div class="my-2">
     <a class="btn btn-default my-1" href="{{ path([$controller, 'index']) }}">
-      {{ trans('acp.reset_filters') }}
+      @lang('acp.reset_filters')
     </a>
     @foreach ($filters as $key => $value)
       <a class="btn btn-default my-1" href="{{ fullUrl(array_merge($filters, ['page' => null, $key => null])) }}">

@@ -95,6 +95,6 @@ class Handler extends ExceptionHandler
         return $request->expectsJson()
             ? response()->json(['message' => 'Unauthenticated.'], 401)
             : redirect()->guest(path([SignIn::class, 'index']))
-                ->with('message', trans('auth.signin_to_view_page'));
+                ->with('message', __('auth.signin_to_view_page'));
     }
 }
