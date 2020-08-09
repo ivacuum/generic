@@ -27,10 +27,7 @@ class Controller extends BaseController
             $response = $this->alwaysCallBefore(...array_values($parameters));
         }
 
-        $this->appendLocale();
-        $this->appendRequestUri();
         $this->appendViewSharedVars();
-
         $this->appendCustomVars();
 
         return $response !== null
@@ -51,44 +48,14 @@ class Controller extends BaseController
     {
     }
 
-    protected function appendLocale(): void
-    {
-        $locale = request()->server->get('LARAVEL_LOCALE');
-
-        $prefferedLocale = \Request::getPreferredLanguage(array_keys(config('cfg.locales')));
-
-        view()->share(
-            [
-                'locale' => $locale ?: config('app.locale'),
-                'localeUri' => $locale ? "/{$locale}" : '',
-                'localePreffered' => $prefferedLocale,
-            ]
-        );
-    }
-
-    protected function appendRequestUri(?string $uri = null): void
-    {
-        view()->share('requestUri', $uri ?? request()->path());
-    }
-
     protected function appendViewSharedVars(): void
     {
-        $browserEnv = new \Ivacuum\Generic\Utilities\EnvironmentForCss(request()->userAgent());
-        $firstTimeVisit = null === \Session::previousUrl();
-
         view()->share(
             [
                 'tpl' => $this->prefix,
-                'goto' => request('goto'),
                 'self' => $this->controllerBasename(),
                 'view' => $this->view,
-                'isMobile' => $browserEnv->isMobile(),
-                'routeUri' => request()->route()->uri(),
-                'isCrawler' => $browserEnv->isCrawler(),
-                'isDesktop' => !$browserEnv->isMobile(),
                 'controller' => static::class,
-                'cssClasses' => (string) $browserEnv,
-                'firstTimeVisit' => $firstTimeVisit,
             ]
         );
     }
