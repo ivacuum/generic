@@ -70,3 +70,14 @@ if (!function_exists('path_locale')) {
         return ($absolute ? app('request')->root() : '') . $prefix . ($action === '/' ? '' : $action);
     }
 }
+
+if (!function_exists('to')) {
+    function to(string $url, $params = []): string
+    {
+        $locale = app('request')->server->get('LARAVEL_LOCALE');
+
+        $route = new Illuminate\Routing\Route('', trim("{$locale}/{$url}", '/'), '');
+
+        return app('url')->toRoute($route, $params, false);
+    }
+}
