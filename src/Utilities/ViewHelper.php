@@ -67,8 +67,10 @@ class ViewHelper
             return __("meta_title.{$view}", $replace);
         }
 
-        if (__($view) !== $view) {
-            return __($view);
+        $result = __($view);
+
+        if (!is_array($result) && $result !== $view) {
+            return $result;
         }
 
         return config('cfg.sitename');
