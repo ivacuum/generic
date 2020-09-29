@@ -38,7 +38,7 @@ class ExceptionHelper
     {
         return [
             'class' => get_class($e),
-            'message' => $e->getMessage(),
+            'message' => mb_substr($e->getMessage(), 0, 3000),
             'code' => $e->getCode(),
             'file' => "{$e->getFile()}:{$e->getLine()}",
         ];
