@@ -1,6 +1,6 @@
 <?php namespace Ivacuum\Generic\Services;
 
-use Foolz\SphinxQL\Drivers\SimpleConnection;
+use Foolz\SphinxQL\Drivers\ConnectionInterface;
 use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\SphinxQL;
 
@@ -8,7 +8,7 @@ class Sphinx
 {
     protected $connection;
 
-    public function __construct(SimpleConnection $connection)
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
     }

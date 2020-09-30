@@ -1,6 +1,6 @@
 <?php namespace Ivacuum\Generic\Providers;
 
-use Foolz\SphinxQL\Drivers\SimpleConnection;
+use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Illuminate\Support\ServiceProvider;
 use Ivacuum\Generic\Services\Sphinx;
 
@@ -11,7 +11,7 @@ class SphinxServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Sphinx::class, function () {
-            $connection = new SimpleConnection;
+            $connection = new Connection;
             $connection->setParams([
                 'host' => config('cfg.sphinx.host'),
                 'port' => config('cfg.sphinx.port'),
