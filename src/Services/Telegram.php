@@ -1,17 +1,9 @@
 <?php namespace Ivacuum\Generic\Services;
 
 use Ivacuum\Generic\Jobs\SendTelegramMessageJob;
-use Telegram\Bot\Api;
 
 class Telegram
 {
-    protected $telegram;
-
-    public function __construct(Api $telegram)
-    {
-        $this->telegram = $telegram;
-    }
-
     public function notifyAdmin(string $text): void
     {
         if (\App::isLocal()) {
