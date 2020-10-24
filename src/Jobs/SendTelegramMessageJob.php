@@ -1,6 +1,7 @@
 <?php namespace Ivacuum\Generic\Jobs;
 
 use Telegram\Bot\Api;
+use Telegram\Bot\Exceptions\TelegramOtherException;
 use Telegram\Bot\Exceptions\TelegramResponseException;
 
 class SendTelegramMessageJob extends BaseJob
@@ -20,10 +21,10 @@ class SendTelegramMessageJob extends BaseJob
     {
         try {
             $telegram->sendMessage($this->params);
-        } catch (TelegramResponseException $e) {
-            $httpStatusCode = $e->getHttpStatusCode();
+        } catch (TelegramResponseException | TelegramOtherException $e) {
+            $code = $e->getCode();
 
-            if ($httpStatusCode === 413) {
+            if ($code === 413) {
                 $params = $this->params;
                 $params['text'] = mb_substr($params['text'], 0, 3000);
 
@@ -32,7 +33,7 @@ class SendTelegramMessageJob extends BaseJob
                 $params['text'] = mb_substr($e->getMessage(), 0, 3000);
 
                 $telegram->sendMessage($params);
-            } elseif ($httpStatusCode === 429) {
+            } elseif ($code === 429) {
                 $this->release(3600);
 
                 return;
