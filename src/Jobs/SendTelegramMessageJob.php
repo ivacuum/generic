@@ -39,6 +39,8 @@ class SendTelegramMessageJob extends BaseJob
                 $this->release(3600);
 
                 return;
+            } else {
+                throw $e;
             }
         }
 
