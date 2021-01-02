@@ -78,5 +78,8 @@ class SphinxEngine extends Engine
 
     public function flush($model)
     {
+        \Sphinx::helper()
+            ->truncateRtIndex($model->searchableAs())
+            ->execute();
     }
 }
