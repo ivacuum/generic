@@ -28,7 +28,7 @@
         @foreach ($modelRelations as $relation)
           <a class="border-l-2 border-transparent px-3 py-2" href="{{ $relation['path'] }}">
             @lang("acp.{$relation['i18n_index']}.index")
-            <span class="text-muted text-xs whitespace-no-wrap">{{ ViewHelper::number($relation['count']) }}</span>
+            <span class="text-muted text-xs whitespace-nowrap">{{ ViewHelper::number($relation['count']) }}</span>
           </a>
         @endforeach
       @endif

@@ -1,6 +1,6 @@
 <select
   {{ $required ? 'required' : '' }}
-  class="form-select {{ implode(' ', $classes) }}"
+  class="form-input {{ implode(' ', $classes) }}"
   name="{{ $name }}"
   id="{{ $entity }}_{{ $name }}"
 >

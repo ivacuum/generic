@@ -4,7 +4,7 @@
 <div class="flex items-center flex-wrap mb-2 -mt-2">
   <h3 class="mb-1 mr-4">
     @lang("$tpl.index")
-    <span class="text-base text-muted whitespace-no-wrap">
+    <span class="text-base text-muted whitespace-nowrap">
       {{ $models instanceof Illuminate\Support\Collection
           ? ViewHelper::number(sizeof($models))
           : ViewHelper::number($models->total())
@@ -17,7 +17,7 @@
   @endcan
   @if (!empty($searchForm))
     <form class="my-1 mr-2">
-      <input name="q" class="form-input" enterkeyhint="search" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
+      <input class="form-input" type="search" name="q" enterkeyhint="search" placeholder="{{ ViewHelper::modelFieldTrans($modelTpl, 'q_placeholder') }}" value="{{ $q ?? '' }}" autocapitalize="none">
     </form>
   @endif
   @yield('heading-after-search')
