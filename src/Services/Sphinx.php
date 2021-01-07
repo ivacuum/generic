@@ -20,6 +20,6 @@ class Sphinx
 
     public function helper()
     {
-        return Helper::create($this->connection);
+        return new Helper($this->connection);
     }
 }
