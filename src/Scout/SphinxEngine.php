@@ -1,10 +1,18 @@
 <?php namespace Ivacuum\Generic\Scout;
 
+use Ivacuum\Generic\Services\Sphinx;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 
 class SphinxEngine extends Engine
 {
+    private $sphinx;
+
+    public function __construct(Sphinx $sphinx)
+    {
+        $this->sphinx = $sphinx->create();
+    }
+
     public function update($models)
     {
         if ($models->isEmpty()) {
@@ -13,7 +21,9 @@ class SphinxEngine extends Engine
 
         $model = $models->first();
 
-        $query = \Sphinx::create()
+        $this->ping();
+
+        $query = $this->sphinx
             ->replace()
             ->into($model->searchableAs())
             ->columns(array_keys($model->toSearchableArray()));
@@ -34,7 +44,9 @@ class SphinxEngine extends Engine
         $model = $models->first();
         $ids = $models->pluck($model->getKeyName())->values()->all();
 
-        \Sphinx::create()
+        $this->ping();
+
+        $this->sphinx
             ->delete()
             ->from($model->searchableAs())
             ->where('id', 'IN', $ids)
@@ -43,7 +55,9 @@ class SphinxEngine extends Engine
 
     public function search(Builder $builder)
     {
-        $query = \Sphinx::create()
+        $this->ping();
+
+        $query = $this->sphinx
             ->select('id')
             ->from($builder->index ?: $builder->model->searchableAs())
             ->limit($builder->limit ?: 500);
@@ -78,8 +92,15 @@ class SphinxEngine extends Engine
 
     public function flush($model)
     {
+        $this->ping();
+
         \Sphinx::helper()
             ->truncateRtIndex($model->searchableAs())
             ->execute();
+    }
+
+    private function ping()
+    {
+        $this->sphinx->getConnection()->ping();
     }
 }
