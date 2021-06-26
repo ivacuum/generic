@@ -6,8 +6,8 @@ use Ivacuum\Generic\Telegram\TelegramException;
 class SendTelegramMessageJob extends BaseJob
 {
     public $tries = 10;
+    public $backoff = 30;
     public $timeout = 5;
-    public $retryAfter = 30;
     public $maxExceptions = 1;
     private int $chatId;
     private bool $disableWebPagePreview;

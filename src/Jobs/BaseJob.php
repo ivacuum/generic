@@ -14,7 +14,7 @@ class BaseJob implements ShouldQueue
     use SerializesModels;
 
     public $tries;
+    public $backoff;
     public $timeout;
-    public $retryAfter;
     public $maxExceptions;
 }
