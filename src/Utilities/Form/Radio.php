@@ -26,10 +26,6 @@ class Radio extends Base
         return $this;
     }
 
-    /**
-     * @param \Illuminate\Contracts\Support\Arrayable|array $values
-     * @return $this
-     */
     public function values($values): self
     {
         if ($values instanceof Arrayable) {

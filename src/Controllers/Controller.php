@@ -64,7 +64,7 @@ class Controller extends BaseController
     {
         $class = get_class($this);
 
-        $class = \Str::endsWith($class, 'Controller')
+        $class = str_ends_with($class, 'Controller')
             ? \Str::replaceLast('Controller', '', $class)
             : $class;
 
@@ -85,7 +85,7 @@ class Controller extends BaseController
             : $this->prefix;
     }
 
-    protected function redirectAfterStore(/** @noinspection PhpUnusedParameterInspection */ $model)
+    protected function redirectAfterStore($model)
     {
         return request()->expectsJson()
             ? response('', 201, ['Location' => path([static::class, 'index'])])

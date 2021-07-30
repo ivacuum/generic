@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    protected function unauthenticated($request, AuthenticationException $e)
+    protected function unauthenticated($request, AuthenticationException $exception)
     {
         return $request->expectsJson()
             ? response()->json(['message' => 'Unauthenticated.'], 401)

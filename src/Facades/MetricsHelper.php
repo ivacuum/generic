@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Facade;
 
-/** @noinspection PhpUndefinedClassInspection */
-
 class MetricsHelper extends Facade
 {
     protected static function getFacadeAccessor()

@@ -11,7 +11,7 @@ class TextImagesParser
 
         // Картинки обрабатываются на строку позже, поэтому в конец текста добавлен \n
         foreach (explode("\n", $text."\n") as $line) {
-            if (preg_match('#^(https?:\/\/[A-Za-z-_\d\/\.]+\.(jpe?g|png))$#', $line, $matches)) {
+            if (preg_match('#^(https?://[A-Za-z-_\d/.]+\.(jpe?g|png))$#', $line, $matches)) {
                 $images[] = $matches[1];
             } else {
                 $sizeof = sizeof($images);

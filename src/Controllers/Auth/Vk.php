@@ -44,7 +44,7 @@ class Vk extends Base
             event(new ExternalIdentityLogin($identity));
             event(new \Ivacuum\Generic\Events\Stats\UserSignedInWithExternalIdentity);
 
-            return redirect()->intended('/');
+            return redirect()->intended();
         }
 
         if (null === $userdata->email) {
@@ -65,7 +65,7 @@ class Vk extends Base
 
         event(new ExternalIdentityFirstLogin($identity, $user));
 
-        return redirect()->intended('/');
+        return redirect()->intended();
     }
 
     /**

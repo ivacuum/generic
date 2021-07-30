@@ -42,19 +42,13 @@ class ExternalIdentity extends Model
 
     public function externalLink(): string
     {
-        switch ($this->provider) {
-            case 'facebook':
-                return "https://www.facebook.com/{$this->uid}";
-            case 'google':
-                return "https://plus.google.com/{$this->uid}";
-            case 'odnoklassniki':
-                return "https://ok.ru/profile/{$this->uid}";
-            case 'twitter':
-                return "https://twitter.com/intent/user?user_id={$this->uid}";
-            case 'vk':
-                return "https://vk.com/id{$this->uid}";
-        }
-
-        return '#';
+        return match ($this->provider) {
+            'facebook' => "https://www.facebook.com/{$this->uid}",
+            'google' => "https://plus.google.com/{$this->uid}",
+            'odnoklassniki' => "https://ok.ru/profile/{$this->uid}",
+            'twitter' => "https://twitter.com/intent/user?user_id={$this->uid}",
+            'vk' => "https://vk.com/id{$this->uid}",
+            default => '#',
+        };
     }
 }

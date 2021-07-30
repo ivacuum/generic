@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Facade;
 
-/** @noinspection PhpUndefinedClassInspection */
-
 class Sphinx extends Facade
 {
     protected static function getFacadeAccessor()

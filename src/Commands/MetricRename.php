@@ -13,7 +13,7 @@ class MetricRename extends Command
         $from = $this->argument('from');
 
         $metrics = Metric::where('event', $from)
-            ->orderBy('date', 'asc')
+            ->orderBy('date')
             ->get(['date', 'count']);
 
         $values = [];

@@ -105,13 +105,12 @@ class PhoneHelper
 
     public function dashed(string $phone): string
     {
-        switch (strlen($phone)) {
-            case 5: return vsprintf('%s-%s-%s', sscanf($phone, '%1s%2s%2s'));
-            case 6: return vsprintf('%s-%s-%s', sscanf($phone, '%2s%2s%2s'));
-            case 7: return vsprintf('%s-%s-%s', sscanf($phone, '%3s%2s%2s'));
-        }
-
-        return $phone;
+        return match (strlen($phone)) {
+            5 => vsprintf('%s-%s-%s', sscanf($phone, '%1s%2s%2s')),
+            6 => vsprintf('%s-%s-%s', sscanf($phone, '%2s%2s%2s')),
+            7 => vsprintf('%s-%s-%s', sscanf($phone, '%3s%2s%2s')),
+            default => $phone,
+        };
     }
 
     public function format(?string $phones, ?string $prefix = null): array
@@ -165,7 +164,7 @@ class PhoneHelper
                 $code = $matches[1];
                 $phone = substr($phone, strlen($code));
 
-                if (0 === strpos($code, "80")) {
+                if (str_starts_with($code, '80')) {
                     $prefix = static::TOLL_FREE_PREFIX;
                 }
 
