@@ -267,7 +267,15 @@ class Controller extends BaseController
 
     protected function getAcpView(): string
     {
-        return view()->exists($this->view) ? $this->view : "acp.{$this->method}";
+        if (view()->exists($this->view)) {
+            return $this->view;
+        }
+
+        if (in_array($this->method, ['create', 'edit']) && $this instanceof UsesLivewire) {
+            return "acp.livewire-{$this->method}";
+        }
+
+        return "acp.{$this->method}";
     }
 
     /**

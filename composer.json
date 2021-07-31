@@ -42,6 +42,7 @@
         "Sphinx": "Ivacuum\\Generic\\Facades\\Sphinx",
         "UrlHelper": "Ivacuum\\Generic\\Facades\\UrlHelper",
         "Breadcrumbs": "Ivacuum\\Generic\\Facades\\Breadcrumbs",
+        "LivewireForm": "Ivacuum\\Generic\\Facades\\LivewireForm",
         "MetricsHelper": "Ivacuum\\Generic\\Facades\\MetricsHelper"
       }
     }
