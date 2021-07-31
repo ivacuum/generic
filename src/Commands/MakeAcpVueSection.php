@@ -67,7 +67,7 @@ class MakeAcpVueSection extends MakeAcpSection
 
     protected function printVueRoutes(): void
     {
-        if (false !== mb_strpos($this->fs->get($this->routerPath()), "./components/acp/{$this->modelPlural}/Index.vue")) {
+        if (str_contains($this->fs->get($this->routerPath()), "./components/acp/{$this->modelPlural}/Index.vue")) {
             return;
         }
 

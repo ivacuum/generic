@@ -74,7 +74,7 @@ class Controller extends BaseController
     protected function fillControllerFields(): void
     {
         $action = \Route::currentRouteAction();
-        $this->method = mb_strpos($action, '@')
+        $this->method = str_contains($action, '@')
             ? \Arr::last(explode('@', $action))
             : null;
 
@@ -109,6 +109,8 @@ class Controller extends BaseController
                 : redirect(path([static::class, 'edit'], $model));
         }
 
-        return $goto ? redirect($goto) : redirect(path([static::class, $method]));
+        return $goto
+            ? redirect($goto)
+            : redirect(path([static::class, $method]));
     }
 }

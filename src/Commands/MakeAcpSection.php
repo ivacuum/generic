@@ -76,7 +76,7 @@ class MakeAcpSection extends Command
 
     protected function printAuthReminder(): void
     {
-        if (false !== mb_strpos($this->fs->get($this->authServiceProviderPath()), "{$this->model}::class")) {
+        if (str_contains($this->fs->get($this->authServiceProviderPath()), "{$this->model}::class")) {
             return;
         }
 
