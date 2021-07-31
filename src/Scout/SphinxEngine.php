@@ -103,4 +103,16 @@ class SphinxEngine extends Engine
     {
         $this->sphinx->getConnection()->ping();
     }
+
+    public function lazyMap(Builder $builder, $results, $model)
+    {
+    }
+
+    public function createIndex($name, array $options = [])
+    {
+    }
+
+    public function deleteIndex($name)
+    {
+    }
 }
