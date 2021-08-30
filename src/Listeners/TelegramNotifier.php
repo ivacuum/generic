@@ -8,12 +8,7 @@ use Ivacuum\Generic\Services\Telegram;
  */
 class TelegramNotifier
 {
-    protected $request;
-    protected $telegram;
-
-    public function __construct(Request $request, Telegram $telegram)
+    public function __construct(protected Request $request, protected Telegram $telegram)
     {
-        $this->request = $request;
-        $this->telegram = $telegram;
     }
 }

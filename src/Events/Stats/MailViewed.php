@@ -4,11 +4,9 @@ use Ivacuum\Generic\Events\Event;
 
 class MailViewed extends Event
 {
-    public $id;
     public $table = 'emails';
 
-    public function __construct($id)
+    public function __construct(public $id)
     {
-        $this->id = $id;
     }
 }

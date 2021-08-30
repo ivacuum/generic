@@ -5,11 +5,8 @@ use Ivacuum\Generic\Events\ExternalHttpRequestMade;
 
 class ExternalHttpRequestTransferStatsDispatcher
 {
-    private $serviceName;
-
-    public function __construct(string $serviceName)
+    public function __construct(private string $serviceName)
     {
-        $this->serviceName = $serviceName;
     }
 
     public function __invoke(TransferStats $stats): void
