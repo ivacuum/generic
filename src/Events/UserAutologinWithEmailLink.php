@@ -5,17 +5,12 @@ use Illuminate\Queue\SerializesModels;
 
 /**
  * Автовход по ссылке из письма
- *
- * @property \App\Email $email
  */
 class UserAutologinWithEmailLink extends Event
 {
     use SerializesModels;
 
-    public $email;
-
-    public function __construct(Email $email)
+    public function __construct(public Email $email)
     {
-        $this->email = $email;
     }
 }

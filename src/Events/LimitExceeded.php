@@ -5,12 +5,7 @@
  */
 class LimitExceeded extends Event
 {
-    public $title;
-    public $value;
-
-    public function __construct(string $title, string $value)
+    public function __construct(public string $title, public string $value)
     {
-        $this->title = $title;
-        $this->value = $value;
     }
 }

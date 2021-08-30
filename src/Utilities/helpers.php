@@ -22,7 +22,7 @@ if (!function_exists('fullUrl')) {
     {
         $request = app('request');
 
-        if (null === $qs = $request->getQueryString()) {
+        if ($request->getQueryString() === null) {
             if (empty($params)) {
                 return canonical();
             }

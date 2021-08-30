@@ -1,16 +1,10 @@
 <?php namespace Ivacuum\Generic\Events;
 
-/**
- * Данные социальной учетки сохранены впервые
- *
- * @property \Laravel\Socialite\AbstractUser $user
- */
+use Laravel\Socialite\AbstractUser;
+
 class ExternalIdentitySaved extends Event
 {
-    public $user;
-
-    public function __construct($user)
+    public function __construct(public AbstractUser $user)
     {
-        $this->user = $user;
     }
 }
