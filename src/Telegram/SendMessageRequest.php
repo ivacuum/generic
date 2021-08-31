@@ -14,11 +14,6 @@ class SendMessageRequest implements RequestInterface
         return 'sendMessage';
     }
 
-    public function httpMethod(): string
-    {
-        return 'POST';
-    }
-
     public function jsonSerialize()
     {
         return [

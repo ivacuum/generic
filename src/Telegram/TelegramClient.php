@@ -1,21 +1,20 @@
 <?php namespace Ivacuum\Generic\Telegram;
 
 use GuzzleHttp\Exception\ClientException;
-use Ivacuum\Generic\Http\GuzzleClientFactory;
+use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 
 class TelegramClient
 {
-    private $client;
+    private PendingRequest $http;
 
-    public function __construct(GuzzleClientFactory $clientFactory)
+    public function __construct(Factory $http)
     {
         $botToken = config('cfg.telegram.bot_token');
 
-        $this->client = $clientFactory
-            ->baseUri("https://api.telegram.org/bot{$botToken}/")
-            ->timeout(10)
-            ->withLog('telegram')
-            ->create();
+        $this->http = $http
+            ->baseUrl("https://api.telegram.org/bot{$botToken}/")
+            ->timeout(10);
     }
 
     public function sendMessage(int $chatId, string $text, bool $disableWebPagePreview = true)
@@ -28,13 +27,7 @@ class TelegramClient
     private function send(RequestInterface $request)
     {
         try {
-            return $this->client->request(
-                $request->httpMethod(),
-                $request->endpoint(),
-                [
-                    'json' => $request->jsonSerialize(),
-                ]
-            );
+            return $this->http->post($request->endpoint(), $request->jsonSerialize());
         } catch (ClientException $e) {
             throw TelegramException::errorResponse($e);
         } catch (\Throwable $e) {

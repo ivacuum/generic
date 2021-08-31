@@ -1,10 +1,10 @@
 <?php namespace Ivacuum\Generic\Telegram;
 
-use Psr\Http\Message\ResponseInterface;
+use Illuminate\Http\Client\Response;
 
 class SendMessageResponse
 {
-    public function __construct(ResponseInterface $response)
+    public function __construct(Response $response)
     {
     }
 }
