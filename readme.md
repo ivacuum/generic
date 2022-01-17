@@ -36,7 +36,7 @@ Route::get('auth/vk/callback', 'Auth\Vk@callback');
 `config/cfg.php`
 
 ```php
-'gm_bin' => env('GM_BIN', '/usr/bin/env gm'),
+'gm_bin' => env('GM_BIN', '/usr/bin/env gm convert'),
 'locales' => [
     'ru' => ['posix' => 'ru_RU.UTF-8'],
     'en' => ['posix' => 'en_US.UTF-8'],

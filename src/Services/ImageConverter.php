@@ -46,7 +46,6 @@ class ImageConverter
             ' ',
             [
                 config('cfg.gm_bin'),
-                'convert',
                 $this->size,
                 escapeshellarg($this->source($source)),
                 $this->authOrient,
