@@ -58,6 +58,7 @@ class SignIn extends Controller
         \Auth::logout();
 
         session()->invalidate();
+        session()->regenerateToken();
 
         event(new \Ivacuum\Generic\Events\Stats\UserLoggedOut);
 
