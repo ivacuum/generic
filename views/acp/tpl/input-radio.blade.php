@@ -5,7 +5,7 @@
       type="radio"
       name="{{ $name }}"
       value="{{ $_value }}"
-      {{ $_value == old($name, $model->{$name} instanceof JsonSerializable ? $model->{$name}->jsonSerialize() : $model->{$name}) ? 'checked' : '' }}
+      {{ $_value == old($name, $model->{$name} instanceof BackedEnum ? $model->{$name}->value : $model->{$name}) ? 'checked' : '' }}
     >
     {{ $_title }}
   </label>
