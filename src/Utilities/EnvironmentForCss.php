@@ -2,35 +2,38 @@
 
 class EnvironmentForCss
 {
-    protected $userAgent;
+    protected string $userAgent;
 
     public function __construct(?string $userAgent)
     {
-        $this->userAgent = mb_strtolower($userAgent);
+        $this->userAgent = mb_strtolower($userAgent ?? '');
     }
 
     public function __toString(): string
     {
-        return implode(' ', array_merge(
-            $this->browserClasses(),
-            $this->mobileOrDesktopClasses(),
-            $this->operatingSystemClasses()
-        ));
+        return implode(
+            ' ',
+            array_merge(
+                $this->browserClasses(),
+                $this->mobileOrDesktopClasses(),
+                $this->operatingSystemClasses()
+            )
+        );
     }
 
     public function browserClasses(): array
     {
-        if (preg_match('/msie|trident/', $this->userAgent) && !preg_match('/opera/', $this->userAgent)) {
+        if (preg_match('/msie|trident/', $this->userAgent) && !str_contains($this->userAgent, 'opera')) {
             return ['ie'];
-        } elseif (preg_match('/edge/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'edge')) {
             return ['edge'];
-        } elseif (preg_match('/firefox/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'firefox')) {
             return ['firefox'];
-        } elseif (preg_match('/safari/', $this->userAgent) && !preg_match('/chrome/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'safari') && !str_contains($this->userAgent, 'chrome')) {
             return ['safari'];
         } elseif (preg_match('/opera|opr/', $this->userAgent)) {
             return ['opera'];
-        } elseif (preg_match('/chrome/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'chrome')) {
             return ['chrome'];
         }
 
@@ -54,15 +57,15 @@ class EnvironmentForCss
 
     public function operatingSystemClasses(): array
     {
-        if (preg_match('/win/', $this->userAgent)) {
+        if (str_contains($this->userAgent, 'win')) {
             return ['windows'];
         } elseif (preg_match('/iphone|ipad|ipod/', $this->userAgent)) {
             return ['ios'];
-        } elseif (preg_match('/mac/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'mac')) {
             return ['macos'];
-        } elseif (preg_match('/linux/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'linux')) {
             return ['linux'];
-        } elseif (preg_match('/android/', $this->userAgent)) {
+        } elseif (str_contains($this->userAgent, 'android')) {
             return ['android'];
         }
 
