@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
  */
 class ImageConverter
 {
-    protected $authOrient;
+    protected $autoOrient;
     protected $crop;
     protected $filter;
     protected $filters = ['point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'lanczos', 'bessel', 'sinc'];
@@ -25,7 +25,7 @@ class ImageConverter
      */
     public function autoOrient()
     {
-        $this->authOrient = '-auto-orient';
+        $this->autoOrient = '-auto-orient';
 
         return $this;
     }
@@ -48,7 +48,7 @@ class ImageConverter
                 config('cfg.gm_bin'),
                 $this->size,
                 escapeshellarg($this->source($source)),
-                $this->authOrient,
+                $this->autoOrient,
                 $this->quality,
                 $this->filter, // Фильтр должен быть перед параметром resize
                 $this->resize,
