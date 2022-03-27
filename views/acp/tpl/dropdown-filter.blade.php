@@ -16,20 +16,16 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
   </summary>
   <details-menu
     role="menu"
-    class="absolute top-full left-0 z-50 py-2 bg-white mt-1 border border-gray-300 rounded shadow-md"
+    class="absolute top-full left-0 z-50 py-2 bg-white dark:bg-slate-800 mt-1 border border-gray-300 dark:border-slate-700 rounded shadow-md"
     style="min-width: 10rem;"
   >
     @foreach ($values as $name => $value)
       @if ($name === '---')
-        <div class="h-0 my-2 overflow-hidden border-t border-gray-100"></div>
+        <div class="h-0 my-2 overflow-hidden border-t border-gray-100 dark:border-slate-700"></div>
       @else
-        <a
-          class="dropdown-item"
-          href="{{ UrlHelper::filter([$field => $value]) }}"
-          role="menuitem"
-        >
+        <x-dropdown-item abs-href="{{ UrlHelper::filter([$field => $value]) }}">
           {{ $name }}
-        </a>
+        </x-dropdown-item>
       @endif
     @endforeach
   </details-menu>
