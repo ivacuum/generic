@@ -70,7 +70,8 @@ abstract class ModelCacheHelper
         }
 
         throw (new ModelNotFoundException)->setModel(
-            get_class($this->model), $id
+            get_class($this->model),
+            $id
         );
     }
 
@@ -96,14 +97,15 @@ abstract class ModelCacheHelper
         }
 
         throw (new ModelNotFoundException)->setModel(
-            get_class($this->model), $slug
+            get_class($this->model),
+            $slug
         );
     }
 
     public function title($q): ?string
     {
         return is_numeric($q)
-            ? optional($this->findById($q))->{$this->titleField}
-            : optional($this->findBySlug($q))->{$this->titleField};
+            ? $this->findById($q)?->{$this->titleField}
+            : $this->findBySlug($q)?->{$this->titleField};
     }
 }

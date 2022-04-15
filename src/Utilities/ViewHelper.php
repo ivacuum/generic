@@ -27,20 +27,20 @@ class ViewHelper
         }
 
         if ($date->year === $year) {
-            return $date->formatLocalized('%e %B');
+            return $date->isoFormat('D MMMM');
         }
 
-        return $date->formatLocalized('%e %b %Y');
+        return $date->isoFormat('D MMMM YYYY');
     }
 
     public function inputHiddenConcurrencyControl($value)
     {
-        return new HtmlString('<input hidden type="text" name="'.ConcurrencyControl::FIELD.'" value="'.md5($value).'">');
+        return new HtmlString('<input hidden type="text" name="' . ConcurrencyControl::FIELD . '" value="' . md5($value) . '">');
     }
 
     public function inputHiddenMail()
     {
-        return new HtmlString('<input hidden type="text" name="mail" value="'.old("mail").'">');
+        return new HtmlString('<input hidden type="text" name="mail" value="' . old("mail") . '">');
     }
 
     public function metaDescription(string $view, array $replace = []): string
@@ -112,7 +112,7 @@ class ViewHelper
         $pow = min($pow, sizeof($units) - 1);
         $number /= pow(1024, $pow);
 
-        return round($number, $decimals[$pow]).$units[$pow];
+        return round($number, $decimals[$pow]) . $units[$pow];
     }
 
     public function paginatorIteration($paginator, $loop): int
