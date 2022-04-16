@@ -1,8 +1,9 @@
 <?php namespace Ivacuum\Generic\Utilities\LivewireForm;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 
-abstract class Base
+abstract class Base implements Htmlable
 {
     public $model;
     public bool $lazy = false;
@@ -13,7 +14,6 @@ abstract class Base
     public string $camelName;
     public ?string $help = null;
     public ?string $label = null;
-
     protected $livewire = false;
 
     public function buildData(): array

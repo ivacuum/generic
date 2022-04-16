@@ -17,4 +17,9 @@ class Text extends Base
     {
         return view('acp.tpl.livewire.input', $this->buildData());
     }
+
+    public function toHtml()
+    {
+        return $this->html();
+    }
 }

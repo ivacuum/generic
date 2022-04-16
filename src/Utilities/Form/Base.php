@@ -1,8 +1,9 @@
 <?php namespace Ivacuum\Generic\Utilities\Form;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 
-abstract class Base
+abstract class Base implements Htmlable
 {
     public $help;
     public $label;

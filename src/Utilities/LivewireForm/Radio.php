@@ -1,6 +1,8 @@
 <?php namespace Ivacuum\Generic\Utilities\LivewireForm;
 
-class Radio extends Base
+use Illuminate\Contracts\Support\Htmlable;
+
+class Radio extends Base implements Htmlable
 {
     use HasManyValues;
 
@@ -15,5 +17,10 @@ class Radio extends Base
     public function html()
     {
         return view('acp.tpl.livewire.input', $this->buildData());
+    }
+
+    public function toHtml()
+    {
+        return $this->html();
     }
 }

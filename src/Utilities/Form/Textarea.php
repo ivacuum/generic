@@ -34,6 +34,11 @@ class Textarea extends Base
         return $this;
     }
 
+    public function toHtml()
+    {
+        return $this->html();
+    }
+
     public function wide(bool $value = true): self
     {
         $this->wide = $value;

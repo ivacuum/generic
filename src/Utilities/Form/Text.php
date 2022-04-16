@@ -30,4 +30,9 @@ class Text extends Base
 
         return $this;
     }
+
+    public function toHtml()
+    {
+        return $this->html();
+    }
 }
