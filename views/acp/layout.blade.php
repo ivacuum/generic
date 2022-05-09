@@ -6,7 +6,7 @@
 <div class="grid lg:grid-cols-4 gap-8">
   <div>
     <div class="flex flex-col w-full">
-      @can('show', $model)
+      @can('view', $model)
         <a
           class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.show" ? 'border-orangeish-600 text-black dark:text-slate-200 hover:text-black hover:dark:text-slate-200' : '' }}"
           href="{{ path([$controller, 'show'], $model) }}"
@@ -14,7 +14,7 @@
           @lang("$tpl.show")
         </a>
       @endcan
-      @can('edit', $model)
+      @can('update', $model)
         <a
           class="border-l-2 border-transparent px-3 py-2 {{ $view === "$tpl.edit" ? 'border-orangeish-600 text-black dark:text-slate-200 hover:text-black hover:dark:text-slate-200' : '' }}"
           href="{{ UrlHelper::edit($controller, $model) }}"

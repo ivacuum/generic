@@ -13,7 +13,6 @@ class Controller extends BaseController
     use ValidatesRequests;
 
     protected $view;
-    protected $class;
     protected $method;
     protected $prefix;
 
@@ -50,14 +49,11 @@ class Controller extends BaseController
 
     protected function appendViewSharedVars(): void
     {
-        view()->share(
-            [
-                'tpl' => $this->prefix,
-                'self' => $this->controllerBasename(),
-                'view' => $this->view,
-                'controller' => static::class,
-            ]
-        );
+        view()->share([
+            'tpl' => $this->prefix,
+            'view' => $this->view,
+            'controller' => static::class,
+        ]);
     }
 
     protected function controllerBasename(): string

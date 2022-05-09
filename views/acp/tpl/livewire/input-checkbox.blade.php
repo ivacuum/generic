@@ -2,7 +2,7 @@
   <label class="flex items-center">
     <input
       class="border-gray-300 mr-2"
-      type="radio"
+      type="checkbox"
       wire:model="{{ $name }}"
       value="{{ $_value }}"
     >

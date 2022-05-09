@@ -17,21 +17,25 @@ class Base
         return $me->isRoot();
     }
 
+    /** @deprecated use delete */
     public function destroy(User $me)
     {
         return $me->isRoot();
     }
 
+    /** @deprecated use update */
     public function edit(User $me)
     {
         return $me->isRoot();
     }
 
+    /** @deprecated use viewAny */
     public function list(User $me)
     {
         return $me->isRoot();
     }
 
+    /** @deprecated use view */
     public function show(User $me)
     {
         return $me->isRoot();

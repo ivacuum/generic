@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Metric extends Model
 {
-    protected $guarded = ['*'];
+    protected $dates = ['date'];
     protected $perPage = 100;
 
     public function scopeWeek(Builder $query)

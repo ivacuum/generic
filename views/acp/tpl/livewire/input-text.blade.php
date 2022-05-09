@@ -3,9 +3,9 @@
   type="{{ $type }}"
   class="form-input {{ implode(' ', $classes) }}"
   @if ($lazy)
-    wire:model.lazy="{{ $camelName }}"
+    wire:model.lazy="{{ $name }}"
   @else
-    wire:model="{{ $camelName }}"
+    wire:model="{{ $name }}"
   @endif
   placeholder="{{ $placeholder }}"
   id="{{ $entity }}_{{ $name }}"

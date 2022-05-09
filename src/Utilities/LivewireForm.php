@@ -2,7 +2,12 @@
 
 class LivewireForm
 {
-    protected $model;
+    private object|string $model;
+
+    public function checkbox(...$parameters): LivewireForm\Checkbox
+    {
+        return $this->applySettings(new LivewireForm\Checkbox(...$parameters));
+    }
 
     public function model($model)
     {
@@ -11,28 +16,28 @@ class LivewireForm
         return $this;
     }
 
-    public function checkbox(...$parameters): LivewireForm\Checkbox
-    {
-        return (new LivewireForm\Checkbox(...$parameters))->model($this->model);
-    }
-
     public function radio(...$parameters): LivewireForm\Radio
     {
-        return (new LivewireForm\Radio(...$parameters))->model($this->model);
+        return $this->applySettings(new LivewireForm\Radio(...$parameters));
     }
 
     public function select(...$parameters): LivewireForm\Select
     {
-        return (new LivewireForm\Select(...$parameters))->model($this->model);
+        return $this->applySettings(new LivewireForm\Select(...$parameters));
     }
 
     public function text(...$parameters): LivewireForm\Text
     {
-        return (new LivewireForm\Text(...$parameters))->model($this->model);
+        return $this->applySettings(new LivewireForm\Text(...$parameters));
     }
 
     public function textarea(...$parameters): LivewireForm\Textarea
     {
-        return (new LivewireForm\Textarea(...$parameters))->model($this->model);
+        return $this->applySettings(new LivewireForm\Textarea(...$parameters));
+    }
+
+    private function applySettings(LivewireForm\Checkbox|LivewireForm\Radio|LivewireForm\Select|LivewireForm\Text|LivewireForm\Textarea $form)
+    {
+        return $form->model($this->model);
     }
 }

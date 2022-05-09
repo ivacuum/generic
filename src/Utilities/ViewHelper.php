@@ -78,10 +78,12 @@ class ViewHelper
 
     public function modelFieldTrans(string $model, string $field): string
     {
-        $transKey = "model.$model.$field";
+        if ($model) {
+            $transKey = "model.$model.$field";
 
-        if (($text = __($transKey)) !== $transKey) {
-            return $text;
+            if (($text = __($transKey)) !== $transKey) {
+                return $text;
+            }
         }
 
         $transKeyGeneral = "model.$field";
@@ -90,7 +92,9 @@ class ViewHelper
             return $text;
         }
 
-        return $transKey;
+        return $model
+            ? "model.$model.$field"
+            : "model.$field";
     }
 
     public function number(int $number): string

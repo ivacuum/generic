@@ -10,7 +10,6 @@ class Text extends Base
     public function __construct(string $name)
     {
         $this->name = $name;
-        $this->camelName = \Str::camel($name);
     }
 
     public function html()

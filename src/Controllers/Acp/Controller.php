@@ -7,31 +7,17 @@ use Ivacuum\Generic\Utilities\NamingHelper;
 
 class Controller extends BaseController
 {
-    protected $apiOnly = false;
     protected $sortDir = 'desc';
     protected $sortKey = 'id';
     protected $showWith = [];
     protected $sortableKeys = ['id'];
     protected $showWithCount = [];
-    protected $reactiveFields = [];
 
     public function create()
     {
-        if ($this->shouldReturnApiOnlyResponse()) {
-            return $this->apiOnlyResponse();
-        }
-
         $model = $this->createGeneric();
 
-        if (!$this->isApiRequest()) {
-            return view($this->getAcpView(), ['model' => $model]);
-        }
-
-        return array_merge(
-            ['model' => $model],
-            ['breadcrumbs' => \Breadcrumbs::get()],
-            $this->appendToCreateAndEditResponse($model)
-        );
+        return view($this->getAcpView(), ['model' => $model]);
     }
 
     public function createGeneric()
@@ -42,7 +28,7 @@ class Controller extends BaseController
 
         \Breadcrumbs::push(__($this->view));
 
-        return $this->newModelDefaults($model);
+        return $model;
     }
 
     public function destroy($id)
@@ -58,36 +44,23 @@ class Controller extends BaseController
     {
         $model = $this->getModel($id);
 
-        $this->authorize('destroy', $model);
+        $this->authorize('delete', $model);
 
         return $model;
     }
 
     public function edit($id)
     {
-        if ($this->shouldReturnApiOnlyResponse()) {
-            return $this->apiOnlyResponse();
-        }
-
         $model = $this->editGeneric($id);
 
-        if (!$this->isApiRequest()) {
-            return view($this->getAcpView(), ['model' => $model]);
-        }
-
-        return array_merge(
-            ['model' => $model],
-            ['breadcrumbs' => \Breadcrumbs::get()],
-            $model->exists && $model->updated_at ? [ConcurrencyControl::FIELD => md5($model->updated_at)] : [],
-            $this->appendToCreateAndEditResponse($model)
-        );
+        return view($this->getAcpView(), ['model' => $model]);
     }
 
     public function editGeneric($id)
     {
         $model = $this->getModel($id);
 
-        $this->authorize('edit', $model);
+        $this->authorize('update', $model);
         $this->breadcrumbsModelSubpage($model);
 
         return $model;
@@ -95,13 +68,9 @@ class Controller extends BaseController
 
     public function indexBefore()
     {
-        if ($this->shouldReturnApiOnlyResponse()) {
-            return $this->apiOnlyResponse();
-        }
-
         $model = $this->newModel();
 
-        $this->authorize('list', $model);
+        $this->authorize('viewAny', $model);
 
         $modelTpl = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', str_replace('App\\', '', get_class($model)))));
 
@@ -125,27 +94,19 @@ class Controller extends BaseController
 
     public function show($id)
     {
-        if ($this->shouldReturnApiOnlyResponse()) {
-            return $this->apiOnlyResponse();
-        }
-
         $model = $this->showGeneric($id);
 
-        if (!$this->isApiRequest()) {
-            return view($this->getAcpView(), [
-                'model' => $model,
-                'modelRelations' => $this->modelAccessibleRelations($model),
-            ]);
-        }
-
-        return $this->modelResource($model);
+        return view($this->getAcpView(), [
+            'model' => $model,
+            'modelRelations' => $this->modelAccessibleRelations($model),
+        ]);
     }
 
     public function showGeneric($id)
     {
         $model = $this->getModel($id);
 
-        $this->authorize('show', $model);
+        $this->authorize('view', $model);
 
         \Breadcrumbs::push($model->breadcrumb());
 
@@ -166,7 +127,6 @@ class Controller extends BaseController
     public function storeGeneric()
     {
         $this->authorize('create', $this->newModel());
-        $this->sanitizeRequest();
         $this->validateArray($this->requestDataForModel(), $this->rules());
     }
 
@@ -183,31 +143,20 @@ class Controller extends BaseController
     {
         $model = $this->getModel($id);
 
-        $this->authorize('edit', $model);
-        $this->sanitizeRequest();
+        $this->authorize('update', $model);
         $this->validateArray($this->requestDataForModel(), $this->rules($model));
         $this->concurrencyControl($model);
 
         return $model;
     }
 
-    protected function apiOnlyResponse()
+    protected function alwaysCallBefore()
     {
-        return view('acp.index');
-    }
+        if ($this->method === 'index' && method_exists($this, 'indexBefore')) {
+            return $this->indexBefore();
+        }
 
-    protected function appendToCreateAndEditResponse($model): array
-    {
-        return [];
-    }
-
-    protected function appendViewSharedVars(): void
-    {
-        parent::appendViewSharedVars();
-
-        view()->share([
-            'showWithCount' => $this->showWithCount,
-        ]);
+        return null;
     }
 
     protected function concurrencyControl($model)
@@ -221,23 +170,6 @@ class Controller extends BaseController
         ]);
     }
 
-    protected function sanitizeData(array $data)
-    {
-        return null;
-    }
-
-    protected function sanitizeRequest()
-    {
-        $data = request()->all();
-
-        if (is_array($sanitizeData = $this->sanitizeData($data))) {
-            request()->replace($sanitizeData);
-        }
-    }
-
-    /**
-     * @param \Ivacuum\Generic\Models\Model|\Eloquent $model
-     */
     protected function breadcrumbsModelSubpage($model)
     {
         \Breadcrumbs::push(
@@ -315,11 +247,6 @@ class Controller extends BaseController
         return [$sortKey, $sortDir];
     }
 
-    protected function isApiRequest()
-    {
-        return request()->expectsJson();
-    }
-
     protected function modelAccessibleRelations($model): array
     {
         /** @var \Illuminate\Database\Eloquent\Model $model */
@@ -333,7 +260,7 @@ class Controller extends BaseController
         foreach ($this->showWithCount as $field) {
             $related = $model->{$field}()->getRelated();
 
-            if (!$me->can('list', $related)) {
+            if (!$me->can('viewAny', $related)) {
                 continue;
             }
 
@@ -358,26 +285,6 @@ class Controller extends BaseController
         return $result;
     }
 
-    protected function modelResource($model)
-    {
-        $resource = NamingHelper::modelResourceClassFromController(static::class);
-
-        return (new $resource($model))
-            ->additional([
-                'relations' => $this->modelAccessibleRelations($model),
-                'i18n_index' => NamingHelper::transField($model),
-                'breadcrumbs' => \Breadcrumbs::get(),
-            ]);
-    }
-
-    protected function modelResourceCollection($models)
-    {
-        $resourceCollection = NamingHelper::modelResourceCollectionClassFromController(static::class);
-
-        return (new $resourceCollection($models))
-            ->additional(['breadcrumbs' => \Breadcrumbs::get()]);
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -386,19 +293,6 @@ class Controller extends BaseController
         $model = $this->getModelName();
 
         return new $model;
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    protected function newModelDefaults($model)
-    {
-        foreach ($this->reactiveFields as $field) {
-            $model->{$field} = null;
-        }
-
-        return $model;
     }
 
     /**
@@ -430,11 +324,6 @@ class Controller extends BaseController
     protected function rules($model = null)
     {
         return [];
-    }
-
-    protected function shouldReturnApiOnlyResponse(): bool
-    {
-        return $this->apiOnly && !$this->isApiRequest();
     }
 
     protected function storeModel()

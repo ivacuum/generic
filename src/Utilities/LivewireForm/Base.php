@@ -11,10 +11,8 @@ abstract class Base implements Htmlable
     public array $classes = [];
     public string $name;
     public string $entity = '';
-    public string $camelName;
     public ?string $help = null;
     public ?string $label = null;
-    protected $livewire = false;
 
     public function buildData(): array
     {
@@ -23,6 +21,18 @@ abstract class Base implements Htmlable
 
         foreach ($properties as $property) {
             $data[$property->getName()] = $property->getValue($this);
+        }
+
+        if ($data['label'] === null) {
+            $model = $this->entity;
+            $field = str($this->name)->snake();
+
+            if (str_contains($this->name, '.')) {
+                $model = str($this->name)->beforeLast('.')->snake('-');
+                $field = str($this->name)->afterLast('.')->snake();
+            }
+
+            $data['label'] = \ViewHelper::modelFieldTrans($model, $field);
         }
 
         return $data;
@@ -48,9 +58,18 @@ abstract class Base implements Htmlable
 
     abstract public function html();
 
+    public function i18n(string $field, string $model = null)
+    {
+        $this->label = \ViewHelper::modelFieldTrans($model ?? $this->entity, $field);
+
+        return $this;
+    }
+
     public function label(string $text): self
     {
-        $this->label = $text;
+        $this->label = $text !== ''
+            ? __($text)
+            : $text;
 
         return $this;
     }
@@ -62,11 +81,13 @@ abstract class Base implements Htmlable
         return $this;
     }
 
-    public function model($model)
+    public function model(string|object $model)
     {
-        $this->model = $model;
+        $modelAsString = is_object($model)
+            ? get_class($model)
+            : $model;
 
-        $class = str_replace('App\\', '', get_class($model));
+        $class = str_replace('App\\', '', $modelAsString);
 
         $this->entity = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $class)));
 

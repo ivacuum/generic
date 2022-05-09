@@ -1,7 +1,7 @@
 <select
   {{ $required ? 'required' : '' }}
   class="form-input {{ implode(' ', $classes) }}"
-  wire:model="{{ $camelName }}"
+  wire:model="{{ $name }}"
   id="{{ $entity }}_{{ $name }}"
 >
   <option value=""></option>

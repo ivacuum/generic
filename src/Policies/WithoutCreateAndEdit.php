@@ -9,6 +9,7 @@ class WithoutCreateAndEdit extends Base
         return false;
     }
 
+    /** @deprecated use update */
     public function edit(User $me)
     {
         return false;

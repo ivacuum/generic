@@ -11,11 +11,8 @@ class NamingHelper
 
     /**
      * App\PostPhoto => PostPhotos
-     *
-     * @param object $class
-     * @return string
      */
-    public static function controllerName($class): string
+    public static function controllerName(object $class): string
     {
         return \Str::plural(class_basename($class));
     }
@@ -54,11 +51,8 @@ class NamingHelper
 
     /**
      * App\PostPhoto => post-photos
-     *
-     * @param object $class
-     * @return string
      */
-    public static function transField($class): string
+    public static function transField(object $class): string
     {
         return static::kebab(static::controllerName($class));
     }
