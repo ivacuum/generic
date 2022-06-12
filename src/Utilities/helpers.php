@@ -38,12 +38,8 @@ if (!function_exists('path')) {
     // Адрес страницы, соответствующий контроллеру
     function path($name, $parameters = [], bool $absolute = false): string
     {
-        static $prefix;
-
-        if (null === $prefix) {
-            $locale = app('request')->server->get('LARAVEL_LOCALE') ?? null;
-            $prefix = $locale ? "/{$locale}" : '';
-        }
+        $locale = app('request')->server->get('LARAVEL_LOCALE') ?? null;
+        $prefix = $locale ? "/{$locale}" : '';
 
         if (!$prefix) {
             return app('url')->action($name, $parameters, $absolute);

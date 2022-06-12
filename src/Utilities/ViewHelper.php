@@ -16,15 +16,11 @@ class ViewHelper
 
     public function dateShort(?CarbonInterface $date): string
     {
-        static $year;
-
-        if (null === $date) {
+        if ($date === null) {
             return '—';
         }
 
-        if (empty($year)) {
-            $year = now()->year;
-        }
+        $year = now()->year;
 
         if ($date->year === $year) {
             return $date->isoFormat('D MMMM');
