@@ -1,9 +1,9 @@
 <form
-  class="flex flex-wrap js-batch-form"
+  class="flex flex-wrap gap-1 js-batch-form"
   data-url="{{ path([$controller, 'batch']) }}"
   data-selector=".models-checkbox"
 >
-  <div class="mr-1">
+  <div>
     <select class="form-input" name="action">
       <option value="">Выберите действие...</option>
       @foreach ($actions as $value => $title)
