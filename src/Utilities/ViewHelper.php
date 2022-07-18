@@ -11,7 +11,7 @@ class ViewHelper
 
     public function avatarBg(int $id): string
     {
-        return config('cfg.avatar_bg')[$id % sizeof(config('cfg.avatar_bg'))];
+        return config('cfg.avatar_bg')[$id % count(config('cfg.avatar_bg'))];
     }
 
     public function dateShort(?CarbonInterface $date): string
@@ -109,7 +109,7 @@ class ViewHelper
 
         $number = max($number, 0);
         $pow = floor(($number ? log($number) : 0) / log(1024));
-        $pow = min($pow, sizeof($units) - 1);
+        $pow = min($pow, count($units) - 1);
         $number /= pow(1024, $pow);
 
         return round($number, $decimals[$pow]) . $units[$pow];
@@ -146,7 +146,7 @@ class ViewHelper
 
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, sizeof($units) - 1);
+        $pow = min($pow, count($units) - 1);
         $bytes /= pow(1024, $pow);
 
         return round($bytes, $decimals[$pow]) . static::$thousandsSeparator . $units[$pow];

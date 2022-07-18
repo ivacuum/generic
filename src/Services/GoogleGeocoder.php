@@ -26,13 +26,15 @@ class GoogleGeocoder
 
     protected function query(string $query): array
     {
-        $response = $this->client->get('', ['query' => [
-            'address' => $query,
-        ]]);
+        $response = $this->client->get('', [
+            'query' => [
+                'address' => $query,
+            ],
+        ]);
 
         $json = json_decode($response->getBody());
 
-        if (!isset($json->results) || !sizeof($json->results) || 'OK' !== $json->status) {
+        if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
             throw new \Exception('Запрос геоданных не удался');
         }
 

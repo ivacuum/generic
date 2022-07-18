@@ -221,8 +221,8 @@ class Controller extends BaseController
         return $model->query()
             ->where($model->getRouteKeyName(), '=', $id)
             ->when(ModelHelper::hasSoftDeleteLaravel($model), fn (Builder $query) => $query->withTrashed())
-            ->when($this->method === 'show' && sizeof($this->showWith), fn (Builder $query) => $query->with($this->showWith))
-            ->when($this->method === 'show' && sizeof($this->showWithCount), fn (Builder $query) => $query->withCount($this->showWithCount))
+            ->when($this->method === 'show' && count($this->showWith), fn (Builder $query) => $query->with($this->showWith))
+            ->when($this->method === 'show' && count($this->showWithCount), fn (Builder $query) => $query->withCount($this->showWithCount))
             ->firstOrFail();
     }
 
@@ -250,7 +250,7 @@ class Controller extends BaseController
     protected function modelAccessibleRelations($model): array
     {
         /** @var \Illuminate\Database\Eloquent\Model $model */
-        if (sizeof($this->showWithCount) < 1) {
+        if (count($this->showWithCount) < 1) {
             return [];
         }
 

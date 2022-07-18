@@ -110,8 +110,8 @@ class SitemapBuild extends Command
     {
         $stream = fopen('php://memory', 'r+');
 
-        fwrite($stream, '<?xml version="1.0" encoding="UTF-8"?>'."\n");
-        fwrite($stream, '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n");
+        fwrite($stream, '<?xml version="1.0" encoding="UTF-8"?>' . "\n");
+        fwrite($stream, '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n");
 
         foreach ($this->pages as $page) {
             fwrite(
@@ -135,7 +135,7 @@ class SitemapBuild extends Command
 
     protected function write(): void
     {
-        if (!sizeof($this->pages)) {
+        if (!count($this->pages)) {
             return;
         }
 
@@ -152,7 +152,7 @@ class SitemapBuild extends Command
 
         $part = ceil($this->count / $this->threshold);
 
-        file_put_contents('compress.zlib://'.public_path("uploads/temp/sitemap-{$part}.xml.gz"), $stream);
+        file_put_contents('compress.zlib://' . public_path("uploads/temp/sitemap-{$part}.xml.gz"), $stream);
     }
 
     protected function writeSingleSitemap(): void
@@ -165,8 +165,8 @@ class SitemapBuild extends Command
         $parts = ceil($this->count / $this->threshold);
         $stream = fopen('php://memory', 'r+');
 
-        fwrite($stream, '<?xml version="1.0" encoding="UTF-8"?>'."\n");
-        fwrite($stream, '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n");
+        fwrite($stream, '<?xml version="1.0" encoding="UTF-8"?>' . "\n");
+        fwrite($stream, '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n");
 
         foreach (range(1, $parts) as $part) {
             fwrite(

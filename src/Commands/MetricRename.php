@@ -22,7 +22,7 @@ class MetricRename extends Command
             $values[] = sprintf('("%s", "%s", %d)', $metric->date, $to, $metric->count);
         }
 
-        $rows = sizeof($values);
+        $rows = count($values);
 
         \DB::statement('INSERT INTO metrics (`date`, `event`, `count`) VALUES ' . implode(', ', $values) . ' ON DUPLICATE KEY UPDATE `count` = `count` + values(`count`)');
 

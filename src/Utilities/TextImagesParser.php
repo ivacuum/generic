@@ -10,11 +10,11 @@ class TextImagesParser
         $images = $result = [];
 
         // Картинки обрабатываются на строку позже, поэтому в конец текста добавлен \n
-        foreach (explode("\n", $text."\n") as $line) {
+        foreach (explode("\n", $text . "\n") as $line) {
             if (preg_match('#^(https?://[A-Za-z-_\d/.]+\.(jpe?g|png))$#', $line, $matches)) {
                 $images[] = $matches[1];
             } else {
-                $sizeof = sizeof($images);
+                $sizeof = count($images);
 
                 if ($sizeof > 1) {
                     $this->fotoramaMarkup($result, $images);
@@ -37,13 +37,13 @@ class TextImagesParser
         $result[] = '<div class="max-w-1000px mx-auto text-center">';
 
         $i = 0;
-        $lastIteration = sizeof($images) - 1;
+        $lastIteration = count($images) - 1;
 
         foreach ($images as $image) {
             $lastImageClass = $i === $lastIteration ? 'sm:rounded-b' : '';
             $firstImageClass = $i === 0 ? 'sm:rounded-t' : '';
 
-            $result[] = '<div><img class="markdown-responsive-image '."{$firstImageClass} {$lastImageClass}".' js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'"></div>';
+            $result[] = '<div><img class="markdown-responsive-image ' . "{$firstImageClass} {$lastImageClass}" . ' js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="' . $image . '"></div>';
 
             $i++;
         }
@@ -57,7 +57,7 @@ class TextImagesParser
         $result[] = '<div class="-mt-2 mb-6 mobile-wide js-shortcuts-item">';
         $result[] = '<div class="max-w-1000px mx-auto text-center">';
 
-        $result[] = '<img class="markdown-responsive-image sm:rounded js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="'.$image.'">';
+        $result[] = '<img class="markdown-responsive-image sm:rounded js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="' . $image . '">';
 
         $result[] = '</div>';
         $result[] = '</div>';
