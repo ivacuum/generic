@@ -7,7 +7,7 @@ class SendTelegramMessageJob extends BaseJob
 {
     public $tries = 10;
     public $backoff = 30;
-    public $timeout = 15;
+    public $timeout = 20;
     public $maxExceptions = 1;
 
     public function __construct(
@@ -19,19 +19,21 @@ class SendTelegramMessageJob extends BaseJob
 
     public function handle(TelegramClient $telegram)
     {
+        $telegram = $telegram->chat($this->chatId);
+
         try {
-            $telegram->sendMessage($this->chatId, $this->text, $this->disableWebPagePreview);
+            $telegram->sendMessage($this->text, $this->disableWebPagePreview);
         } catch (TelegramException $e) {
             $code = $e->getCode();
 
             if ($code === 413) {
-                $text = mb_substr($this->text, 0, 3000);
+                $text = mb_substr($this->text, 0, 4000);
 
-                $telegram->sendMessage($this->chatId, $text, $this->disableWebPagePreview);
+                $telegram->sendMessage($text, $this->disableWebPagePreview);
 
-                $text = mb_substr($e->getMessage(), 0, 3000);
+                $text = mb_substr($e->getMessage(), 0, 4000);
 
-                $telegram->sendMessage($this->chatId, $text, $this->disableWebPagePreview);
+                $telegram->sendMessage($text, $this->disableWebPagePreview);
             } elseif ($code === 429) {
                 $this->release(3600);
 

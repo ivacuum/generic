@@ -1,11 +1,13 @@
 <?php namespace Ivacuum\Generic\Telegram;
 
-class SendMessageRequest implements RequestInterface
+use Ivacuum\Generic\Http\HttpRequest;
+
+class SendMessageRequest implements HttpRequest
 {
     public function __construct(
         private int $chatId,
         private string $text,
-        private bool $disableWebPagePreview
+        private ?bool $disableWebPagePreview = false
     ) {
     }
 
@@ -19,7 +21,9 @@ class SendMessageRequest implements RequestInterface
         return [
             'text' => $this->text,
             'chat_id' => $this->chatId,
-            'disable_web_page_preview' => (int) $this->disableWebPagePreview,
+            'disable_web_page_preview' => $this->disableWebPagePreview
+                ? true
+                : null,
         ];
     }
 }
