@@ -2,14 +2,20 @@
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Client\Factory;
+use Ivacuum\Generic\Action\FilterNullsAction;
 use Ivacuum\Generic\Http\HttpRequest;
 
 class TelegramClient
 {
     private int $chatId;
+    private int|null $replyToMessageId = null;
+    private bool|null $disableWebPagePreview;
+    private ParseMode|null $parseMode = null;
+    private InlineKeyboardMarkup|null $replyMarkup = null;
 
-    public function __construct(private Factory $http)
+    public function __construct(private Factory $http, private FilterNullsAction $filterNulls)
     {
+        $this->disableWebPagePreview = config('cfg.telegram.disable_web_page_preview');
     }
 
     public function chat(int $chatId)
@@ -20,12 +26,100 @@ class TelegramClient
         return $telegram;
     }
 
-    public function sendMessage(string $text, bool $disableWebPagePreview = null)
+    public function disableWebPagePreview(bool $disableWebPagePreview = true)
+    {
+        $telegram = clone $this;
+        $telegram->disableWebPagePreview = $disableWebPagePreview;
+
+        return $telegram;
+    }
+
+    public function editMessageReplyMarkup(int $messageId)
+    {
+        $request = new EditMessageReplyMarkupRequest($this->chatId, $messageId, $this->replyMarkup);
+
+        return new TelegramResponse($this->send($request));
+    }
+
+    public function editMessageText(int $messageId, string $text)
+    {
+        $request = new EditMessageTextRequest(
+            $this->chatId,
+            $messageId,
+            $text,
+            $this->disableWebPagePreview
+        );
+
+        return new TelegramResponse($this->send($request));
+    }
+
+    public function html()
+    {
+        return $this->parseMode(ParseMode::Html);
+    }
+
+    public function markdown()
+    {
+        return $this->parseMode(ParseMode::Markdown);
+    }
+
+    public function parseMode(ParseMode $parseMode)
+    {
+        $telegram = clone $this;
+        $telegram->parseMode = $parseMode;
+
+        return $telegram;
+    }
+
+    public function replyMarkup(InlineKeyboardMarkup|null $replyMarkup)
+    {
+        $telegram = clone $this;
+        $telegram->replyMarkup = $replyMarkup;
+
+        return $telegram;
+    }
+
+    public function replyToMessageId(int $messageId)
+    {
+        $telegram = clone $this;
+        $telegram->replyToMessageId = $messageId;
+
+        return $telegram;
+    }
+
+    public function sendLocation(string $lat, string $lon)
+    {
+        $request = new SendLocationRequest(
+            $this->chatId,
+            $lat,
+            $lon,
+            $this->replyMarkup,
+            $this->replyToMessageId
+        );
+
+        return new TelegramResponse($this->send($request));
+    }
+
+    public function sendMessage(string $text)
     {
         $request = new SendMessageRequest(
             $this->chatId,
             $text,
-            $disableWebPagePreview ?? $this->disableWebPagePreview()
+            $this->disableWebPagePreview,
+            $this->replyMarkup
+        );
+
+        return new TelegramResponse($this->send($request));
+    }
+
+    public function sendPhoto(string $fileId, ?string $caption = null)
+    {
+        $request = new SendPhotoRequest(
+            $this->chatId,
+            $fileId,
+            $caption,
+            $this->parseMode,
+            $this->replyMarkup
         );
 
         return new TelegramResponse($this->send($request));
@@ -47,16 +141,15 @@ class TelegramClient
             ->timeout(15);
     }
 
-    private function disableWebPagePreview(): ?bool
-    {
-        return config('cfg.telegram.disable_web_page_preview');
-    }
-
     private function payload(HttpRequest $request)
     {
-        return collect($request->jsonSerialize())
-            ->reject(fn ($value) => $value === null)
-            ->all();
+        $payload = $request->jsonSerialize();
+
+        if (is_array($payload)) {
+            return $this->filterNulls->execute($request->jsonSerialize());
+        }
+
+        return $payload;
     }
 
     private function send(HttpRequest $request)

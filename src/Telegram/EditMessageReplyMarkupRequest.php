@@ -2,30 +2,26 @@
 
 use Ivacuum\Generic\Http\HttpRequest;
 
-class SendMessageRequest implements HttpRequest
+class EditMessageReplyMarkupRequest implements HttpRequest
 {
     public function __construct(
         private int $chatId,
-        private string $text,
-        private bool|null $disableWebPagePreview = false,
+        private int $messageId,
         private InlineKeyboardMarkup|null $replyMarkup = null
     ) {
     }
 
     public function endpoint(): string
     {
-        return 'sendMessage';
+        return 'editMessageReplyMarkup';
     }
 
     public function jsonSerialize()
     {
         return [
-            'text' => $this->text,
             'chat_id' => $this->chatId,
+            'message_id' => $this->messageId,
             'reply_markup' => $this->replyMarkup,
-            'disable_web_page_preview' => $this->disableWebPagePreview
-                ? true
-                : null,
         ];
     }
 }

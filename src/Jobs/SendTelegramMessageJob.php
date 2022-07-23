@@ -19,21 +19,23 @@ class SendTelegramMessageJob extends BaseJob
 
     public function handle(TelegramClient $telegram)
     {
-        $telegram = $telegram->chat($this->chatId);
+        $telegram = $telegram
+            ->chat($this->chatId)
+            ->disableWebPagePreview($this->disableWebPagePreview);
 
         try {
-            $telegram->sendMessage($this->text, $this->disableWebPagePreview);
+            $telegram->sendMessage($this->text);
         } catch (TelegramException $e) {
             $code = $e->getCode();
 
             if ($code === 413) {
                 $text = mb_substr($this->text, 0, 4000);
 
-                $telegram->sendMessage($text, $this->disableWebPagePreview);
+                $telegram->sendMessage($text);
 
                 $text = mb_substr($e->getMessage(), 0, 4000);
 
-                $telegram->sendMessage($text, $this->disableWebPagePreview);
+                $telegram->sendMessage($text);
             } elseif ($code === 429) {
                 $this->release(3600);
 

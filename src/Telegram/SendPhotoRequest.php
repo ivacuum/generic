@@ -2,30 +2,30 @@
 
 use Ivacuum\Generic\Http\HttpRequest;
 
-class SendMessageRequest implements HttpRequest
+class SendPhotoRequest implements HttpRequest
 {
     public function __construct(
         private int $chatId,
-        private string $text,
-        private bool|null $disableWebPagePreview = false,
+        private string $fileId,
+        private string|null $caption,
+        private ParseMode|null $parseMode,
         private InlineKeyboardMarkup|null $replyMarkup = null
     ) {
     }
 
     public function endpoint(): string
     {
-        return 'sendMessage';
+        return 'sendPhoto';
     }
 
     public function jsonSerialize()
     {
         return [
-            'text' => $this->text,
+            'photo' => $this->fileId,
+            'caption' => $this->caption,
             'chat_id' => $this->chatId,
+            'parse_mode' => $this->parseMode?->value,
             'reply_markup' => $this->replyMarkup,
-            'disable_web_page_preview' => $this->disableWebPagePreview
-                ? true
-                : null,
         ];
     }
 }

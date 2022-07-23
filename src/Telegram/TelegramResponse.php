@@ -6,9 +6,11 @@ use Illuminate\Http\Client\Response;
 class TelegramResponse
 {
     public readonly bool $successful;
+    public readonly int|null $messageId;
 
     public function __construct(Response $response)
     {
+        $this->messageId = $response->json('result.message_id');
         $this->successful = $response->json('ok');
     }
 
