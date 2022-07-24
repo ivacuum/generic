@@ -148,9 +148,9 @@ class TelegramClient
         return new TelegramResponse($this->send($request));
     }
 
-    public function setWebhook(string $url)
+    public function setWebhook(string $url, string|null $secretToken = null)
     {
-        $request = new SetWebhookRequest($url);
+        $request = new SetWebhookRequest($url, $secretToken);
 
         return new TelegramResponse($this->send($request));
     }

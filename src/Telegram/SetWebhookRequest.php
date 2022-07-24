@@ -4,7 +4,7 @@ use Ivacuum\Generic\Http\HttpRequest;
 
 class SetWebhookRequest implements HttpRequest
 {
-    public function __construct(private string $url)
+    public function __construct(private string $url, private string|null $secretToken = null)
     {
     }
 
@@ -17,6 +17,7 @@ class SetWebhookRequest implements HttpRequest
     {
         return [
             'url' => $this->url,
+            'secret_token' => $this->secretToken,
         ];
     }
 }
