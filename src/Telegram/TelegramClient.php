@@ -11,6 +11,7 @@ class TelegramClient
     private int|null $replyToMessageId = null;
     private bool|null $disableWebPagePreview;
     private ParseMode|null $parseMode = null;
+    private LanguageCode|null $languageCode = null;
     private InlineKeyboardMarkup|null $replyMarkup = null;
 
     public function __construct(private Factory $http, private FilterNullsAction $filterNulls)
@@ -24,6 +25,13 @@ class TelegramClient
         $telegram->chatId = $chatId;
 
         return $telegram;
+    }
+
+    public function deleteMyCommands()
+    {
+        $request = new DeleteMyCommandsRequest($this->languageCode);
+
+        return new TelegramResponse($this->send($request));
     }
 
     public function disableWebPagePreview(bool $disableWebPagePreview = true)
@@ -56,6 +64,14 @@ class TelegramClient
     public function html()
     {
         return $this->parseMode(ParseMode::Html);
+    }
+
+    public function languageCode(LanguageCode|null $languageCode)
+    {
+        $telegram = clone $this;
+        $telegram->languageCode = $languageCode;
+
+        return $telegram;
     }
 
     public function markdown()
@@ -121,6 +137,13 @@ class TelegramClient
             $this->parseMode,
             $this->replyMarkup
         );
+
+        return new TelegramResponse($this->send($request));
+    }
+
+    public function setMyCommands(BotCommand ...$commands)
+    {
+        $request = new SetMyCommandsRequest($commands, $this->languageCode);
 
         return new TelegramResponse($this->send($request));
     }
