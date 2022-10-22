@@ -9,7 +9,7 @@ class OdnoklassnikiServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(OdnoklassnikiProvider::class, function ($app) {
+        $this->app->scoped(OdnoklassnikiProvider::class, function ($app) {
             $config = $app['config']['services.odnoklassniki'];
 
             return new OdnoklassnikiProvider(

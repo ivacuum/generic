@@ -9,7 +9,7 @@ class VkServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(VkProvider::class, function ($app) {
+        $this->app->scoped(VkProvider::class, function ($app) {
             $config = $app['config']['services.vk'];
 
             return new VkProvider(

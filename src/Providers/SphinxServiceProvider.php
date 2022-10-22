@@ -10,7 +10,7 @@ class SphinxServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(Sphinx::class, function () {
+        $this->app->scoped(Sphinx::class, function () {
             $connection = new SphinxPdoConnection;
             $connection->setParams([
                 'host' => config('cfg.sphinx.host'),
