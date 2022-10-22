@@ -41,7 +41,6 @@ Route::get('auth/vk/callback', 'Auth\Vk@callback');
     'ru' => ['posix' => 'ru_RU.UTF-8'],
     'en' => ['posix' => 'en_US.UTF-8'],
 ],
-'metrics_address' => 'udp://127.0.0.1:1111',
 'sphinx' => [
     'host'   => env('SPHINX_HOST', 'localhost'),
     'port'   => env('SPHINX_PORT', 9306),
