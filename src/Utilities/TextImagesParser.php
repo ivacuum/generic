@@ -33,7 +33,7 @@ class TextImagesParser
 
     protected function fotoramaMarkup(array &$result, array $images): void
     {
-        $result[] = '<div class="-mt-2 mb-6 mobile-wide js-shortcuts-item">';
+        $result[] = '<div class="-mt-2 mb-6 -mx-4 sm:mx-0 js-shortcuts-item">';
         $result[] = '<div class="max-w-1000px mx-auto text-center">';
 
         $i = 0;
@@ -54,7 +54,7 @@ class TextImagesParser
 
     protected function singleImageMarkup(array &$result, string $image): void
     {
-        $result[] = '<div class="-mt-2 mb-6 mobile-wide js-shortcuts-item">';
+        $result[] = '<div class="-mt-2 mb-6 -mx-4 sm:mx-0 js-shortcuts-item">';
         $result[] = '<div class="max-w-1000px mx-auto text-center">';
 
         $result[] = '<img class="markdown-responsive-image sm:rounded js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="' . $image . '">';
