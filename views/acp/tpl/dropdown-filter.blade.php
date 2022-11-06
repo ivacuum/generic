@@ -1,8 +1,7 @@
 <?php
 /** @var array $values */
 /** @var string $field */
-$current = array_keys($values, request($field))[0];
-$current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
+$current = array_keys($values, request($field))[0] ?? request($field);
 ?>
 <details class="relative details-reset details-overlay my-1 mr-2 {{ $class ?? '' }}">
   <summary class="btn btn-default">
@@ -10,7 +9,10 @@ $current = mb_strtolower(mb_substr($current, 0, 1)).mb_substr($current, 1);
       <span class="text-muted mr-1">
         @svg (filter)
       </span>
-      {{ $title ?? ViewHelper::modelFieldTrans($modelTpl, $field) }}: {{ $current }}
+      <span>
+        <span class="text-muted">{{ $title ?? ViewHelper::modelFieldTrans($modelTpl, $field) }}:</span>
+        <span class="font-medium">{{ $current }}</span>
+      </span>
       @svg (angle-down)
     </div>
   </summary>
