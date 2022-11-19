@@ -6,19 +6,16 @@ use Foolz\SphinxQL\SphinxQL;
 
 class Sphinx
 {
-    protected $connection;
-
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(private ConnectionInterface $connection)
     {
-        $this->connection = $connection;
     }
 
-    public function create()
+    public function create(): SphinxQL
     {
         return new SphinxQL($this->connection);
     }
 
-    public function helper()
+    public function helper(): Helper
     {
         return new Helper($this->connection);
     }

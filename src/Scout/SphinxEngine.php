@@ -1,16 +1,17 @@
 <?php namespace Ivacuum\Generic\Scout;
 
+use Foolz\SphinxQL\SphinxQL;
 use Ivacuum\Generic\Services\Sphinx;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 
 class SphinxEngine extends Engine
 {
-    private $sphinx;
+    private SphinxQL $sphinxQl;
 
-    public function __construct(Sphinx $sphinx)
+    public function __construct(private Sphinx $sphinx)
     {
-        $this->sphinx = $sphinx->create();
+        $this->sphinxQl = $sphinx->create();
     }
 
     public function update($models)
@@ -23,7 +24,7 @@ class SphinxEngine extends Engine
 
         $this->ping();
 
-        $query = $this->sphinx
+        $query = $this->sphinxQl
             ->replace()
             ->into($model->searchableAs())
             ->columns(array_keys($model->toSearchableArray()));
@@ -46,7 +47,7 @@ class SphinxEngine extends Engine
 
         $this->ping();
 
-        $this->sphinx
+        $this->sphinxQl
             ->delete()
             ->from($model->searchableAs())
             ->where('id', 'IN', $ids)
@@ -57,7 +58,7 @@ class SphinxEngine extends Engine
     {
         $this->ping();
 
-        $query = $this->sphinx
+        $query = $this->sphinxQl
             ->select('id')
             ->from($builder->index ?: $builder->model->searchableAs())
             ->limit($builder->limit ?: 500);
@@ -94,14 +95,15 @@ class SphinxEngine extends Engine
     {
         $this->ping();
 
-        \Sphinx::helper()
+        $this->sphinx
+            ->helper()
             ->truncateRtIndex($model->searchableAs())
             ->execute();
     }
 
     private function ping()
     {
-        $this->sphinx->getConnection()->ping();
+        $this->sphinxQl->getConnection()->ping();
     }
 
     public function lazyMap(Builder $builder, $results, $model)
