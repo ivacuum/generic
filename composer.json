@@ -38,7 +38,6 @@
       "aliases": {
         "Form": "Ivacuum\\Generic\\Facades\\Form",
         "Sphinx": "Ivacuum\\Generic\\Facades\\Sphinx",
-        "UrlHelper": "Ivacuum\\Generic\\Facades\\UrlHelper",
         "Breadcrumbs": "Ivacuum\\Generic\\Facades\\Breadcrumbs",
         "LivewireForm": "Ivacuum\\Generic\\Facades\\LivewireForm"
       }
