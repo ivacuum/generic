@@ -3,13 +3,10 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\User;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 
 class SignIn extends Controller
 {
-    use ThrottlesLogins;
-
     protected $username = 'email';
 
     public function index()
@@ -24,13 +21,6 @@ class SignIn extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-            $this->sendLockoutResponse($request);
-
-            return null;
-        }
 
         if ($this->attemptLogin($request)) {
             $this->loginOkCallback();
@@ -47,8 +37,6 @@ class SignIn extends Controller
         }
 
         $this->username = $username;
-
-        $this->incrementLoginAttempts($request);
 
         return $this->sendFailedResponse($request);
     }
@@ -115,8 +103,6 @@ class SignIn extends Controller
     protected function sendOkResponse(Request $request)
     {
         $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
 
         return $this->sendAuthenticatedResponse();
     }
