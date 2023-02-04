@@ -6,7 +6,7 @@ class Telegram
 {
     public function notifyAdmin(string $text): void
     {
-        $chatId = config('cfg.telegram.admin_id');
+        $chatId = config('services.telegram.admin_id');
 
         if ($chatId === null) {
             return;

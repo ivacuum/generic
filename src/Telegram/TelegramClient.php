@@ -16,7 +16,7 @@ class TelegramClient
 
     public function __construct(private Factory $http, private FilterNullsAction $filterNulls)
     {
-        $this->disableWebPagePreview = config('cfg.telegram.disable_web_page_preview');
+        $this->disableWebPagePreview = config('services.telegram.disable_web_page_preview');
     }
 
     public function chat(int $chatId)
@@ -157,7 +157,7 @@ class TelegramClient
 
     private function configureClient()
     {
-        $botToken = config('cfg.telegram.bot_token');
+        $botToken = config('services.telegram.bot_token');
 
         return $this->http
             ->baseUrl("https://api.telegram.org/bot{$botToken}/")
