@@ -20,7 +20,6 @@ class Notification extends DatabaseNotification
 {
     protected $keyType = 'string';
     protected $guarded = ['created_at', 'updated_at'];
-    protected $dates = ['read_at'];
     protected $perPage = 50;
 
     public function notifiable()
