@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Metric extends Model
 {
+    public $timestamps = false;
     protected $casts = ['date' => 'datetime'];
     protected $perPage = 100;
 
