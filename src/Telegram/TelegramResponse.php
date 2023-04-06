@@ -14,6 +14,17 @@ class TelegramResponse
         $this->successful = $response->json('ok');
     }
 
+    public static function fakeBlockedByUser()
+    {
+        return [
+            'api.telegram.org/*' => Factory::response([
+                'ok' => false,
+                'error_code' => 403,
+                'description' => 'Forbidden: bot was blocked by the user',
+            ]),
+        ];
+    }
+
     public static function fakeSuccess()
     {
         return [
