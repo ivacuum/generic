@@ -93,7 +93,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return $request->expectsJson()
-            ? response()->json(['message' => 'Unauthenticated.'], 401)
+            ? response()->json(['message' => $exception->getMessage()], 401)
             : redirect()->guest(path([SignIn::class, 'index']))
                 ->with('message', __('auth.signin_to_view_page'));
     }
