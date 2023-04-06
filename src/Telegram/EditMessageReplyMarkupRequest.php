@@ -16,7 +16,7 @@ class EditMessageReplyMarkupRequest implements HttpRequest
         return 'editMessageReplyMarkup';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'chat_id' => $this->chatId,

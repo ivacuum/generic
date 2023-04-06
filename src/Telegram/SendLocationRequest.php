@@ -18,7 +18,7 @@ class SendLocationRequest implements HttpRequest
         return 'sendLocation';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'chat_id' => $this->chatId,

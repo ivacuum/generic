@@ -13,7 +13,7 @@ class SetWebhookRequest implements HttpRequest
         return 'setWebhook';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'url' => $this->url,

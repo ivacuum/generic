@@ -18,7 +18,7 @@ class SendPhotoRequest implements HttpRequest
         return 'sendPhoto';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'photo' => $this->fileId,

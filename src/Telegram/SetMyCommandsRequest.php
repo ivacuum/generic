@@ -14,7 +14,7 @@ class SetMyCommandsRequest implements HttpRequest
         return 'setMyCommands';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'commands' => $this->commands,

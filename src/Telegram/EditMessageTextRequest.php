@@ -18,7 +18,7 @@ class EditMessageTextRequest implements HttpRequest
         return 'editMessageText';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'text' => $this->text,

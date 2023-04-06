@@ -17,7 +17,7 @@ class SendMessageRequest implements HttpRequest
         return 'sendMessage';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'text' => $this->text,

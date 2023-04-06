@@ -13,7 +13,7 @@ class DeleteMyCommandsRequest implements HttpRequest
         return 'deleteMyCommands';
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'language_code' => $this->languageCode?->value,

@@ -12,7 +12,7 @@ class InlineKeyboardMarkup implements \JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'inline_keyboard' => $this->rows,
