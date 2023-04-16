@@ -16,7 +16,7 @@ class Breadcrumbs
         return $this;
     }
 
-    public function push(string $title, ?string $url = null): self
+    public function push(string $title, string|null $url = null): self
     {
         $this->breadcrumbs[] = [
             'url' => $url,

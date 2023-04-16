@@ -9,7 +9,7 @@ class SendLocationRequest implements HttpRequest
         private string $lat,
         private string $lon,
         private InlineKeyboardMarkup|null $replyMarkup = null,
-        private ?int $replyToMessageId = null,
+        private int|null $replyToMessageId = null,
     ) {
     }
 

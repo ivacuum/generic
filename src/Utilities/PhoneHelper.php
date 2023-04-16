@@ -99,9 +99,9 @@ class PhoneHelper
         )/x',
     ];
 
-    const PRINT_PREFIX = "+7";
-    const TOLL_FREE_PREFIX = "8";
-    const NORMALIZED_PREFIX = "7";
+    const PRINT_PREFIX = '+7';
+    const TOLL_FREE_PREFIX = '8';
+    const NORMALIZED_PREFIX = '7';
 
     public function dashed(string $phone): string
     {
@@ -113,7 +113,7 @@ class PhoneHelper
         };
     }
 
-    public function format(?string $phones, ?string $prefix = null): array
+    public function format(string|null $phones, string|null $prefix = null): array
     {
         if (null === $phones) {
             return [];
@@ -128,12 +128,12 @@ class PhoneHelper
         return $result;
     }
 
-    public function formatFirst(string $phones, ?string $prefix = null): string
+    public function formatFirst(string $phones, string|null $prefix = null): string
     {
         return $this->formatOne(explode(',', $this->tidy($phones))[0], $prefix);
     }
 
-    public function formatOne(string $phone, ?string $prefix = null): string
+    public function formatOne(string $phone, string|null $prefix = null): string
     {
         $len = strlen($phone);
 
@@ -189,15 +189,15 @@ class PhoneHelper
         $len = strlen($phone);
 
         if ($code && 10 === strlen($code) + $len) {
-            return static::NORMALIZED_PREFIX.$code.$phone;
+            return static::NORMALIZED_PREFIX . $code . $phone;
         }
 
         if (10 === $len) {
-            return static::NORMALIZED_PREFIX.$phone;
+            return static::NORMALIZED_PREFIX . $phone;
         }
 
         if (11 === $len) {
-            return static::NORMALIZED_PREFIX.mb_substr($phone, 1);
+            return static::NORMALIZED_PREFIX . mb_substr($phone, 1);
         }
 
         return $phone;

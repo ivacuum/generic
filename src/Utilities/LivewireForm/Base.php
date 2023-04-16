@@ -11,8 +11,8 @@ abstract class Base implements Htmlable
     public array $classes = [];
     public string $name;
     public string $entity = '';
-    public ?string $help = null;
-    public ?string $label = null;
+    public string|null $help = null;
+    public string|null $label = null;
 
     public function buildData(): array
     {

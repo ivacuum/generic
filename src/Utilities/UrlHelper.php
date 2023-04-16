@@ -44,7 +44,7 @@ class UrlHelper
         return $this;
     }
 
-    public function sort(string $key, ?string $defaultDir = null): string
+    public function sort(string $key, string|null $defaultDir = null): string
     {
         if (null !== $this->sortKey && $this->sortKey !== $key) {
             // При смене поля сортировки используется

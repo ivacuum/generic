@@ -5,7 +5,7 @@ use Ivacuum\Generic\Http\HttpRequest;
 class SetMyCommandsRequest implements HttpRequest
 {
     /** @param array<BotCommand> $commands */
-    public function __construct(private array $commands, private ?LanguageCode $languageCode = null)
+    public function __construct(private array $commands, private LanguageCode|null $languageCode = null)
     {
     }
 

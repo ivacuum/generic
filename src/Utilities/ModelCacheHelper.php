@@ -102,7 +102,7 @@ abstract class ModelCacheHelper
         );
     }
 
-    public function title($q): ?string
+    public function title($q): string|null
     {
         return is_numeric($q)
             ? $this->findById($q)?->{$this->titleField}

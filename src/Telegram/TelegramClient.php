@@ -128,7 +128,7 @@ class TelegramClient
         return new TelegramResponse($this->send($request));
     }
 
-    public function sendPhoto(string $fileId, ?string $caption = null)
+    public function sendPhoto(string $fileId, string|null $caption = null)
     {
         $request = new SendPhotoRequest(
             $this->chatId,

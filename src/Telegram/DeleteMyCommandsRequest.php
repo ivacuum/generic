@@ -4,7 +4,7 @@ use Ivacuum\Generic\Http\HttpRequest;
 
 class DeleteMyCommandsRequest implements HttpRequest
 {
-    public function __construct(private ?LanguageCode $languageCode = null)
+    public function __construct(private LanguageCode|null $languageCode = null)
     {
     }
 
