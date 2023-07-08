@@ -8,6 +8,7 @@ use Ivacuum\Generic\Http\HttpRequest;
 class TelegramClient
 {
     private int $chatId;
+    private bool $asResponse = false;
     private int|null $replyToMessageId = null;
     private bool|null $disableWebPagePreview;
     private ParseMode|null $parseMode = null;
@@ -17,6 +18,14 @@ class TelegramClient
     public function __construct(private Factory $http, private FilterNullsAction $filterNulls)
     {
         $this->disableWebPagePreview = config('services.telegram.disable_web_page_preview');
+    }
+
+    public function asResponse()
+    {
+        $telegram = clone $this;
+        $telegram->asResponse = true;
+
+        return $telegram;
     }
 
     public function chat(int $chatId)
@@ -31,7 +40,7 @@ class TelegramClient
     {
         $request = new DeleteMyCommandsRequest($this->languageCode);
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function disableWebPagePreview(bool $disableWebPagePreview = true)
@@ -46,7 +55,7 @@ class TelegramClient
     {
         $request = new EditMessageReplyMarkupRequest($this->chatId, $messageId, $this->replyMarkup);
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function editMessageText(int $messageId, string $text)
@@ -58,7 +67,7 @@ class TelegramClient
             $this->disableWebPagePreview
         );
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function html()
@@ -113,7 +122,7 @@ class TelegramClient
             $this->replyToMessageId
         );
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function sendMessage(string $text)
@@ -125,7 +134,7 @@ class TelegramClient
             $this->replyMarkup
         );
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function sendPhoto(string $fileId, string|null $caption = null)
@@ -138,21 +147,21 @@ class TelegramClient
             $this->replyMarkup
         );
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function setMyCommands(BotCommand ...$commands)
     {
         $request = new SetMyCommandsRequest($commands, $this->languageCode);
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     public function setWebhook(string $url, string|null $secretToken = null)
     {
         $request = new SetWebhookRequest($url, $secretToken);
 
-        return new TelegramResponse($this->send($request));
+        return $this->send($request);
     }
 
     private function configureClient()
@@ -169,7 +178,11 @@ class TelegramClient
         $payload = $request->jsonSerialize();
 
         if (is_array($payload)) {
-            return $this->filterNulls->execute($request->jsonSerialize());
+            if ($this->asResponse) {
+                $payload['method'] = $request->endpoint();
+            }
+
+            return $this->filterNulls->execute($payload);
         }
 
         return $payload;
@@ -177,9 +190,15 @@ class TelegramClient
 
     private function send(HttpRequest $request)
     {
+        if ($this->asResponse) {
+            return $this->payload($request);
+        }
+
         try {
-            return $this->configureClient()
+            $response = $this->configureClient()
                 ->post($request->endpoint(), $this->payload($request));
+
+            return new TelegramResponse($response);
         } catch (ClientException $e) {
             throw TelegramException::errorResponse($e);
         } catch (\Throwable $e) {
