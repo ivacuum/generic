@@ -131,6 +131,7 @@ class TelegramClient
             $this->chatId,
             $text,
             $this->disableWebPagePreview,
+            $this->parseMode,
             $this->replyMarkup
         );
 

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Telegram;
+<?php
+
+namespace Ivacuum\Generic\Telegram;
 
 use Ivacuum\Generic\Http\HttpRequest;
 
@@ -8,6 +10,7 @@ class SendMessageRequest implements HttpRequest
         private int $chatId,
         private string $text,
         private bool|null $disableWebPagePreview = false,
+        private ParseMode|null $parseMode = null,
         private InlineKeyboardMarkup|null $replyMarkup = null
     ) {
     }
@@ -22,6 +25,7 @@ class SendMessageRequest implements HttpRequest
         return [
             'text' => $this->text,
             'chat_id' => $this->chatId,
+            'parse_mode' => $this->parseMode?->value,
             'reply_markup' => $this->replyMarkup,
             'disable_web_page_preview' => $this->disableWebPagePreview
                 ? true
