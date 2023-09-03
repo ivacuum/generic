@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Http;
+<?php
+
+namespace Ivacuum\Generic\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities\Form;
+<?php
+
+namespace Ivacuum\Generic\Utilities\Form;
 
 class Textarea extends Base
 {

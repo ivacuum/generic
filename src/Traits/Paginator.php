@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Traits;
+<?php
+
+namespace Ivacuum\Generic\Traits;
 
 use Ivacuum\Generic\Scopes\PaginatorScope;
 

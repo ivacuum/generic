@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Facades;
+<?php
+
+namespace Ivacuum\Generic\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

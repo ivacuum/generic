@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Scout;
+<?php
+
+namespace Ivacuum\Generic\Scout;
 
 use Foolz\SphinxQL\SphinxQL;
 use Ivacuum\Generic\Services\Sphinx;
@@ -101,11 +103,6 @@ class SphinxEngine extends Engine
             ->execute();
     }
 
-    private function ping()
-    {
-        $this->sphinxQl->getConnection()->ping();
-    }
-
     public function lazyMap(Builder $builder, $results, $model)
     {
     }
@@ -116,5 +113,10 @@ class SphinxEngine extends Engine
 
     public function deleteIndex($name)
     {
+    }
+
+    private function ping()
+    {
+        $this->sphinxQl->getConnection()->ping();
     }
 }

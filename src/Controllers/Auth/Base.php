@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Controllers\Auth;
+<?php
+
+namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\ExternalIdentity;
 use App\Http\Controllers\Controller;
@@ -21,7 +23,6 @@ abstract class Base extends Controller
      * Поиск или создание новой учетки социального сервиса
      *
      * @param \Laravel\Socialite\AbstractUser $user
-     *
      * @return \App\ExternalIdentity
      */
     protected function externalIdentity($user)
@@ -41,7 +42,6 @@ abstract class Base extends Controller
      * Поиск учетки по ID в социальном сервисе
      *
      * @param string $uid
-     *
      * @return \App\ExternalIdentity
      */
     protected function findIdentityByUid($uid)
@@ -58,7 +58,6 @@ abstract class Base extends Controller
      * Поиск пользователя сайта по электронной почте
      *
      * @param string $email
-     *
      * @return \App\User
      */
     protected function findUserByEmail($email)
@@ -73,7 +72,6 @@ abstract class Base extends Controller
      * Мгновенная регистрация пользователя
      *
      * @param \Laravel\Socialite\AbstractUser $user
-     *
      * @return \App\User
      */
     protected function registerUser($user)
@@ -90,7 +88,6 @@ abstract class Base extends Controller
      * Сохранение поступивших от социального сервиса данных
      *
      * @param \Laravel\Socialite\AbstractUser $user
-     *
      * @return \App\ExternalIdentity
      */
     protected function saveExternalIdentity($user)

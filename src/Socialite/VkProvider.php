@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Socialite;
+<?php
+
+namespace Ivacuum\Generic\Socialite;
 
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;

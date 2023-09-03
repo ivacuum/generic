@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Middleware;
+<?php
+
+namespace Ivacuum\Generic\Middleware;
 
 use Illuminate\Validation\ValidationException;
 

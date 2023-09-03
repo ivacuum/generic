@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Exceptions;
+<?php
+
+namespace Ivacuum\Generic\Exceptions;
 
 abstract class LimitExceededException extends \Exception
 {

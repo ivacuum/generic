@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Services;
+<?php
+
+namespace Ivacuum\Generic\Services;
 
 use Illuminate\Http\UploadedFile;
 
@@ -20,10 +22,8 @@ class ImageConverter
 
     /**
      * Автоматическое определение ориентации снимка
-     *
-     * @return $this
      */
-    public function autoOrient()
+    public function autoOrient(): self
     {
         $this->autoOrient = '-auto-orient';
 
@@ -36,7 +36,6 @@ class ImageConverter
      * Но: звездочку +profile "*" экранировать не нужно, иначе в изображении останутся профили
      *
      * @param string $source Путь к исходному файлу
-     * @return \Illuminate\Http\UploadedFile
      */
     public function convert(string $source): UploadedFile
     {
@@ -79,9 +78,6 @@ class ImageConverter
 
     /**
      * Фильтр для размыливания
-     *
-     * @param string $filter
-     * @return $this
      */
     public function filter(string $filter): self
     {
@@ -96,8 +92,6 @@ class ImageConverter
 
     /**
      * Первый кадр gif для миниатюры
-     *
-     * @return $this
      */
     public function firstFrame(): self
     {
@@ -129,9 +123,6 @@ class ImageConverter
 
     /**
      * Путь к файлу-исходнику. Для gif берется первый кадр
-     *
-     * @param string $source
-     * @return string
      */
     public function source(string $source): string
     {
@@ -152,8 +143,6 @@ class ImageConverter
     /**
      * Результат работы конвертера будет помещен во временный файл, который будет удален по завершении запроса
      * Временный файл после преобразований подразумевается перенести в постоянное хранилище
-     *
-     * @return string
      */
     protected function tempFile(): string
     {

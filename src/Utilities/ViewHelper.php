@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -14,7 +16,7 @@ class ViewHelper
         return config('cfg.avatar_bg')[$id % count(config('cfg.avatar_bg'))];
     }
 
-    public function dateShort(?CarbonInterface $date): string
+    public function dateShort(CarbonInterface|null $date): string
     {
         if ($date === null) {
             return '—';
@@ -36,7 +38,7 @@ class ViewHelper
 
     public function inputHiddenMail()
     {
-        return new HtmlString('<input hidden type="text" name="mail" value="' . old("mail") . '">');
+        return new HtmlString('<input hidden type="text" name="mail" value="' . old('mail') . '">');
     }
 
     public function metaDescription(string $view, array $replace = []): string

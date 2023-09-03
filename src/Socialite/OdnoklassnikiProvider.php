@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Socialite;
+<?php
+
+namespace Ivacuum\Generic\Socialite;
 
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
@@ -50,11 +52,11 @@ class OdnoklassnikiProvider extends AbstractProvider implements ProviderInterfac
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id'       => \Arr::get($user, 'uid'),
+            'id' => \Arr::get($user, 'uid'),
             'nickname' => null,
-            'name'     => \Arr::get($user, 'name'),
-            'email'    => \Arr::get($user, 'email'),
-            'avatar'   => \Arr::get($user, 'pic190x190'),
+            'name' => \Arr::get($user, 'name'),
+            'email' => \Arr::get($user, 'email'),
+            'avatar' => \Arr::get($user, 'pic190x190'),
         ]);
     }
 
@@ -62,6 +64,6 @@ class OdnoklassnikiProvider extends AbstractProvider implements ProviderInterfac
     {
         $_params = array_map(fn ($key, $value) => $key . '=' . $value, array_keys($params), array_values($params));
 
-        return md5(join('', $_params) . md5($token . $this->clientSecret));
+        return md5(implode('', $_params) . md5($token . $this->clientSecret));
     }
 }

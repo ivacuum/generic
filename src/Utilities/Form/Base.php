@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities\Form;
+<?php
+
+namespace Ivacuum\Generic\Utilities\Form;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
@@ -11,6 +13,8 @@ abstract class Base implements Htmlable
     public $entity = '';
     public $classes = [];
     public $default;
+
+    abstract public function html();
 
     public function buildData(): array
     {
@@ -51,8 +55,6 @@ abstract class Base implements Htmlable
 
         return $this;
     }
-
-    abstract public function html();
 
     public function label($text): self
     {

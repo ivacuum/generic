@@ -1,12 +1,11 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 class UserAgent
 {
     /**
      * Чистка строки названия браузера от неактуальных подстрок
-     *
-     * @param string $ua
-     * @return string
      */
     public static function tidy(string $ua): string
     {

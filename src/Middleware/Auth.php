@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Middleware;
+<?php
+
+namespace Ivacuum\Generic\Middleware;
 
 use App\Http\Controllers\Auth\SignIn;
 use App\Http\Controllers\HomeController;
@@ -16,7 +18,7 @@ class Auth extends Authenticate
         return $next($request);
     }
 
-    protected function checkStatus(?User $user, ...$guards): void
+    protected function checkStatus(User|null $user, ...$guards): void
     {
         if ($user !== null && !$this->isUserActive($user)) {
             \Auth::logout();

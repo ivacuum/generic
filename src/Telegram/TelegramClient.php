@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Telegram;
+<?php
+
+namespace Ivacuum\Generic\Telegram;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Client\Factory;
@@ -138,7 +140,7 @@ class TelegramClient
         return $this->send($request);
     }
 
-    public function sendPhoto(string $fileId, string|null $caption = null)
+    public function sendPhoto(string $fileId, string $caption = null)
     {
         $request = new SendPhotoRequest(
             $this->chatId,
@@ -158,7 +160,7 @@ class TelegramClient
         return $this->send($request);
     }
 
-    public function setWebhook(string $url, string|null $secretToken = null)
+    public function setWebhook(string $url, string $secretToken = null)
     {
         $request = new SetWebhookRequest($url, $secretToken);
 

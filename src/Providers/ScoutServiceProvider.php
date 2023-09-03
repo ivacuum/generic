@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Providers;
+<?php
+
+namespace Ivacuum\Generic\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Ivacuum\Generic\Scout\SphinxEngine;

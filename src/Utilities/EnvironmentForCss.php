@@ -1,10 +1,12 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 class EnvironmentForCss
 {
     protected string $userAgent;
 
-    public function __construct(?string $userAgent)
+    public function __construct(string|null $userAgent)
     {
         $this->userAgent = mb_strtolower($userAgent ?? '');
     }

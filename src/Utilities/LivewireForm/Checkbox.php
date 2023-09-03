@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities\LivewireForm;
+<?php
+
+namespace Ivacuum\Generic\Utilities\LivewireForm;
 
 class Checkbox extends Base
 {

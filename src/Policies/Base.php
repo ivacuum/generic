@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Policies;
+<?php
+
+namespace Ivacuum\Generic\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -22,6 +24,10 @@ abstract class ModelCacheHelper
     protected $cachedFields = ['*'];
     protected $rememberTime = 1440;
 
+    abstract public function cachedByIdKey(): string;
+
+    abstract public function cachedBySlugKey(): string;
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -35,8 +41,6 @@ abstract class ModelCacheHelper
         });
     }
 
-    abstract public function cachedByIdKey(): string;
-
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -49,8 +53,6 @@ abstract class ModelCacheHelper
                 ->keyBy($this->slugField);
         });
     }
-
-    abstract public function cachedBySlugKey(): string;
 
     public function findById(int $id)
     {
@@ -75,7 +77,7 @@ abstract class ModelCacheHelper
         );
     }
 
-    public function findBySlug(?string $slug)
+    public function findBySlug(string|null $slug)
     {
         if (!$slug) {
             return null;
@@ -88,7 +90,7 @@ abstract class ModelCacheHelper
         return isset($this->cachedSlug[$slug]) ? $this->cachedSlug[$slug] : null;
     }
 
-    public function findBySlugOrFail(?string $slug)
+    public function findBySlugOrFail(string|null $slug)
     {
         $result = $this->findBySlug($slug);
 

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Middleware;
+<?php
+
+namespace Ivacuum\Generic\Middleware;
 
 use Illuminate\Contracts\Foundation\Application;
 
@@ -13,8 +15,6 @@ class NoCacheHeaders
 
     /**
      * Create a new middleware instance.
-     *
-     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct(Application $app)
     {

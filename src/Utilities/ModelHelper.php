@@ -1,10 +1,11 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 class ModelHelper
 {
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @return bool
      */
     public static function exists($model): bool
     {

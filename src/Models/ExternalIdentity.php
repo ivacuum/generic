@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Models;
+<?php
+
+namespace Ivacuum\Generic\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property \Carbon\CarbonImmutable $created_at
  * @property \Carbon\CarbonImmutable $updated_at
- *
  * @property \App\User $user
  *
  * @mixin \Eloquent

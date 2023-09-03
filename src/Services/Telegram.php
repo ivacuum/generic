@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Services;
+<?php
+
+namespace Ivacuum\Generic\Services;
 
 use Ivacuum\Generic\Jobs\SendTelegramMessageJob;
 

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Jobs;
+<?php
+
+namespace Ivacuum\Generic\Jobs;
 
 use Ivacuum\Generic\Telegram\TelegramClient;
 use Ivacuum\Generic\Telegram\TelegramException;

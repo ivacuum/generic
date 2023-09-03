@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Sphinx;
+<?php
+
+namespace Ivacuum\Generic\Sphinx;
 
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Illuminate\Database\DetectsLostConnections;

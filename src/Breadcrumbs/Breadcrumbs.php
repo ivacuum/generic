@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Breadcrumbs;
+<?php
+
+namespace Ivacuum\Generic\Breadcrumbs;
 
 class Breadcrumbs
 {
@@ -16,7 +18,7 @@ class Breadcrumbs
         return $this;
     }
 
-    public function push(string $title, string|null $url = null): self
+    public function push(string $title, string $url = null): self
     {
         $this->breadcrumbs[] = [
             'url' => $url,

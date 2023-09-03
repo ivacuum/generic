@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Telegram;
+<?php
+
+namespace Ivacuum\Generic\Telegram;
 
 use GuzzleHttp\Exception\ClientException;
 
@@ -20,6 +22,6 @@ class TelegramException extends \Exception
 
     public static function generalError(\Throwable $e): self
     {
-        return new static("The communication with Telegram failed.", 0, $e);
+        return new static('The communication with Telegram failed.', 0, $e);
     }
 }

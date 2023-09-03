@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Listeners;
+<?php
+
+namespace Ivacuum\Generic\Listeners;
 
 use Ivacuum\Generic\Events\LimitExceeded;
 

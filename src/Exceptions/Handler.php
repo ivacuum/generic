@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Exceptions;
+<?php
+
+namespace Ivacuum\Generic\Exceptions;
 
 use App\Http\Controllers\Auth\SignIn;
 use Illuminate\Auth\AuthenticationException;

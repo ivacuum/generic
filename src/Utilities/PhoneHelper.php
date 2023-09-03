@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 class PhoneHelper
 {
@@ -113,7 +115,7 @@ class PhoneHelper
         };
     }
 
-    public function format(string|null $phones, string|null $prefix = null): array
+    public function format(string|null $phones, string $prefix = null): array
     {
         if (null === $phones) {
             return [];
@@ -128,12 +130,12 @@ class PhoneHelper
         return $result;
     }
 
-    public function formatFirst(string $phones, string|null $prefix = null): string
+    public function formatFirst(string $phones, string $prefix = null): string
     {
         return $this->formatOne(explode(',', $this->tidy($phones))[0], $prefix);
     }
 
-    public function formatOne(string $phone, string|null $prefix = null): string
+    public function formatOne(string $phone, string $prefix = null): string
     {
         $len = strlen($phone);
 

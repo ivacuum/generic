@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Controllers;
+<?php
+
+namespace Ivacuum\Generic\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -77,7 +79,7 @@ class Controller extends BaseController
         $this->prefix = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $this->controllerBasename())));
 
         $this->view = $this->method
-            ? $this->prefix . "." . \Str::snake($this->method)
+            ? $this->prefix . '.' . \Str::snake($this->method)
             : $this->prefix;
     }
 

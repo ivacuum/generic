@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Services;
+<?php
+
+namespace Ivacuum\Generic\Services;
 
 use Foolz\SphinxQL\Drivers\ConnectionInterface;
 use Foolz\SphinxQL\Helper;

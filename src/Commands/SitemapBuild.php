@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Commands;
+<?php
+
+namespace Ivacuum\Generic\Commands;
 
 class SitemapBuild extends Command
 {
@@ -67,7 +69,7 @@ class SitemapBuild extends Command
         }
     }
 
-    protected function page($locs, $priorities = "1", string $changefreq = 'daily', string $lastmod = ''): void
+    protected function page($locs, $priorities = '1', string $changefreq = 'daily', string $lastmod = ''): void
     {
         foreach (\Arr::wrap($locs) as $loc) {
             $lastmod = $lastmod ?: $this->now;

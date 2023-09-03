@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Models;
+<?php
+
+namespace Ivacuum\Generic\Models;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
 

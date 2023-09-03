@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Commands;
+<?php
+
+namespace Ivacuum\Generic\Commands;
 
 use Illuminate\Console\Command as BaseCommand;
 

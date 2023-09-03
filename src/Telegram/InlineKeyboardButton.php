@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Telegram;
+<?php
+
+namespace Ivacuum\Generic\Telegram;
 
 class InlineKeyboardButton implements \JsonSerializable
 {

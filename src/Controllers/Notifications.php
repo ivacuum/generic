@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Controllers;
+<?php
+
+namespace Ivacuum\Generic\Controllers;
 
 use App\Http\Controllers\Controller;
 

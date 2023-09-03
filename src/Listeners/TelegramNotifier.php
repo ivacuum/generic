@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Listeners;
+<?php
+
+namespace Ivacuum\Generic\Listeners;
 
 use Illuminate\Http\Request;
 use Ivacuum\Generic\Services\Telegram;

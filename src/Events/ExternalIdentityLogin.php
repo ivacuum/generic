@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Events;
+<?php
+
+namespace Ivacuum\Generic\Events;
 
 use App\ExternalIdentity;
 

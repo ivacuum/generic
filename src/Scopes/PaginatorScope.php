@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Scopes;
+<?php
+
+namespace Ivacuum\Generic\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

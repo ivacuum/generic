@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Telegram;
+<?php
+
+namespace Ivacuum\Generic\Telegram;
 
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\Response;

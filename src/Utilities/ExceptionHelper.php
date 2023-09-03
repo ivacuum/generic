@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities;
+<?php
+
+namespace Ivacuum\Generic\Utilities;
 
 use Illuminate\Validation\ValidationException;
 use Ivacuum\Generic\Services\Telegram;
@@ -69,7 +71,7 @@ class ExceptionHelper
 
     public static function validationSummary(ValidationException $e): string
     {
-        $text = "Ошибка валидации ".fullUrl()."\n";
+        $text = 'Ошибка валидации ' . fullUrl() . "\n";
         $text .= json_encode([
             'validator' => $e->validator->failed(),
             'request' => \Request::all(),

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Controllers\Auth;
+<?php
+
+namespace Ivacuum\Generic\Controllers\Auth;
 
 use App\Http\Controllers\Auth\SignIn;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;

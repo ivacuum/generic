@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Rules;
+<?php
+
+namespace Ivacuum\Generic\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 

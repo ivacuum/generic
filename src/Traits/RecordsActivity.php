@@ -1,18 +1,11 @@
-<?php namespace Ivacuum\Generic\Traits;
+<?php
+
+namespace Ivacuum\Generic\Traits;
 
 use Ivacuum\Generic\Utilities\UserAgent;
 
 trait RecordsActivity
 {
-    protected static function bootRecordsActivity()
-    {
-        foreach (static::getActivitiesToRecord() as $event) {
-            static::$event(fn ($model) => $model->recordActivity($event));
-        }
-
-        static::deleting(fn ($model) => $model->activities()->delete());
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -37,10 +30,17 @@ trait RecordsActivity
         ]);
     }
 
+    protected static function bootRecordsActivity()
+    {
+        foreach (static::getActivitiesToRecord() as $event) {
+            static::$event(fn ($model) => $model->recordActivity($event));
+        }
+
+        static::deleting(fn ($model) => $model->activities()->delete());
+    }
+
     /**
      * События для отслеживания и сохранения
-     *
-     * @return array
      */
     protected static function getActivitiesToRecord(): array
     {
@@ -49,9 +49,6 @@ trait RecordsActivity
 
     /**
      * Тип события
-     *
-     * @param string $event
-     * @return string
      */
     protected function getActivityType(string $event): string
     {

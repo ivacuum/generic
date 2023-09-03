@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Events;
+<?php
+
+namespace Ivacuum\Generic\Events;
 
 /**
  * Превышение лимита создания записей

@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Commands;
+<?php
+
+namespace Ivacuum\Generic\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 
@@ -99,18 +101,18 @@ class MakeAcpSection extends Command
         $path = $this->routesPath();
         $content = $this->fs->get($path);
 
-        if (preg_match('/.*Acp\\\\'.$this->modelPlural.'.*/', $content)) {
+        if (preg_match('/.*Acp\\\\' . $this->modelPlural . '.*/', $content)) {
             $this->info("Маршрут для контроллера [{$this->modelPlural}] уже существует");
-        } elseif (preg_match_all('/.*Acp\\\\'.$this->basePlural.'.*/', $content, $matches)) {
+        } elseif (preg_match_all('/.*Acp\\\\' . $this->basePlural . '.*/', $content, $matches)) {
             $routes = "\n";
 
             foreach ($matches[0] as $match) {
                 $route = str_replace([
                     "\\{$this->basePlural}",
-                    mb_strtolower($this->basePlural).'/',
+                    mb_strtolower($this->basePlural) . '/',
                 ], [
                     "\\{$this->modelPlural}",
-                    mb_strtolower($this->modelPlural).'/',
+                    mb_strtolower($this->modelPlural) . '/',
                 ], $match);
 
                 $routes .= $route . "\n";
@@ -118,7 +120,7 @@ class MakeAcpSection extends Command
                 $this->info($route);
             }
 
-            $this->fs->put($path, $content.$routes);
+            $this->fs->put($path, $content . $routes);
         }
     }
 

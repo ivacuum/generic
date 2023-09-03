@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Utilities\LivewireForm;
+<?php
+
+namespace Ivacuum\Generic\Utilities\LivewireForm;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
@@ -13,6 +15,8 @@ abstract class Base implements Htmlable
     public string $entity = '';
     public string|null $help = null;
     public string|null $label = null;
+
+    abstract public function html();
 
     public function buildData(): array
     {
@@ -55,8 +59,6 @@ abstract class Base implements Htmlable
 
         return $this;
     }
-
-    abstract public function html();
 
     public function i18n(string $field, string $model = null)
     {

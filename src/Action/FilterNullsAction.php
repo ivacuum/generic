@@ -1,4 +1,6 @@
-<?php namespace Ivacuum\Generic\Action;
+<?php
+
+namespace Ivacuum\Generic\Action;
 
 class FilterNullsAction
 {
