@@ -9,7 +9,6 @@ class BladeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->lang();
-        $this->prop();
         $this->svg();
     }
 
@@ -22,11 +21,6 @@ class BladeServiceProvider extends ServiceProvider
         \Blade::directive('de', fn () => '<?php elseif ($locale === "de"): ?>');
         \Blade::directive('endde', fn () => '<?php endif; ?>');
         \Blade::directive('endlang', fn () => '<?php endif; ?>');
-    }
-
-    protected function prop()
-    {
-        \Blade::directive('prop', fn () => '<?php echo \Ivacuum\Generic\Utilities\Vue::prop($expression); ?>');
     }
 
     protected function svg()
