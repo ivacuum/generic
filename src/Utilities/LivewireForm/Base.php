@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 abstract class Base implements Htmlable
 {
     public $model;
-    public bool $lazy = false;
+    public bool $live = false;
     public bool $required = false;
     public array $classes = [];
     public string $name;
@@ -76,9 +76,9 @@ abstract class Base implements Htmlable
         return $this;
     }
 
-    public function lazy(): self
+    public function live(): self
     {
-        $this->lazy = true;
+        $this->live = true;
 
         return $this;
     }
@@ -92,13 +92,6 @@ abstract class Base implements Htmlable
         $class = str_replace('App\\', '', $modelAsString);
 
         $this->entity = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $class)));
-
-        return $this;
-    }
-
-    public function notLazy(): self
-    {
-        $this->lazy = false;
 
         return $this;
     }

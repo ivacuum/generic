@@ -3,7 +3,11 @@
     <input
       class="border-gray-300"
       type="checkbox"
-      wire:model="{{ $name }}"
+      @if($live)
+        wire:model.live="{{ $name }}"
+      @else
+        wire:model="{{ $name }}"
+      @endif
       value="{{ $_value }}"
     >
     {{ $_title }}

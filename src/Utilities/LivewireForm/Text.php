@@ -6,7 +6,6 @@ class Text extends Base
 {
     use HasPlaceholder;
 
-    public bool $lazy = true;
     public string $type = 'text';
 
     public function __construct(string $name)

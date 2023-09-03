@@ -1,8 +1,8 @@
 <textarea
   {{ $required ? 'required' : '' }}
   class="form-input {{ implode(' ', $classes) }}"
-  @if ($lazy)
-    wire:model.lazy="{{ $name }}"
+  @if($live)
+    wire:model.live="{{ $name }}"
   @else
     wire:model="{{ $name }}"
   @endif

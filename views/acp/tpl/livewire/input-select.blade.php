@@ -1,7 +1,11 @@
 <select
   {{ $required ? 'required' : '' }}
   class="form-input {{ implode(' ', $classes) }}"
-  wire:model="{{ $name }}"
+  @if($live)
+    wire:model.live="{{ $name }}"
+  @else
+    wire:model="{{ $name }}"
+  @endif
   id="{{ $entity }}_{{ $name }}"
 >
   <option value=""></option>
