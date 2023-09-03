@@ -2,7 +2,7 @@
 
 namespace Ivacuum\Generic\Models;
 
-use App\Http\Controllers\Mail;
+use App\Http\Controllers\MailController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -69,7 +69,7 @@ class Email extends Model
 
     public function reportLink(): string
     {
-        return path([Mail::class, 'report'], [
+        return path([MailController::class, 'report'], [
             $this->getTimestamp(),
             $this->id,
         ]);
