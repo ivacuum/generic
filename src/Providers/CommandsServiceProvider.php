@@ -11,8 +11,6 @@ class CommandsServiceProvider extends ServiceProvider
                 \Ivacuum\Generic\Commands\MakeAcpSection::class,
                 \Ivacuum\Generic\Commands\MetricDelete::class,
                 \Ivacuum\Generic\Commands\MetricRename::class,
-                \Ivacuum\Generic\Commands\NotificationsPurge::class,
-                \Ivacuum\Generic\Commands\PasswordRemindersPurge::class,
             ]);
         }
     }
