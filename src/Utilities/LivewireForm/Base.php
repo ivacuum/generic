@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 abstract class Base implements Htmlable
 {
     public $model;
+    public bool $blur = false;
     public bool $live = false;
     public bool $required = false;
     public array $classes = [];
@@ -17,6 +18,13 @@ abstract class Base implements Htmlable
     public string|null $label = null;
 
     abstract public function html();
+
+    public function blur(): self
+    {
+        $this->blur = true;
+
+        return $this;
+    }
 
     public function buildData(): array
     {
