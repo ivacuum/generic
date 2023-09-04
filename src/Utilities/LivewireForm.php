@@ -11,6 +11,11 @@ class LivewireForm
         return $this->applySettings(new LivewireForm\Checkbox(...$parameters));
     }
 
+    public function datetimeLocal(...$parameters): LivewireForm\DatetimeLocal
+    {
+        return $this->applySettings(new LivewireForm\DatetimeLocal(...$parameters));
+    }
+
     public function model($model)
     {
         $this->model = $model;
@@ -38,7 +43,7 @@ class LivewireForm
         return $this->applySettings(new LivewireForm\Textarea(...$parameters));
     }
 
-    private function applySettings(LivewireForm\Checkbox|LivewireForm\Radio|LivewireForm\Select|LivewireForm\Text|LivewireForm\Textarea $form)
+    private function applySettings(LivewireForm\Checkbox|LivewireForm\DatetimeLocal|LivewireForm\Radio|LivewireForm\Select|LivewireForm\Text|LivewireForm\Textarea $form)
     {
         return $form->model($this->model);
     }
