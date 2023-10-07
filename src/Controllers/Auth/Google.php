@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\SignIn;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
-use Laravel\Socialite\Two\GoogleProvider;
 
 /**
  * Вход через Гугл
@@ -21,7 +20,7 @@ class Google extends Base
     {
         $this->saveUrlIntended();
 
-        return $this->driver()->redirect();
+        return \Socialite::driver('google')->redirect();
     }
 
     public function callback()
@@ -35,7 +34,7 @@ class Google extends Base
         }
 
         /** @var \Laravel\Socialite\Two\User $userdata */
-        $userdata = $this->driver()->user();
+        $userdata = \Socialite::driver('google')->user();
         $identity = $this->externalIdentity($userdata);
 
         if ($identity->user_id) {
@@ -47,12 +46,12 @@ class Google extends Base
             return redirect()->intended();
         }
 
-        if (null === $userdata->email) {
+        if ($userdata->getEmail() === null) {
             return redirect(path([SignIn::class, 'index']))
                 ->with('message', 'Мы не можем вас зарегистрировать, так как не получили от Гугла вашу электронную почту');
         }
 
-        if (null === $user = $this->findUserByEmail($userdata->email)) {
+        if (null === $user = $this->findUserByEmail($userdata->getEmail())) {
             $user = $this->registerUser($userdata);
         }
 
@@ -67,10 +66,5 @@ class Google extends Base
         event(new ExternalIdentityFirstLogin($identity, $user));
 
         return redirect()->intended();
-    }
-
-    protected function driver(): GoogleProvider
-    {
-        return \Socialite::driver('google');
     }
 }

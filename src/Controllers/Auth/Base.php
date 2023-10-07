@@ -6,30 +6,25 @@ use App\ExternalIdentity;
 use App\Http\Controllers\Controller;
 use App\User;
 use Ivacuum\Generic\Events\ExternalIdentitySaved;
+use Laravel\Socialite\AbstractUser;
 
 abstract class Base extends Controller
 {
-    protected $user;
     protected $provider;
 
-    public function __construct(User $user)
+    public function __construct(protected User $user)
     {
-        $this->user = $user;
-
         $this->middleware('guest');
     }
 
     /**
      * Поиск или создание новой учетки социального сервиса
-     *
-     * @param \Laravel\Socialite\AbstractUser $user
-     * @return \App\ExternalIdentity
      */
-    protected function externalIdentity($user)
+    protected function externalIdentity(AbstractUser $user): ExternalIdentity
     {
-        $identity = $this->findIdentityByUid($user->id);
+        $identity = $this->findIdentityByUid($user->getId());
 
-        if (null === $identity) {
+        if ($identity === null) {
             $identity = $this->saveExternalIdentity($user);
         } else {
             $identity->touch();
@@ -40,11 +35,8 @@ abstract class Base extends Controller
 
     /**
      * Поиск учетки по ID в социальном сервисе
-     *
-     * @param string $uid
-     * @return \App\ExternalIdentity
      */
-    protected function findIdentityByUid($uid)
+    protected function findIdentityByUid(string $uid): ExternalIdentity|null
     {
         /** @var \App\ExternalIdentity $model */
         $model = ExternalIdentity::where('uid', $uid)
@@ -56,11 +48,8 @@ abstract class Base extends Controller
 
     /**
      * Поиск пользователя сайта по электронной почте
-     *
-     * @param string $email
-     * @return \App\User
      */
-    protected function findUserByEmail($email)
+    protected function findUserByEmail(string $email): User|null
     {
         /** @var \App\User $user */
         $user = $this->user->where('email', $email)->first();
@@ -70,34 +59,28 @@ abstract class Base extends Controller
 
     /**
      * Мгновенная регистрация пользователя
-     *
-     * @param \Laravel\Socialite\AbstractUser $user
-     * @return \App\User
      */
-    protected function registerUser($user)
+    protected function registerUser(AbstractUser $user): User
     {
         event(new \Ivacuum\Generic\Events\Stats\UserRegisteredWithExternalIdentity);
 
         return $this->user->create([
-            'email' => $user->email,
+            'email' => $user->getEmail(),
             'status' => User::STATUS_ACTIVE,
         ]);
     }
 
     /**
      * Сохранение поступивших от социального сервиса данных
-     *
-     * @param \Laravel\Socialite\AbstractUser $user
-     * @return \App\ExternalIdentity
      */
-    protected function saveExternalIdentity($user)
+    protected function saveExternalIdentity(AbstractUser $user): ExternalIdentity
     {
         event(new ExternalIdentitySaved($user));
         event(new \Ivacuum\Generic\Events\Stats\ExternalIdentityAdded);
 
         $externalIdentity = new ExternalIdentity;
-        $externalIdentity->uid = $user->id;
-        $externalIdentity->email = (string) $user->email;
+        $externalIdentity->uid = $user->getId();
+        $externalIdentity->email = (string) $user->getEmail();
         $externalIdentity->provider = $this->provider;
         $externalIdentity->save();
 

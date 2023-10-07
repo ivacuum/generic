@@ -7,7 +7,6 @@ use Illuminate\Support\HtmlString;
 use Ivacuum\Generic\Events\ExternalIdentityFirstLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLogin;
 use Ivacuum\Generic\Events\ExternalIdentityLoginError;
-use Laravel\Socialite\Two\FacebookProvider;
 
 class Facebook extends Base
 {
@@ -17,7 +16,7 @@ class Facebook extends Base
     {
         $rerequest = request('rerequest');
 
-        $driver = $this->driver();
+        $driver = \Socialite::driver('facebook');
 
         if ($rerequest) {
             $driver = $driver->reRequest();
@@ -39,7 +38,7 @@ class Facebook extends Base
         }
 
         /** @var \Laravel\Socialite\Two\User $userdata */
-        $userdata = $this->driver()->user();
+        $userdata = \Socialite::driver('facebook')->user();
         $identity = $this->externalIdentity($userdata);
 
         if ($identity->user_id) {
@@ -51,11 +50,12 @@ class Facebook extends Base
             return redirect()->intended();
         }
 
-        if (null === $userdata->email) {
-            return redirect(path([SignIn::class, 'index']))->with('message', $this->noEmailMessage());
+        if ($userdata->getEmail() === null) {
+            return redirect(path([SignIn::class, 'index']))
+                ->with('message', $this->noEmailMessage());
         }
 
-        if (null === $user = $this->findUserByEmail($userdata->email)) {
+        if (null === $user = $this->findUserByEmail($userdata->getEmail())) {
             $user = $this->registerUser($userdata);
         }
 
@@ -72,15 +72,7 @@ class Facebook extends Base
         return redirect()->intended();
     }
 
-    protected function driver(): FacebookProvider
-    {
-        return \Socialite::driver('facebook');
-    }
-
-    /**
-     * @return \Illuminate\Support\HtmlString
-     */
-    protected function noEmailMessage()
+    protected function noEmailMessage(): HtmlString
     {
         return new HtmlString('<div>Мы не можем вас зарегистрировать, так как не получили от Фэйсбука вашу электронную почту. Доступ к ее адресу можно разрешить при <a class="link" href="' . path([static::class, 'index'], ['rerequest' => 1]) . '">повторной попытке</a></div>');
     }
