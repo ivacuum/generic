@@ -14,6 +14,7 @@ class ImageConverter
     protected $filter;
     protected $filters = ['point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'lanczos', 'bessel', 'sinc'];
     protected $firstFrame;
+    protected $format;
     protected $gravity;
     protected $gravities = ['northwest', 'north', 'northeast', 'west', 'center', 'east', 'southwest', 'south', 'southeast'];
     protected $quality;
@@ -45,6 +46,7 @@ class ImageConverter
             ' ',
             [
                 config('cfg.gm_bin'),
+                $this->format,
                 $this->size,
                 escapeshellarg($this->source($source)),
                 $this->autoOrient,
@@ -53,6 +55,10 @@ class ImageConverter
                 $this->resize,
                 $this->gravity,
                 $this->crop,
+                match ($this->format) {
+                    '-format webp' => '-define webp:method=6',
+                    default => '',
+                },
                 '+profile "!icm,*"',
                 escapeshellarg($destination),
             ]
@@ -100,6 +106,20 @@ class ImageConverter
         return $this;
     }
 
+    public function heic(): self
+    {
+        $this->format = '-format heic';
+
+        return $this;
+    }
+
+    public function jpegxl(): self
+    {
+        $this->format = '-format jxl';
+
+        return $this;
+    }
+
     public function gravity(string $gravity): self
     {
         $gravity = strtolower($gravity);
@@ -140,14 +160,28 @@ class ImageConverter
         return $this;
     }
 
+    public function webp(): self
+    {
+        $this->format = '-format webp';
+
+        return $this;
+    }
+
     /**
      * Результат работы конвертера будет помещен во временный файл, который будет удален по завершении запроса
      * Временный файл после преобразований подразумевается перенести в постоянное хранилище
      */
     protected function tempFile(): string
     {
+        $extension = match ($this->format) {
+            '-format heic' => 'heic',
+            '-format jxl' => 'jxl',
+            '-format webp' => 'webp',
+            default => 'jpg',
+        };
+
         $filename = \Str::random(6);
-        $destination = storage_path("app/resize-{$filename}");
+        $destination = storage_path("app/resize-{$filename}.{$extension}");
 
         register_shutdown_function(
             function () use ($destination) {
