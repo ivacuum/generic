@@ -2,6 +2,9 @@
 
 namespace Ivacuum\Generic\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+
+#[AsCommand('app:sitemap-build', 'Build sitemap.xml')]
 class SitemapBuild extends Command
 {
     protected $signature = 'app:sitemap-build {threshold=50000}';

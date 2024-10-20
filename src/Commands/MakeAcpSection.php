@@ -3,11 +3,12 @@
 namespace Ivacuum\Generic\Commands;
 
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand('make:acp-section', 'Create a new admin control panel section')]
 class MakeAcpSection extends Command
 {
     protected $signature = 'make:acp-section {model} {base}';
-    protected $description = 'Create a new admin control panel section';
 
     protected $fs;
     protected $base;

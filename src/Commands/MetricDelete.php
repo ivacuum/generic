@@ -3,11 +3,12 @@
 namespace Ivacuum\Generic\Commands;
 
 use App\Metric;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand('app:metric-delete', 'Delete a metric')]
 class MetricDelete extends Command
 {
     protected $signature = 'app:metric-delete {metric}';
-    protected $description = 'Удаление метрики';
 
     public function handle()
     {
