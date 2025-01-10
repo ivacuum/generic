@@ -29,7 +29,6 @@
         "Ivacuum\\Generic\\Providers\\DebugbarServiceProvider",
         "Ivacuum\\Generic\\Providers\\FastcgiServiceProvider",
         "Ivacuum\\Generic\\Providers\\OdnoklassnikiServiceProvider",
-        "Ivacuum\\Generic\\Providers\\QueueServiceProvider",
         "Ivacuum\\Generic\\Providers\\ScoutServiceProvider",
         "Ivacuum\\Generic\\Providers\\SphinxServiceProvider",
         "Ivacuum\\Generic\\Providers\\ValidatorServiceProvider",
