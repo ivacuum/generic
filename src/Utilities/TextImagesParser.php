@@ -59,7 +59,7 @@ class TextImagesParser
         $result[] = '<div class="-mt-2 mb-6 -mx-4 sm:mx-0 js-shortcuts-item">';
         $result[] = '<div class="max-w-1000px mx-auto text-center">';
 
-        $result[] = '<img class="markdown-responsive-image sm:rounded js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="' . $image . '">';
+        $result[] = '<img class="markdown-responsive-image sm:rounded-sm js-lazy" alt="" src="https://life.ivacuum.ru/0.gif" data-src="' . $image . '">';
 
         $result[] = '</div>';
         $result[] = '</div>';
