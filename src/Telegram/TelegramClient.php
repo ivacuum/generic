@@ -140,7 +140,7 @@ class TelegramClient
         return $this->send($request);
     }
 
-    public function sendPhoto(string $fileId, string $caption = null)
+    public function sendPhoto(string $fileId, string|null $caption = null)
     {
         $request = new SendPhotoRequest(
             $this->chatId,
@@ -160,7 +160,7 @@ class TelegramClient
         return $this->send($request);
     }
 
-    public function setWebhook(string $url, string $secretToken = null)
+    public function setWebhook(string $url, string|null $secretToken = null)
     {
         $request = new SetWebhookRequest($url, $secretToken);
 

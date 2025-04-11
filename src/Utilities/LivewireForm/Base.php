@@ -68,7 +68,7 @@ abstract class Base implements Htmlable
         return $this;
     }
 
-    public function i18n(string $field, string $model = null)
+    public function i18n(string $field, string|null $model = null)
     {
         $this->label = \ViewHelper::modelFieldTrans($model ?? $this->entity, $field);
 
