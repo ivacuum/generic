@@ -4,6 +4,7 @@ namespace Ivacuum\Generic\Telegram;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\RequestException;
 use Ivacuum\Generic\Action\FilterNullsAction;
 use Ivacuum\Generic\Http\HttpRequest;
 
@@ -173,7 +174,8 @@ class TelegramClient
 
         return $this->http
             ->baseUrl("https://api.telegram.org/bot{$botToken}/")
-            ->timeout(\App::runningInConsole() ? 60 : 15);
+            ->timeout(\App::runningInConsole() ? 60 : 15)
+            ->throw();
     }
 
     private function payload(HttpRequest $request)
@@ -204,6 +206,8 @@ class TelegramClient
             return new TelegramResponse($response);
         } catch (ClientException $e) {
             throw TelegramException::errorResponse($e);
+        } catch (RequestException $e) {
+            throw TelegramException::fromLaravelRequestException($e);
         } catch (\Throwable $e) {
             throw TelegramException::generalError($e);
         }

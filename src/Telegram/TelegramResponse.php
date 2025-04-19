@@ -16,6 +16,17 @@ class TelegramResponse
         $this->successful = $response->json('ok');
     }
 
+    public static function fakeBadMarkdown()
+    {
+        return [
+            'api.telegram.org/*' => Factory::response([
+                'ok' => false,
+                'error_code' => 400,
+                'description' => "Bad Request: can't parse entities: Character '.' is reserved and must be escaped with the preceding '\\'",
+            ], 400),
+        ];
+    }
+
     public static function fakeBlockedByUser()
     {
         return [
@@ -23,7 +34,7 @@ class TelegramResponse
                 'ok' => false,
                 'error_code' => 403,
                 'description' => 'Forbidden: bot was blocked by the user',
-            ]),
+            ], 403),
         ];
     }
 
