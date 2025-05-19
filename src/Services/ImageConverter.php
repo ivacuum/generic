@@ -55,6 +55,7 @@ class ImageConverter
                 $this->resize,
                 $this->gravity,
                 $this->crop,
+                // '-interlace Line', // Progressive JPEG
                 match ($this->format) {
                     '-format webp' => '-define webp:method=6',
                     default => '',
