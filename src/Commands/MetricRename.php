@@ -5,10 +5,11 @@ namespace Ivacuum\Generic\Commands;
 use App\Metric;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand('app:metric-rename', 'Rename a metric')]
+#[AsCommand('app:metric-rename')]
 class MetricRename extends Command
 {
     protected $signature = 'app:metric-rename {from} {to}';
+    protected $description = 'Rename a metric';
 
     public function handle()
     {
