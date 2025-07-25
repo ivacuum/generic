@@ -97,9 +97,9 @@ abstract class Base implements Htmlable
             ? get_class($model)
             : $model;
 
-        $class = str_replace('App\\', '', $modelAsString);
-
-        $this->entity = implode('.', array_map(fn ($ary) => \Str::snake($ary, '-'), explode('\\', $class)));
+        $this->entity = str($modelAsString)
+            ->afterLast('\\')
+            ->snake('-');
 
         return $this;
     }
